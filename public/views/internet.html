@@ -1,0 +1,34 @@
+<div class="container">
+     
+   <div class="panel-body">
+        <ul class="nav navbar-nav">
+        <li data-match-route="/form"><a href="/form">Information personnelles</a></li>
+        <li data-match-route="/Mode-de-vie"><a href="/Mode-de-vie">Mode de vie et santé</a></li>
+      <li data-match-route="/High-Tech"><a href="/High-Tech">High Tech</a></li>
+      <li data-match-route="/Sports"><a href="/Sports">Sports pratiqués et regardés</a></li>
+      <li data-match-route="/Cosmétique"><a href="/Cosmetique">Cosmétique </a></li>
+      <li data-match-route="/Mode"><a href="/Mode">Mode & style</a></li>
+      <li data-match-route="/Habitation"><a href="/Habitation">Habitation</a></li>
+      <li data-match-route="/Boissons"><a href="/Boissons">Boisson</a></li>
+      <li data-match-route="/Transport"><a href="/Transport">Transport</a></li>
+      </ul>
+</div>
+<div class="panel-body">
+    <div ng-controller="InternetCtrl">
+        
+        <h2>Internet & opérateurs téléphoniques</h2>
+        <div class="center-form panel">
+         <div class="panel-body">
+        <form method="post" ng-submit="info()" name="infoForm">
+            <div class="form-group has-feedback">
+
+            <input class="btn btn-lg btn-block btn-primary" type="submit" ng-click="info()" value="Enregistrer" ng-disabled="infoForm.$invalid" schema="UserSchema"/>
+    
+
+
+           </form>
+          </div>
+   </div>
+    </div>
+   </div>
+</div>

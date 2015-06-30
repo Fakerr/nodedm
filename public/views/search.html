@@ -1,0 +1,59 @@
+<div class="panel-body">
+    <div ng-controller="SearchCtrl">
+        <div class="center-form panel">
+            <div class="panel-body">
+                <form method="post" ng-submit="imag()" name="searchForm">
+
+                    <label class="control-label">Titre de l'annonce publicitaire</label>
+
+                    <div class="form-group has-feedback">
+                        <input class="form-control input-lg" type="text" name="name" ng-model="name"
+                               placeholder="Saisissez le titre de l'annonce publicitaire" required>
+                    </div>
+
+                    <label class="control-label">Prix de l'annonce publicitaire</label>
+
+                    <div class="form-group has-feedback">
+                        <input class="form-control input-lg" type="text" name="prix" ng-model="prix"
+                               placeholder="Saisissez le prix de l'annonce publicitaire/client" required>
+                    </div>
+
+
+                    <label class="control-label">Les cibles de l'annonce</label>
+                    <label ng-repeat="(cible,enabled) in cibles">
+                        <div class="check">
+                            <input type="checkbox" ng-model="cibles[cible]"> {{cible}}
+                        </div>
+                    </label>
+
+                    <label class="control-label">Marque du produit de l'annonce publicitaire</label>
+
+                    <div class="form-group has-feedback">
+                        <input class="form-control input-lg" type="text" name="marque" ng-model="marque"
+                               placeholder="Saisissez la marque du prduit de l'annonce publicitaire" required>
+                    </div>
+
+
+                    <div class="col-md-4 col-xs-8">
+                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <img class="profile-pic thumbnail" style="width: 200px; height: 150px;"/>
+
+                            <div>
+            <span class="btn btn-default btn-file">
+            <input type="file"  name="file" accept="image/*" image="image"
+                   onchange="angular.element(this).scope().fileNameChanged(this)"/>
+            <img ng-show="img" ng-src="{{img.url}}" type="{{img.file.type}}"/>
+            </span>
+                            </div>
+                            <input class="btn btn-lg btn-block btn-primary" type="submit" ng-click="imag()"
+                                   value="Enregistrer" ng-disabled="searchForm.$invalid" schema="imageSchema"/>
+
+                            </div>
+                        </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

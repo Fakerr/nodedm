@@ -1,0 +1,45 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files (x86)\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'node-weka/lib/weka-lib.js' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.32
+4 verbose node symlink C:\Program Files (x86)\nodejs\\node.exe
+5 warn package.json application@0.0.0 No description
+6 warn package.json application@0.0.0 No repository field.
+7 warn package.json application@0.0.0 No README data
+8 warn package.json karma-phantomjs-launcher@0.1.4 No README data
+9 verbose readDependencies using package.json deps
+10 verbose cache add [ 'node-weka/lib/weka-lib.js', null ]
+11 verbose cache add name=undefined spec="node-weka/lib/weka-lib.js" args=["node-weka/lib/weka-lib.js",null]
+12 verbose parsed url { protocol: null,
+12 verbose parsed url   slashes: null,
+12 verbose parsed url   auth: null,
+12 verbose parsed url   host: null,
+12 verbose parsed url   port: null,
+12 verbose parsed url   hostname: null,
+12 verbose parsed url   hash: null,
+12 verbose parsed url   search: null,
+12 verbose parsed url   query: null,
+12 verbose parsed url   pathname: 'node-weka/lib/weka-lib.js',
+12 verbose parsed url   path: 'node-weka/lib/weka-lib.js',
+12 verbose parsed url   href: 'node-weka/lib/weka-lib.js' }
+13 silly lockFile dc4dbbbb-node-weka-lib-weka-lib-js node-weka/lib/weka-lib.js
+14 verbose lock node-weka/lib/weka-lib.js C:\Users\walid\AppData\Roaming\npm-cache\dc4dbbbb-node-weka-lib-weka-lib-js.lock
+15 silly lockFile dc4dbbbb-node-weka-lib-weka-lib-js node-weka/lib/weka-lib.js
+16 silly lockFile dc4dbbbb-node-weka-lib-weka-lib-js node-weka/lib/weka-lib.js
+17 error addLocal Could not install node-weka/lib/weka-lib.js
+18 error Error: ENOENT, stat 'C:\Users\walid\Desktop\cybex\application\node-weka\lib\weka-lib.js'
+19 error If you need help, you may report this *entire* log,
+19 error including the npm and node versions, at:
+19 error     <http://github.com/npm/npm/issues>
+20 error System Windows_NT 6.1.7600
+21 error command "C:\\Program Files (x86)\\nodejs\\\\node.exe" "C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "node-weka/lib/weka-lib.js"
+22 error cwd C:\Users\walid\Desktop\cybex\application
+23 error node -v v0.10.32
+24 error npm -v 1.4.28
+25 error path C:\Users\walid\Desktop\cybex\application\node-weka\lib\weka-lib.js
+26 error code ENOENT
+27 error errno 34
+28 verbose exit [ 34, true ]

@@ -1,0 +1,140 @@
+<div class="container">
+
+    <div class="panel-body">
+        <ul class="nav navbar-nav">
+            <li data-match-route="/Mode-de-vie"><a href="/Mode-de-vie">Mode de vie et santé</a></li>
+            <li data-match-route="/High-Tech"><a href="/High-Tech">High Tech</a></li>
+            <li data-match-route="/Internet et opérateurs téléphoniques"><a
+                    href="/Internet et opérateurs téléphoniques">Internet & opérateurs</a></li>
+            <li data-match-route="/Sports"><a href="/Sports">Sports pratiqués et regardés</a></li>
+            <li data-match-route="/Cosmétique"><a href="/Cosmetique">Cosmétique </a></li>
+            <li data-match-route="/Mode"><a href="/Mode">Mode & style</a></li>
+            <li data-match-route="/Habitation"><a href="/Habitation">Habitation</a></li>
+            <li data-match-route="/Boissons"><a href="/Boissons">Boisson</a></li>
+            <li data-match-route="/Transport"><a href="/Transport">Transport</a></li>
+        </ul>
+    </div>
+    <div class="panel-body">
+        <div ng-controller="InfoCtrl">
+
+            <h2>Informations Personnelles</h2>
+
+            <div class="center-form panel">
+                <div class="panel-body">
+                    <form method="post" ng-submit="info()" name="infoForm">
+                        <div class="form-group has-feedback">
+                            <input class="form-control input-lg" type="text" name="age" ng-model="age" placeholder="Age"
+                                   required>
+                        </div>
+
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="optionsRadios" id="Homme" ng-name="sexe" value="Homme"
+                                       ng-model="sexe" checked>
+                                Homme
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="optionsRadios" id="Femme" ng-name="sexe" value="Femme"
+                                       ng-model="sexe">
+                                Femme
+                            </label>
+                        </div>
+
+                        <div class="select">
+                            <label>Vous êtes : </label><select id="job" name="job" ng-model="job">
+                            <option value="">Sélectionnez une valeur</option>
+                            <option value="etudiant" ng-model="job">Etudiant</option>
+                            <option value="fonctionnaire" ng-model="job">Fonctionnaire</option>
+                            <option value="chomeur" ng-model="job">Chômeur</option>
+                            <option value="retraite" ng-model="job">Retraité</option>
+                            <option value="entrepreneur" ng-model="job">Entrepreneur</option>
+                        </select></p><p class="hide" data-cref="67" data-ctype="=" data-cvalue="1">
+                        </div>
+
+
+                        <label ng-repeat="(langue,enabled) in langues">
+                            <div class="check">
+                                <input type="checkbox" ng-model="langues[langue]"> {{langue}}
+                            </div>
+                        </label>
+
+
+                        <div class="select">
+                            <label>Vous êtes : </label><select id="StatutSocial" name="statut" ng-model="statut">
+                            <option value="">Sélectionnez une valeur</option>
+                            <option value="Celibataire" ng-model="statut">Célibataire</option>
+                            <option value="fiance" ng-model="statut">Fiancé(e)</option>
+                            <option value="marie" ng-model="statut">Marié(e)</option>
+                            <option value="veuf" ng-model="statut">Veuf (ve)</option>
+                            <option value="divorce" ng-model="statut">Divorcé(e)</option>
+                        </select></p><p class="hide" data-cref="67" data-ctype="=" data-cvalue="1">
+                        </div>
+
+                        <label> Vou avez combien d'enfants ?</label>
+
+                        <div class="radio">
+
+                            <label> <input type="radio" name="optionsRadios" id="0" ng-name="enfant" value="0"
+                                           ng-model="enfant" checked>
+                                0
+                            </label>
+                        </div>
+                        <div class="radio">
+
+                            <label> <input type="radio" name="optionsRadios" id="1" ng-name="enfant" value="1"
+                                           ng-model="enfant" checked>
+                                1
+                            </label>
+                        </div>
+
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="optionsRadios" id="2" ng-name="enfant" value="2"
+                                       ng-model="enfant">
+                                2
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label> <input type="radio" name="optionsRadios" id="+3" ng-name="enfant" value="+3"
+                                           ng-model="enfant" checked>
+                                3 ou plus
+                            </label>
+                        </div>
+
+                        <div class="select">
+                            <label>Votre niveau d'études : </label><select id="NivEtudes" name="nivEtude"
+                                                                           ng-model="nivEtude">
+                            <option value="">Sélectionnez une valeur</option>
+                            <option value="aucun" ng-model="nivEtude">Aucun</option>
+                            <option value="college" ng-model="nivEtude">Brevet des collèges</option>
+                            <option value="baccalaureat" ng-model="nivEtude">Baccalauréat</option>
+                            <option value="premierCycle" ng-model="nivEtude">Niveau premier cycle</option>
+                            <option value="ingenieur" ng-model="nivEtude">Ingénieur</option>
+                            <option value="mastere" ng-model="nivEtude">Mastère</option>
+                            <option value="docteur" ng-model="nivEtude">Docteur</option>
+                        </select></p><p class="hide" data-cref="67" data-ctype="=" data-cvalue="1">
+                        </div>
+
+                        <div class="select">
+                            <label>Votre salaire mensuel : </label><select id="salaire" name="salaire"
+                                                                           ng-model="salaire">
+                            <option value="">Sélectionnez une valeur</option>
+                            <option value="500" ng-model="salaire">Moins de 500 €</option>
+                            <option value="1000" ng-model="salaire">Entre 500 et 1000 €</option>
+                            <option value="2000" ng-model="salaire">Entre 1000 et 2000 €</option>
+                            <option value="3000" ng-model="salaire">Entre 2000 et 3000 €</option>
+                            <option value="4000" ng-model="salaire">Entre 3000 et 4000 €</option>
+                            <option value="5000" ng-model="salaire">Plus que 5000 €
+                        </select></p><p class="hide" data-cref="67" data-ctype="=" data-cvalue="1">
+                        </div>
+                        <input class="btn btn-lg btn-block btn-primary" type="submit" ng-click="info()"
+                               value="Enregistrer" ng-disabled="infoForm.$invalid" schema="UserSchema"/>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

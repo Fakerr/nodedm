@@ -1,0 +1,23 @@
+<div class="container">
+
+    <div class="panel-body">
+        <div ng-controller="ProfileCtrl">
+
+            <div id="aWrapper">
+                <ul class="aList">
+                    <li ng-repeat="annonce in ann track by $index">
+                        <img ng-src="{{annonce}}" width="400" height="280" ng-click="change(annonce)"/>
+                    </li>
+                </ul>
+            </div>
+            <br>
+            <div id="vWrapper">
+                <ul class="vList">
+                    <li ng-repeat="video in videos track by $index">
+                        <youtube src="video"></youtube>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
