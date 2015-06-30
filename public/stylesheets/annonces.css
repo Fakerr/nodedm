@@ -17,12 +17,12 @@ img.displayed:hover {
 #aWrapper {
     width: 1100px;
     overflow: auto;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 #vWrapper{
     width: 1100px;
     overflow: auto;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 .aList{
     white-space: nowrap;

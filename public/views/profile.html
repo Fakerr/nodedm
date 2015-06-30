@@ -6,7 +6,7 @@
             <div id="aWrapper">
                 <ul class="aList">
                     <li ng-repeat="annonce in ann track by $index">
-                        <img ng-src="{{annonce}}" width="400" height="280" ng-click="change(annonce)"/>
+                        <img ng-src="{{annonce}}" width="300" height="220" ng-click="open(annonce)"/>
                     </li>
                 </ul>
             </div>
@@ -18,6 +18,15 @@
                     </li>
                 </ul>
             </div>
+
+
+            <script type="text/ng-template" id="firstDialog">
+                    <img ng-src="{{ pub }}" width="500" height="400"/>
+                <div class="ngdialog-buttons mt">
+                    <button type="button" class="ngdialog-button ngdialog-button-primary" >?</button>
+                </div>
+            </script>
+
         </div>
     </div>
 </div>
