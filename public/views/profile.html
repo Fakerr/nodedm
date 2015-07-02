@@ -6,7 +6,7 @@
             <div id="aWrapper">
                 <ul class="aList">
                     <li ng-repeat="annonce in ann track by $index">
-                        <img ng-src="{{annonce}}" width="300" height="220" ng-click="open(annonce)"/>
+                        <img ng-src="{{annonce}}" width="400" height="280" ng-click="open(annonce)"/>
                     </li>
                 </ul>
             </div>
@@ -14,6 +14,7 @@
             <div id="vWrapper">
                 <ul class="vList">
                     <li ng-repeat="video in videos track by $index">
+                        <img id="imgW" src="images/bg.png" width="400" height="280" ng-click="openVideo(video)"/>
                         <youtube src="video"></youtube>
                     </li>
                 </ul>
@@ -22,6 +23,13 @@
 
             <script type="text/ng-template" id="firstDialog">
                     <img ng-src="{{ pub }}" width="500" height="400"/>
+                <div class="ngdialog-buttons mt">
+                    <button type="button" class="ngdialog-button ngdialog-button-primary" >?</button>
+                </div>
+            </script>
+
+            <script type="text/ng-template" id="secondDialog">
+                <youtube src="pubVideo"></youtube>
                 <div class="ngdialog-buttons mt">
                     <button type="button" class="ngdialog-button ngdialog-button-primary" >?</button>
                 </div>

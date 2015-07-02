@@ -15,7 +15,6 @@ var agenda = require('agenda')({ db: { address: 'localhost:27017/test' } });
 var sugar = require('sugar');
 var nodemailer = require('nodemailer');
 var _ = require('lodash');
-//var user = require('/api/users'):
 var tokenSecret = 'your unique secret';
 var uuid = require('node-uuid');
     multiparty = require('multiparty');
@@ -24,19 +23,16 @@ var formidable = require('formidable');
 var arff = require('node-arff');
 var spawn = require('child_process').spawn;
 var _ = require('underscore');
-//var jf = require('jsonfile');
 var util = require('util');
 var fakery = require('mongoose-fakery');
 
 var session = require('express-session');
 
-//var arff = require('arff');
-//var readFile = require('fs').readFile;
 
 var videoPub = new mongoose.Schema({
   id : String, 
   type : String, //sport, cosmétique, boissons....
-  prix : Number,
+  prix : Number
 });
 
 var imageSchema =new mongoose.Schema({
@@ -130,35 +126,6 @@ app.use(bodyParser.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
 var data;
 
-
-/*
-fakery.fake('user', mongoose.model('User'), {
-    name: 'john',
-    
-    email: fakery.lazy(function(attrs) {
-        // this will return john@example.com 
-        return attrs.name + '@example.com';
-    })
-});
-var userFakery = fakery.fake('user');
-fakery.fake('user', mongoose.model('User'), {
-    name: fakery.g.name(),
-    // this will create tags 'projects', <random string>, 'tech' 
-    tags: ['projects', fakery.g.str(5), 'tech']
-});
-var names = [], i;
-for (i = 0; i < 10; i++) {
-    names.push(fakery.g.fullName());
-}
-fakery.generator('custom', function() {
-    return 'custom';
-});
- 
-// use like this 
-var customGenerator = fakery.g.custom();
-customGenerator(); // returns 'custom' 
-
-*/
 function ensureAuthenticated(req, res, next) {
   if (req.headers.authorization) {
     var token = req.headers.authorization.split(' ')[1];

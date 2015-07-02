@@ -24,6 +24,12 @@ img.displayed:hover {
     overflow: auto;
     opacity: 0.9;
 }
+
+#imgW{
+    position: absolute;
+    opacity: 0;
+}
+
 .aList{
     white-space: nowrap;
     margin: 0px;
@@ -43,6 +49,7 @@ img.displayed:hover {
     white-space: nowrap;
     margin: 0px;
 }
+
 .vList li {
     display: inline;
     padding-left: 2px;
