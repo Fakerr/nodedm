@@ -3,7 +3,9 @@ angular.module('MyApp')
         return{
             restrict: 'E',
             scope: {
-                src: '='
+                src: '=',
+                width: '=',
+                height: '='
             },
             templateUrl: 'views/youtube.html'
         };

@@ -296,6 +296,14 @@ app.get('/api/users/:id', function (req, res, next) {
 });
 
 
+app.put('/api/users/:id', function(req, res, next) {
+  User.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
+    if (err) return next(err);
+    res.json(post);
+  });
+});
+
+
 app.get('/api/imagesPub', function(req, res, next) {
   if (!req.query.name) {
     return res.send(400, { message: 'name parameter is required.' });
