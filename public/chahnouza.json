@@ -1,21 +1,68 @@
-{"__v":0,"_id":{"$oid":"552bb3c421cf4804097e5ed0"},"email":"hachaichi-chahnez@live.fr","name":"chahnez","password":"$2a$10$RwAky.vKXKhyRgmZ1NJPQ.I079Z4lbp1GLXGbfYI0ykc7Lu8gNQay"}
-{"__v":0,"_id":{"$oid":"552bb3fc21cf4804097e5ed1"},"email":"maha@live.fr","name":"maha","password":"$2a$10$Ba2QK.qL1bKhiigMjsqSiu1Kb.1xPLN0uRQKr6UaSR52qgvPf/Vlm"}
-{"InfoPerso":{"age":"10","job":"etudiant","langues":{"Allemand":false,"Anglais":true,"Arabe":false,"Espagnol":false,"Français":false,"Japonais":false,"Portugais":false,"chinois":false},"sexe":"Femme","statut":"Celibatire"},"__v":0,"_id":{"$oid":"552bb4b321cf4804097e5ed2"},"email":"jihen@gmail.com","name":"jihen","password":"$2a$10$voldxx0Ri1fPWs1Lfzz9HOdB2Tn1ZupIsUEqzYTUK2syZa8bI/l5y"}
-{"__v":0,"_id":{"$oid":"552e529d7e44c36c17873a78"},"email":"aroua@live.fr","name":"aroua","password":"$2a$10$iKjlIss4mzN6Yy03waKxt.dWMYX6QcRiKBCCQLICd/cM/8Z858CJy"}
-{"__v":0,"_id":{"$oid":"552fc851b9fcf6d41653269d"},"email":"hchah@gmail.com","name":"ch","password":"$2a$10$Zmk.V0Kzy34BVgdptGL82.nInOxNC6ru3D2xpJXRCXXtUEFWrAxE6"}
-{"__v":0,"_id":{"$oid":"553103db0b1856ec0d0c90f3"},"age":"20","email":"a@a.a","name":"aa","password":"$2a$10$uU7Wf7G232oMN7rYU.rblOzPYtCVFF0cAIrou2ErRIfiXC0hIhGhe"}
-{"__v":0,"_id":{"$oid":"55311547e7cbc44417713cc5"},"email":"","name":"ch","password":"$2a$10$Y4YzpA2mRWpPNGfCFKgUNenh1Wj.z0.fhvCrOkXNch1w57LLO8er2"}
-{"__v":0,"_id":{"$oid":"55311dd0fa255d841a09a0f2"},"age":"3","email":"maha@ch.fr","name":"ch","password":"$2a$10$S2iZx3LoaoDt58bnHfOyQeA8.yPeDTfUX1NeqslBGVzwxjqa/h4fm","sexe":"Femme"}
-{"_id":{"$oid":"553125601cdefbbe0eacfa48"},"test":"a"}
-{"__v":0,"_id":{"$oid":"55364b39d11fa8ac10200acb"},"age":"23","email":"c@c","name":"c","password":"$2a$10$6jgtbDEecVT6a4xJdSQIDeKegOesqycA4bVS.4aiR3kc1pJ2.62ni"}
-{"__v":0,"_id":{"$oid":"55366ab48bef70a0049c1bfe"},"email":"faouzi@com","name":"faouzi","password":"$2a$10$chJyzFHoPCCp2RvojMobf.QHp2vcQ7PIiCnnzJd/pNMQ/iH0uVLka"}
-{"__v":0,"_id":{"$oid":"55390329ed8aae141e6dd621"},"age":"age1","email":"test@test","name":"test","password":"$2a$10$tQv6TOt7RdQzRV5QeWtpnet0sOPugb2CcxONEV2ViHC7nh7Hy8M/."}
-{"__v":0,"_id":{"$oid":"55390478b74840e419fae9d7"},"age":"age1","email":"test@1","name":"test1","password":"$2a$10$ZCBgo/wtJI26rff4VSUAeuMXfUem8zKJJjjd5w..H/nxz/GKDeACm"}
-{"__v":0,"_id":{"$oid":"553e32d8bfadec640c2892b1"},"age":"13","email":"test@3","name":"test","password":"$2a$10$eB0dpFuGT1ONd8D7dxMwKOmJZFNokslPE8wwK02AHwdPPfdg21edK"}
-{"InfoPerso":{"age":"12","enfant":0,"job":"etudiant","langues":{"Allemand":false,"Anglais":true,"Arabe":false,"Espagnol":false,"Français":false,"Japonais":true,"Portugais":false,"chinois":false},"nivEtude":"ingenieur","salaire":1000,"sexe":"Femme","statut":"fiance"},"ModeVie":{"poids":45,"taille":45},"__v":0,"_id":{"$oid":"553e4f278250874c1665010f"},"age":"age1","email":"test@10","name":"test","password":"$2a$10$FALVre6mVYGyC/Qyhg5XmeiTIOop6SDhrUM7J.x2rJQGtt8Nxqkfe","portefeuille":10}
-{"__v":0,"_id":{"$oid":"553f45f48fdc39a4151ddda7"},"age":"10","email":"test@7","name":"test","password":"$2a$10$/Azw.1Lf8owCD8I7t2N.Gux1WZPmQbLjM38n0r4JaHHvLq0xPv0eS"}
-{"__v":0,"_id":{"$oid":"55489ce79e4e7e6c0f5e2c90"},"age":"23","email":"test@11","job":"etudiant","name":"test","password":"$2a$10$GbjK2DvcMi77JBBedXryK.r8qigL2AZL/8BseJcU/0xgaZWoVTESe","sexe":"Homme"}
-{"InfoPerso":{"langues":[]},"__v":0,"_id":{"$oid":"55509e29d6ae81fc11f3dde6"},"email":"chahhnez@ch","name":"chahnez","password":"$2a$10$22O1eHjIvrfVTF2e1AsM5e6qQ2tHGQRt3fYF9thOa3xicWjB1Er4q","portefeuille":0}
-{"InfoPerso":{"age":"10","enfant":0,"job":"etudiant","langues":{"Allemand":true,"Anglais":true,"Arabe":false,"Espagnol":false,"Français":false,"Japonais":false,"Portugais":false,"chinois":false},"nivEtude":"ingenieur","salaire":5000,"sexe":"Femme","statut":"Celibataire"},"__v":0,"_id":{"$oid":"55509e47d6ae81fc11f3dde7"},"email":"test@20","name":"chahnez","password":"$2a$10$4tMKMx.tnWXsISgbG10t/.hp6WQMBAw.NqC89Le1W8dFFYrZzGGp.","portefeuille":5}
-{"InfoPerso":{"age":"12","enfant":0,"job":"fonctionnaire","langues":{"Allemand":false,"Anglais":true,"Arabe":true,"Espagnol":false,"Français":false,"Japonais":false,"Portugais":false,"chinois":false},"nivEtude":"college","salaire":1000,"sexe":"Homme","statut":"fiance"},"ModeVie":{"Budget":null,"compagne":[],"compagnie":null,"direction":"pays","duree":2,"freqVoyage":1,"poids":12,"taille":36,"typeHebergement":{"Location":false,"amis":false,"camping":false,"club":false,"famille":true,"hotel":true},"typeReservation":"agence","typeVoyage":[],"typeVoyages":{"Aventure":false,"Compagne":true,"Culture":false,"Mer":false,"Montagne":false}},"__v":0,"_id":{"$oid":"555ae25eee14b0601732c04a"},"email":"faouzi@moussa","name":"faouzi","password":"$2a$10$yfhIZKOscqHClIiElEax9ux7odL6Q4771bSN8ijvG/bonk3tmpQ.u","portefeuille":10}
-{"InfoPerso":{"langues":[]},"ModeVie":{"compagne":[],"typeHebergement":[],"typeReservation":[],"typeVoyage":[]},"__v":0,"_id":{"$oid":"555c416b1828eb4c0c6f968f"},"email":"faouzi@mous","name":"faouiz","password":"$2a$10$KB3IZM/lCXcl0Fr6d.g7UOeCGyWnU2l89OaMyRYmF0zubv7WyNkoq","portefeuille":0}
+{
+  "__v": 0,
+  "_id": {"$oid": "552bb3c421cf4804097e5ed0"},
+  "email": "hachaichi-chahnez@live.fr",
+  "name": "chahnez",
+  "password": "$2a$10$RwAky.vKXKhyRgmZ1NJPQ.I079Z4lbp1GLXGbfYI0ykc7Lu8gNQay"
+}
+{"__v": 0, "_id":{"$oid": "552bb3fc21cf4804097e5ed1"}, "email": "maha@live.fr", "name": "maha","password": "$2a$10$Ba2QK.qL1bKhiigMjsqSiu1Kb.1xPLN0uRQKr6UaSR52qgvPf/Vlm"
+}
+{
+"InfoPerso":
+{
+"age":"10", "job": "etudiant", "langues":{"Allemand": false, "Anglais": true, "Arabe": false, "Espagnol": false, "Français": false, "Japonais": false, "Portugais": false, "chinois": false}, "sexe": "Femme", "statut": "Celibatire"}, "__v": 0, "_id":{"$oid":"552bb4b321cf4804097e5ed2"}, "email": "jihen@gmail.com", "name": "jihen", "password": "$2a$10$voldxx0Ri1fPWs1Lfzz9HOdB2Tn1ZupIsUEqzYTUK2syZa8bI/l5y"
+}
+{
+"__v": 0,"_id":{"$oid": "552e529d7e44c36c17873a78"}, "email":"aroua@live.fr", "name": "aroua", "password": "$2a$10$iKjlIss4mzN6Yy03waKxt.dWMYX6QcRiKBCCQLICd/cM/8Z858CJy"}
+{"__v": 0, "_id":{"$oid":"552fc851b9fcf6d41653269d"}, "email": "hchah@gmail.com", "name": "ch", "password": "$2a$10$Zmk.V0Kzy34BVgdptGL82.nInOxNC6ru3D2xpJXRCXXtUEFWrAxE6"
+}
+{
+"__v": 0,"_id":{"$oid": "553103db0b1856ec0d0c90f3"}, "age":"20", "email": "a@a.a", "name": "aa","password": "$2a$10$uU7Wf7G232oMN7rYU.rblOzPYtCVFF0cAIrou2ErRIfiXC0hIhGhe"
+}
+{
+"__v": 0, "_id":{"$oid": "55311547e7cbc44417713cc5"}, "email": "", "name": "ch", "password": "$2a$10$Y4YzpA2mRWpPNGfCFKgUNenh1Wj.z0.fhvCrOkXNch1w57LLO8er2"
+}
+{"__v": 0, "_id":{"$oid": "55311dd0fa255d841a09a0f2"}, "age": "3", "email": "maha@ch.fr","name": "ch", "password": "$2a$10$S2iZx3LoaoDt58bnHfOyQeA8.yPeDTfUX1NeqslBGVzwxjqa/h4fm", "sexe":"Femme"
+}
+{
+"_id":
+{
+"$oid": "553125601cdefbbe0eacfa48"
+}, "test": "a"
+}
+{
+"__v": 0,"_id":{"$oid": "55364b39d11fa8ac10200acb"}, "age":"23", "email": "c@c", "name": "c","password": "$2a$10$6jgtbDEecVT6a4xJdSQIDeKegOesqycA4bVS.4aiR3kc1pJ2.62ni"
+}
+{
+"__v": 0, "_id":{"$oid": "55366ab48bef70a0049c1bfe"}, "email": "faouzi@com", "name": "faouzi", "password": "$2a$10$chJyzFHoPCCp2RvojMobf.QHp2vcQ7PIiCnnzJd/pNMQ/iH0uVLka"
+}
+{"__v": 0, "_id":{"$oid": "55390329ed8aae141e6dd621"}, "age": "age1", "email": "test@test","name": "test", "password": "$2a$10$tQv6TOt7RdQzRV5QeWtpnet0sOPugb2CcxONEV2ViHC7nh7Hy8M/."
+}
+{
+"__v": 0, "_id":{"$oid": "55390478b74840e419fae9d7"}, "age": "age1", "email": "test@1", "name": "test1", "password": "$2a$10$ZCBgo/wtJI26rff4VSUAeuMXfUem8zKJJjjd5w..H/nxz/GKDeACm"
+}
+{
+"__v":0, "_id":{"$oid": "553e32d8bfadec640c2892b1"},"age": "13", "email": "test@3", "name":"test", "password": "$2a$10$eB0dpFuGT1ONd8D7dxMwKOmJZFNokslPE8wwK02AHwdPPfdg21edK"
+}
+{
+"InfoPerso":
+{"age": "12", "enfant": 0, "job":"etudiant", "langues":{"Allemand": false, "Anglais": true, "Arabe": false, "Espagnol": false, "Français": false, "Japonais": true, "Portugais": false, "chinois": false}, "nivEtude":"ingenieur", "salaire": 1000, "sexe": "Femme","statut": "fiance"}, "ModeVie":{"poids":45, "taille": 45}, "__v": 0, "_id":{"$oid": "553e4f278250874c1665010f"}, "age": "age1", "email": "test@10", "name": "test", "password": "$2a$10$FALVre6mVYGyC/Qyhg5XmeiTIOop6SDhrUM7J.x2rJQGtt8Nxqkfe", "portefeuille": 10
+}
+{"__v": 0, "_id":{"$oid": "553f45f48fdc39a4151ddda7"}, "age": "10", "email": "test@7","name": "test", "password": "$2a$10$/Azw.1Lf8owCD8I7t2N.Gux1WZPmQbLjM38n0r4JaHHvLq0xPv0eS"
+}
+{
+"__v": 0, "_id":{"$oid": "55489ce79e4e7e6c0f5e2c90"}, "age": "23", "email": "test@11", "job": "etudiant", "name": "test", "password": "$2a$10$GbjK2DvcMi77JBBedXryK.r8qigL2AZL/8BseJcU/0xgaZWoVTESe", "sexe": "Homme"
+}
+{
+"InfoPerso":
+{
+"langues":[]}, "__v": 0, "_id":{"$oid": "55509e29d6ae81fc11f3dde6"}, "email": "chahhnez@ch", "name":"chahnez", "password": "$2a$10$22O1eHjIvrfVTF2e1AsM5e6qQ2tHGQRt3fYF9thOa3xicWjB1Er4q", "portefeuille": 0}
+{"InfoPerso":{"age": "10", "enfant":0, "job": "etudiant", "langues":{"Allemand": true, "Anglais": true, "Arabe": false, "Espagnol": false, "Français": false, "Japonais": false, "Portugais": false, "chinois": false}, "nivEtude": "ingenieur", "salaire": 5000,"sexe": "Femme", "statut": "Celibataire"}, "__v": 0, "_id":{"$oid": "55509e47d6ae81fc11f3dde7"}, "email": "test@20", "name": "chahnez", "password": "$2a$10$4tMKMx.tnWXsISgbG10t/.hp6WQMBAw.NqC89Le1W8dFFYrZzGGp.", "portefeuille": 5
+}
+{
+"InfoPerso":{"age": "12", "enfant": 0, "job": "fonctionnaire", "langues":{"Allemand": false,"Anglais": true, "Arabe": true, "Espagnol":false, "Français": false, "Japonais": false,"Portugais": false, "chinois": false}, "nivEtude": "college", "salaire": 1000, "sexe": "Homme", "statut": "fiance"}, "ModeVie":{"Budget": null, "compagne":[], "compagnie": null, "direction": "pays", "duree": 2, "freqVoyage": 1, "poids": 12, "taille": 36, "typeHebergement":{"Location":false, "amis": false, "camping": false,"club": false, "famille": true, "hotel":true}, "typeReservation": "agence", "typeVoyage":[], "typeVoyages":{"Aventure": false, "Compagne":true, "Culture": false, "Mer": false,"Montagne": false}}, "__v": 0,"_id":{"$oid": "555ae25eee14b0601732c04a"}, "email":"faouzi@moussa", "name": "faouzi", "password": "$2a$10$yfhIZKOscqHClIiElEax9ux7odL6Q4771bSN8ijvG/bonk3tmpQ.u","portefeuille": 10
+}
+{
+"InfoPerso":
+{
+"langues":[]}, "ModeVie":{"compagne":[], "typeHebergement":[], "typeReservation":[], "typeVoyage":[]}, "__v": 0, "_id":{"$oid": "555c416b1828eb4c0c6f968f"}, "email": "faouzi@mous", "name":"faouiz", "password": "$2a$10$KB3IZM/lCXcl0Fr6d.g7UOeCGyWnU2l89OaMyRYmF0zubv7WyNkoq", "portefeuille": 0}

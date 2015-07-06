@@ -2,44 +2,87 @@
 1 verbose cli [ 'C:\\Program Files (x86)\\nodejs\\\\node.exe',
 1 verbose cli   'C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
 1 verbose cli   'install',
-1 verbose cli   'node-weka/lib/weka-lib.js' ]
+1 verbose cli   'angular-youtube-mb',
+1 verbose cli   '--save' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.32
 4 verbose node symlink C:\Program Files (x86)\nodejs\\node.exe
-5 warn package.json application@0.0.0 No description
-6 warn package.json application@0.0.0 No repository field.
-7 warn package.json application@0.0.0 No README data
-8 warn package.json karma-phantomjs-launcher@0.1.4 No README data
-9 verbose readDependencies using package.json deps
-10 verbose cache add [ 'node-weka/lib/weka-lib.js', null ]
-11 verbose cache add name=undefined spec="node-weka/lib/weka-lib.js" args=["node-weka/lib/weka-lib.js",null]
-12 verbose parsed url { protocol: null,
-12 verbose parsed url   slashes: null,
-12 verbose parsed url   auth: null,
-12 verbose parsed url   host: null,
-12 verbose parsed url   port: null,
-12 verbose parsed url   hostname: null,
-12 verbose parsed url   hash: null,
-12 verbose parsed url   search: null,
-12 verbose parsed url   query: null,
-12 verbose parsed url   pathname: 'node-weka/lib/weka-lib.js',
-12 verbose parsed url   path: 'node-weka/lib/weka-lib.js',
-12 verbose parsed url   href: 'node-weka/lib/weka-lib.js' }
-13 silly lockFile dc4dbbbb-node-weka-lib-weka-lib-js node-weka/lib/weka-lib.js
-14 verbose lock node-weka/lib/weka-lib.js C:\Users\walid\AppData\Roaming\npm-cache\dc4dbbbb-node-weka-lib-weka-lib-js.lock
-15 silly lockFile dc4dbbbb-node-weka-lib-weka-lib-js node-weka/lib/weka-lib.js
-16 silly lockFile dc4dbbbb-node-weka-lib-weka-lib-js node-weka/lib/weka-lib.js
-17 error addLocal Could not install node-weka/lib/weka-lib.js
-18 error Error: ENOENT, stat 'C:\Users\walid\Desktop\cybex\application\node-weka\lib\weka-lib.js'
-19 error If you need help, you may report this *entire* log,
-19 error including the npm and node versions, at:
-19 error     <http://github.com/npm/npm/issues>
-20 error System Windows_NT 6.1.7600
-21 error command "C:\\Program Files (x86)\\nodejs\\\\node.exe" "C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "node-weka/lib/weka-lib.js"
-22 error cwd C:\Users\walid\Desktop\cybex\application
-23 error node -v v0.10.32
-24 error npm -v 1.4.28
-25 error path C:\Users\walid\Desktop\cybex\application\node-weka\lib\weka-lib.js
-26 error code ENOENT
-27 error errno 34
-28 verbose exit [ 34, true ]
+5 warn package.json application@0.0.0 No repository field.
+6 verbose readDependencies using package.json deps
+7 verbose cache add [ 'angular-youtube-mb', null ]
+8 verbose cache add name=undefined spec="angular-youtube-mb" args=["angular-youtube-mb",null]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: 'angular-youtube-mb',
+9 verbose parsed url   path: 'angular-youtube-mb',
+9 verbose parsed url   href: 'angular-youtube-mb' }
+10 silly lockFile 21770d70-angular-youtube-mb angular-youtube-mb
+11 verbose lock angular-youtube-mb C:\Users\walid\AppData\Roaming\npm-cache\21770d70-angular-youtube-mb.lock
+12 silly lockFile 21770d70-angular-youtube-mb angular-youtube-mb
+13 silly lockFile 21770d70-angular-youtube-mb angular-youtube-mb
+14 verbose addNamed [ 'angular-youtube-mb', '' ]
+15 verbose addNamed [ null, '*' ]
+16 silly lockFile c886e842-angular-youtube-mb angular-youtube-mb@
+17 verbose lock angular-youtube-mb@ C:\Users\walid\AppData\Roaming\npm-cache\c886e842-angular-youtube-mb.lock
+18 silly addNameRange { name: 'angular-youtube-mb', range: '*', hasData: false }
+19 verbose request where is /angular-youtube-mb
+20 verbose request registry https://registry.npmjs.org/
+21 verbose request id 89e1c39d5a1fd1d9
+22 verbose url raw /angular-youtube-mb
+23 verbose url resolving [ 'https://registry.npmjs.org/', './angular-youtube-mb' ]
+24 verbose url resolved https://registry.npmjs.org/angular-youtube-mb
+25 verbose request where is https://registry.npmjs.org/angular-youtube-mb
+26 info trying registry request attempt 1 at 11:30:23
+27 http GET https://registry.npmjs.org/angular-youtube-mb
+28 http 404 https://registry.npmjs.org/angular-youtube-mb
+29 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+29 verbose headers   'content-type': 'application/json',
+29 verbose headers   'cache-control': 'max-age=0',
+29 verbose headers   'content-length': '51',
+29 verbose headers   'accept-ranges': 'bytes',
+29 verbose headers   date: 'Mon, 06 Jul 2015 09:30:25 GMT',
+29 verbose headers   via: '1.1 varnish',
+29 verbose headers   age: '0',
+29 verbose headers   connection: 'keep-alive',
+29 verbose headers   'x-served-by': 'cache-fra1241-FRA',
+29 verbose headers   'x-cache': 'MISS',
+29 verbose headers   'x-cache-hits': '0',
+29 verbose headers   'x-timer': 'S1436175025.018787,VS0,VE102' }
+30 silly registry.get cb [ 404,
+30 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+30 silly registry.get     'content-type': 'application/json',
+30 silly registry.get     'cache-control': 'max-age=0',
+30 silly registry.get     'content-length': '51',
+30 silly registry.get     'accept-ranges': 'bytes',
+30 silly registry.get     date: 'Mon, 06 Jul 2015 09:30:25 GMT',
+30 silly registry.get     via: '1.1 varnish',
+30 silly registry.get     age: '0',
+30 silly registry.get     connection: 'keep-alive',
+30 silly registry.get     'x-served-by': 'cache-fra1241-FRA',
+30 silly registry.get     'x-cache': 'MISS',
+30 silly registry.get     'x-cache-hits': '0',
+30 silly registry.get     'x-timer': 'S1436175025.018787,VS0,VE102' } ]
+31 silly lockFile c886e842-angular-youtube-mb angular-youtube-mb@
+32 silly lockFile c886e842-angular-youtube-mb angular-youtube-mb@
+33 error 404 404 Not Found: angular-youtube-mb
+33 error 404
+33 error 404 'angular-youtube-mb' is not in the npm registry.
+33 error 404 You should bug the author to publish it
+33 error 404 It was specified as a dependency of 'application'
+33 error 404
+33 error 404 Note that you can also install from a
+33 error 404 tarball, folder, or http url, or git url.
+34 error System Windows_NT 6.1.7600
+35 error command "C:\\Program Files (x86)\\nodejs\\\\node.exe" "C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "angular-youtube-mb" "--save"
+36 error cwd C:\Users\walid\Desktop\cybex\application
+37 error node -v v0.10.32
+38 error npm -v 1.4.28
+39 error code E404
+40 verbose exit [ 1, true ]

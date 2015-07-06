@@ -27,6 +27,13 @@ img.displayed:hover {
     cursor: pointer;
 }
 
+
+#imgWS{
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
 #imgA{
     cursor: pointer;
 }
