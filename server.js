@@ -31,8 +31,8 @@ var session = require('express-session');
 
 var videoPub = new mongoose.Schema({
   id : String, 
-  type : String, //sport, cosmétique, boissons....
-  prix : Number
+  url : String,
+  check : Boolean
 });
 
 var imageSchema =new mongoose.Schema({
@@ -80,7 +80,7 @@ var userSchema = new mongoose.Schema({
   Budget : String
  },
   annonces: [String],
-  annoncesVideo: [String]
+  annoncesVideos: []
 });
 
 

@@ -1,12 +1,21 @@
 angular.module('MyApp')
-    .controller('ProfileCtrl', ['$scope', '$http', '$rootScope','ngDialog','$window', function ($scope, $http, $rootScope,ngDialog,$window) {
+    .controller('ProfileCtrl', ['$scope', '$http', '$rootScope','ngDialog','$window', function ($scope, $http, $rootScope,ngDialog,$window,youtubeEmbedUtils) {
 
         //Dimension video dans la page profile.
         $scope.heightVideo = 280;
-        $scope.widthVideo = 400;
+        $scope.widthVideo = 375;
         //Dimension image dans profile.
         $scope.heightImage= 280;
-        $scope.widthImage = 380;
+        $scope.widthImage = 375;
+        $scope.playerVars = {
+            controls: 0
+        };
+
+        $scope.$on('youtube.player.ended', function ($event, player) {
+            $scope.donate();
+            $scope.url = player.getVideoUrl();
+            //player.playVideo();
+        });
 
         $scope.open = function (image) {
             $scope.pub = image;
@@ -46,14 +55,13 @@ angular.module('MyApp')
                 $scope.userName = data.name;
                 $scope.ann = data.annonces;
                 //Exemple de videos à génerer à partir de la base.
-                $scope.videos = [
-                    "https://www.youtube.com/embed/oYOKp9j-_yY?autoplay=0&amp;controls=0&amp;loop=1&amp;showinfo=0&amp;modestbranding=1&amp;disablekb=1&amp;enablejsapi=1&amp;playlist=oYOKp9j-_yY",
-                    "https://www.youtube.com/embed/0NycEiHOeX8?autoplay=0&amp;controls=0&amp;loop=1&amp;showinfo=0&amp;modestbranding=1&amp;disablekb=1&amp;enablejsapi=1&amp;playlist=0NycEiHOeX8",
-                    "https://www.youtube.com/embed/6AytbSdWBKg?autoplay=0&amp;controls=0&amp;loop=1&amp;showinfo=0&amp;modestbranding=1&amp;disablekb=1&amp;enablejsapi=1&amp;playlist=6AytbSdWBKg",
-                    "https://www.youtube.com/embed/R4-YdC5N6Lo?autoplay=0&amp;controls=0&amp;loop=1&amp;showinfo=0&amp;modestbranding=1&amp;disablekb=1&amp;enablejsapi=1&amp;playlist=R4-YdC5N6Lo",
-                    "https://www.youtube.com/embed/15R7I5cH6QA?autoplay=0&amp;controls=0&amp;loop=1&amp;showinfo=0&amp;modestbranding=1&amp;disablekb=1&amp;enablejsapi=1&amp;playlist=15R7I5cH6QA",
-                    "https://www.youtube.com/embed/lC1pBoxvpzw?autoplay=0&amp;controls=0&amp;loop=1&amp;showinfo=0&amp;modestbranding=1&amp;disablekb=1&amp;enablejsapi=1&amp;playlist=lC1pBoxvpzw"
-                      ];
+                $scope.videos = data.annoncesVideos;
+                /*angular.forEach(data.annoncesVideos, function(value) {
+                 if(value.check == false){
+                 $scope.videos = value ;
+                 }
+                 });*/
+
             }).error(function (err) {
                 console.log(err, 'error user !!');
             });

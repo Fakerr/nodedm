@@ -3,13 +3,15 @@
     <div class="panel-body">
         <div ng-controller="ProfileCtrl">
 
+            {{url}}
+
             <h3>Videos</h3>
             <br>
             <div id="vWrapper">
                 <div class="row">
                     <div class="col-md-4" ng-repeat="video in videos track by $index">
-                        <img id="imgW" src="images/bg.png" width="400" height="280" ng-click="openVideo(video)"/>
-                        <youtube src="video" height="heightVideo" width="widthVideo"></youtube>
+                        <img id="imgW" src="images/bg.png" width="380" height="280" ng-click="openVideo(video.url)"/>
+                        <youtube-video video-url="video.url" player-width="widthVideo" player-height="heightVideo" player-vars="playerVars"></youtube-video>
                     </div>
                 </div>
             </div>
@@ -38,8 +40,9 @@
             </script>
 
             <script type="text/ng-template" id="secondDialog">
-                <img id="imgWS" src="images/bg.png" width="1170" height="550" ng-click="donate()"/>
-                <youtube src="pubVideo" height="heightDialogVideo" width="widthDialogVideo" ng-click="donate()"></youtube>
+                <img id="imgWS" src="images/bg.png" width="1170" height="550" ng-click="player.playVideo()"/>
+                <youtube-video video-url="pubVideo" player-width="widthDialogVideo" player-height="heightDialogVideo"
+                         player="player" player-vars="playerVars" ng-click="donate()"></youtube-video>
                 <div class="ngdialog-buttons mt">
                     <button type="button" class="ngdialog-button ngdialog-button-primary">Ok</button>
                 </div>
