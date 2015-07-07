@@ -11,11 +11,33 @@ angular.module('MyApp')
             controls: 0
         };
 
+
+        $http.get('/api/user', {params: {id: $rootScope.currentUser._id}})
+            .success(function (data) {
+                $scope.user = data;
+                $scope.userName = data.name;
+                $scope.ann = data.annonces;
+                $scope.videos = data.annoncesVideos;
+            }).error(function (err) {
+                console.log(err, 'error user !!');
+            });
+
+
         $scope.$on('youtube.player.ended', function ($event, player) {
+            // modif boolean check and update $scope.user
+            var vid = $scope.user.annoncesVideos;
+            var lien = player.getVideoUrl();
+            var res =  lien.replace("?v=","/");
+            for (var i = 0; i < vid.length; i++) {
+                if (!vid[i].url.localeCompare(res)) {
+                    $scope.user.annoncesVideos[i].check = true;
+                    break;
+                }
+            }
             $scope.donate();
-            $scope.url = player.getVideoUrl();
             //player.playVideo();
         });
+
 
         $scope.open = function (image) {
             $scope.pub = image;
@@ -40,31 +62,16 @@ angular.module('MyApp')
         };
 
         $scope.donate = function(){
-           // $window.location.href = 'https://www.apple.com/tn/iphone-6/';
-           // $rootScope.currentUser.portefeuille ++;
+           /* delete $window.localStorage.token;
+            $rootScope.currentUser = null;*/
             $scope.user.portefeuille += 1;
+
             $http.put('/api/users/' + $scope.user._id, $scope.user).success(function(data){
                 $scope.user = data;
+               // $window.localStorage.token = data.token;
                 $rootScope.currentUser = data;
             });
         };
-
-        $http.get('/api/user', {params: {id: $rootScope.currentUser._id}})
-            .success(function (data) {
-                $scope.user = data;
-                $scope.userName = data.name;
-                $scope.ann = data.annonces;
-                //Exemple de videos à génerer à partir de la base.
-                $scope.videos = data.annoncesVideos;
-                /*angular.forEach(data.annoncesVideos, function(value) {
-                 if(value.check == false){
-                 $scope.videos = value ;
-                 }
-                 });*/
-
-            }).error(function (err) {
-                console.log(err, 'error user !!');
-            });
 
         $scope.pageClass = 'fadeZoom';
     }]);

@@ -5,11 +5,12 @@
 
             {{url}}
 
+
             <h3>Videos</h3>
             <br>
             <div id="vWrapper">
                 <div class="row">
-                    <div class="col-md-4" ng-repeat="video in videos track by $index">
+                    <div class="col-md-4" ng-repeat="video in videos | filter:{ check: false }">
                         <img id="imgW" src="images/bg.png" width="380" height="280" ng-click="openVideo(video.url)"/>
                         <youtube-video video-url="video.url" player-width="widthVideo" player-height="heightVideo" player-vars="playerVars"></youtube-video>
                     </div>

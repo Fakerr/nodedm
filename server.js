@@ -297,10 +297,19 @@ app.get('/api/users/:id', function (req, res, next) {
 
 
 app.put('/api/users/:id', function(req, res, next) {
-  User.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
-  });
+  /*if (req.query.url) {
+    console.log(req.query.url);
+    User.update({_id: req.params.id,'annoncesVideos.url': req.query.url}, {'$set': {
+      'annoncesVideos.$.check': true}},function(err){
+      return next(err);
+    })
+  }else{*/
+    console.log('hello');
+    User.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
+      if (err) return next(err);
+      res.json(post);
+    });
+  //}
 });
 
 
