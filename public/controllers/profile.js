@@ -1,5 +1,5 @@
 angular.module('MyApp')
-    .controller('ProfileCtrl', ['$scope', '$http', '$rootScope','ngDialog','$window', function ($scope, $http, $rootScope,ngDialog,$window,youtubeEmbedUtils) {
+    .controller('ProfileCtrl', ['$scope', '$http', '$rootScope','ngDialog','$window', function ($scope, $http, $rootScope,ngDialog,$window) {
 
         //Dimension video dans la page profile.
         $scope.heightVideo = 280;
@@ -30,12 +30,16 @@ angular.module('MyApp')
             var res =  lien.replace("?v=","/");
             for (var i = 0; i < vid.length; i++) {
                 if (!vid[i].url.localeCompare(res)) {
-                    $scope.user.annoncesVideos[i].check = true;
+                    var videoCheck = $scope.user.annoncesVideos[i].check;
+                    var c = i;
                     break;
                 }
             }
-            $scope.donate();
-            //player.playVideo();
+            if(!videoCheck){
+                $scope.user.annoncesVideos[c].check = true;
+                $scope.donate();
+            }
+            player.playVideo();
         });
 
 
@@ -66,12 +70,31 @@ angular.module('MyApp')
            /* delete $window.localStorage.token;
             $rootScope.currentUser = null;*/
             $scope.user.portefeuille += 1;
-
             $http.put('/api/users/' + $scope.user._id, $scope.user).success(function(data){
                 $scope.user = data;
                // $window.localStorage.token = data.token;
                 $rootScope.currentUser = data;
             });
+        };
+
+        $scope.donateImage = function(url){
+
+            var images =  $scope.user.annonces;
+            for (var i = 0; i < images.length; i++) {
+                if (!images[i].url.localeCompare(url)) {
+                    var check = $scope.user.annonces[i].check;
+                    var index = i;
+                    break;
+                }
+            }
+            if(!check){
+                $scope.user.annonces[index].check = true;
+                $scope.user.portefeuille += 1;
+                $http.put('/api/users/' + $scope.user._id, $scope.user).success(function(data){
+                    $scope.user = data;
+                    $rootScope.currentUser = data;
+                });
+            }
         };
 
         $scope.pageClass = 'fadeZoom';

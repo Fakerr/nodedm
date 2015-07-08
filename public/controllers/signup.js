@@ -4,7 +4,8 @@ angular.module('MyApp')
       Auth.signup({
         name: $scope.displayName,
         email: $scope.email,
-        password: $scope.password
+        password: $scope.password,
+        type: $scope.type
       });
     };
     $scope.pageClass = 'fadeZoom'

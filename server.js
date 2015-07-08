@@ -48,6 +48,7 @@ var userSchema = new mongoose.Schema({
     name: {type: String, trim: true, required: true},
     email: {type: String, unique: true, lowercase: true, trim: true},
     password: String,
+    type: String,
     facebook: {
         id: String,
         email: String
@@ -153,10 +154,12 @@ function createJwtToken(user) {
 }
 
 app.post('/auth/signup', function (req, res, next) {
+    //if type=client then ....
     var user = new User({
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
+        type: req.body.type,
         portefeuille: 0
     });
     user.save(function (err) {
