@@ -1,5 +1,8 @@
 .modified-nav{
-    margin-top: -19px !important;
+    margin-top: -20px !important;
+    border-radius: 0px !important;
+    /*background-color: #0000FF;*/
+    color: white !important;
 }
 
 @media (min-width: 768px){
@@ -14,6 +17,43 @@
         display: table-cell !important;
         float: none !important;
         text-align: center !important;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
+        color: white !important;
     }
+}
+
+.act{
+    background-color:red !important;
+}
+.modified-nav .navbar-nav > li:hover{
+    background-color: #0000ba;
+}
+
+.modified-nav .navbar-nav > li > a {
+    color:white;
+}
+.modified-nav .navbar-nav > li > a:hover {
+    font-size: 1.5rem;
+}
+
+.checkbox-inline{
+    margin-right: 20px !important;
+}
+
+.jumbotron-modified {
+    background: url("../images/cash.gif");
+}
+
+.box{
+    background-color: #ffffff;
+    opacity: 0.9;
+    filter: alpha(opacity=90); /* For IE8 and earlier */
+}
+
+#modified-label {
+    margin-top: 19px;
+}
+
+.modified-panel {
+    margin-top: 20px;
 }

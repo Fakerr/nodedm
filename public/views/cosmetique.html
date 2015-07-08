@@ -2,32 +2,37 @@
     <ul class="nav navbar-nav modify">
         <li data-match-route="/form"><a href="/form">Information personnelles</a></li>
         <li data-match-route="/Mode-de-vie"><a href="/Mode-de-vie">Mode de vie et santé</a></li>
-      <li data-match-route="/High-Tech"><a href="/High-Tech">High Tech</a></li>
-       <li data-match-route="/Internet et opérateurs téléphoniques"><a href="/Internet et opérateurs téléphoniques">Internet & opérateurs</a></li>
-      <li data-match-route="/Sports"><a href="/Sports">Sports pratiqués et regardés</a></li>
-      <li data-match-route="/Mode"><a href="/Mode">Mode & style</a></li>
-      <li data-match-route="/Habitation"><a href="/Habitation">Habitation</a></li>
-      <li data-match-route="/Boissons"><a href="/Boissons">Boisson</a></li>
-      <li data-match-route="/Transport"><a href="/Transport">Transport</a></li>
+        <li data-match-route="/High-Tech"><a href="/High-Tech">High Tech</a></li>
+        <li data-match-route="/Internet et opérateurs téléphoniques"><a
+                href="/Internet et opérateurs téléphoniques">Internet & opérateurs</a></li>
+        <li data-match-route="/Sports"><a href="/Sports">Sports pratiqués et regardés</a></li>
+        <li data-match-route="/Cosmétique" class="act"><a href="/Cosmetique">Cosmétique </a></li>
+        <li data-match-route="/Mode"><a href="/Mode">Mode & style</a></li>
+        <li data-match-route="/Habitation"><a href="/Habitation">Habitation</a></li>
+        <li data-match-route="/Boissons"><a href="/Boissons">Boisson</a></li>
+        <li data-match-route="/Transport"><a href="/Transport">Transport</a></li>
       </ul>
     </nav>
 <div class="container">
-<div class="panel-body">
-    <div ng-controller="CosmetiqueCtrl">
-        
-        <h2>Beauté et cosmétique</h2>
-        <div class="center-form panel">
-         <div class="panel-body">
-        <form method="post" ng-submit="info()" name="infoForm">
-            <div class="form-group has-feedback">
+    <div class="panel-body">
+        <div ng-controller="CosmetiqueCtrl">
 
-            <input class="btn btn-lg btn-block btn-primary" type="submit" ng-click="info()" value="Enregistrer" ng-disabled="infoForm.$invalid" schema="UserSchema"/>
-    
-
-
-           </form>
-          </div>
-   </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Beauté & Cosmétique</h2>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" method="post" ng-submit="info()" name="infoForm">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <input class="btn btn-lg btn-block btn-primary" type="submit" ng-click="info()" value="Enregistrer" ng-disabled="infoForm.$invalid" schema="UserSchema"/>
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-   </div>
 </div>

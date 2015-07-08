@@ -55,6 +55,18 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mg
                 templateUrl: 'views/mode.html',
                 controller: 'ModeCtrl'
             })
+            .when('/Habitation', {
+                templateUrl: 'views/Habitation.html',
+                controller: 'HabitationCtrl'
+            })
+            .when('/Boissons', {
+                templateUrl: 'views/Boissons.html',
+                controller: 'BoissonsCtrl'
+            })
+            .when('/Transport', {
+                templateUrl: 'views/Transport.html',
+                controller: 'TransportCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
