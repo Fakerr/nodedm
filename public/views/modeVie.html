@@ -1,97 +1,131 @@
 <nav class="navbar navbar-inverse modified-nav ">
     <ul class="nav navbar-nav modify">
         <li data-match-route="/form"><a href="/form">Information personnelles</a></li>
+        <li data-match-route="/Mode-de-vie"><a href="/Mode-de-vie" class="act">Mode de vie et santé</a></li>
         <li data-match-route="/High-Tech"><a href="/High-Tech">High Tech</a></li>
-      <li data-match-route="/Internet et opérateurs téléphoniques"><a href="/Internet et opérateurs téléphoniques">Internet & opérateurs</a></li>
-      <li data-match-route="/Sports"><a href="/Sports">Sports pratiqués et regardés</a></li>
-      <li data-match-route="/Cosmétique"><a href="/Cosmetique">Cosmétique </a></li>
-      <li data-match-route="/Mode"><a href="/Mode">Mode & style</a></li>
-      <li data-match-route="/Habitation"><a href="/Habitation">Habitation</a></li>
-      <li data-match-route="/Boissons"><a href="/Boissons">Boisson</a></li>
-      <li data-match-route="/Transport"><a href="/Transport">Transport</a></li>
+        <li data-match-route="/Internet et opérateurs téléphoniques"><a
+                href="/Internet et opérateurs téléphoniques">Internet & opérateurs</a></li>
+        <li data-match-route="/Sports"><a href="/Sports">Sports pratiqués et regardés</a></li>
+        <li data-match-route="/Cosmétique"><a href="/Cosmetique">Cosmétique </a></li>
+        <li data-match-route="/Mode"><a href="/Mode">Mode & style</a></li>
+        <li data-match-route="/Habitation"><a href="/Habitation">Habitation</a></li>
+        <li data-match-route="/Boissons"><a href="/Boissons">Boisson</a></li>
+        <li data-match-route="/Transport"><a href="/Transport">Transport</a></li>
       </ul>
 </nav>
 <div class="container">
 <div class="panel-body">
     <div ng-controller="ModeVieCtrl">
-        
-        <h2>Mode de vie & Santé</h2>
-        <div class="center-form panel">
-         <div class="panel-body">
-        <form method="post" ng-submit="mod()" name="modForm">
-            <div class="form-group has-feedback">
-
-            <div class="form-group has-feedback">
-              <input class="form-control input-lg" type="text" name="poids" ng-model="poids" placeholder="Votre poids" required>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Mode de vie & Santé</h2>
             </div>
-            <div class="form-group has-feedback">
-              <input class="form-control input-lg" type="text" name="taille" ng-model="taille" placeholder="Votre taille" required>
-            </div>
+            <div class="panel-body">
+            <form class="form-horizontal" method="post" ng-submit="mod()" name="modForm">
+                <ul class="list-group">
+                <li class="list-group-item">
+                <div class="form-group">
+                    <label class="col-sm-3">Poids:</label>
+                    <div class="col-sm-9">
+                     <input class="form-control " type="text" name="poids" ng-model="poids" placeholder="Votre poids" required>
+                    </div>
+                </div>
+                </li>
+                <li class="list-group-item">
+                <div class="form-group">
+                    <label class="col-sm-3">Taille</label>
+                    <div class="col-sm-9">
+                        <input class="form-control " type="text" name="taille" ng-model="taille" placeholder="Votre taille" required>
+                    </div>
+                </div>
+                </li>
+                <li class="list-group-item">
+                <div class="select form-group">
+                <label class="col-sm-3">Vous voyagez:</label>
+                    <div class="col-sm-9">
+                    <select id="freqVoyage" name="freqVoyage" ng-model="freqVoyage"><option value="" >Sélectionnez une valeur</option><option value="0" ng-model="freqVoyage">0</option><option value="1" ng-model="freqVoyage">1</option><option value="2" ng-model="freqVoyage">2</option><option value="3" ng-model="freqVoyage">3</option><option value="4" ng-model="freqVoyage">4 ou plus</option></select></p><p class="hide" data-cref="67" data-ctype="=" data-cvalue="1"><label> par an</label>
+                    </div>
+                </div>
+                </li>
+                    <li class="list-group-item">
+                        <div class="form-group">
+                <label class="col-sm-3">Le type de voyage que vous fréquentez: </label>
+                            <div class="col-sm-9">
+                <label ng-repeat="(typeVoyage,enabled) in typeVoyages">
+                <div class="checkbox-inline">
+                    <input type="checkbox" ng-model="typeVoyages[typeVoyage]"> {{typeVoyage}}
+                </div>
+                </label></div>
+                </div>
+                </li>
+                    <li class="list-group-item">
+                <div class="form-group">
+                  <label class="col-sm-3">Votre direction: </label>
+                    <div class="col-sm-9">
+                        <div class="radio">
+                          <label>
+                         <input type="radio" name="optionsRadios" id="pays" ng-name= "direction" value="pays" ng-model="direction" checked>
+                    Dans votre pays.
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="optionsRadios" id="horsPays" ng-name= "direction" value="horsPays" ng-model="direction">
+                    Hors du pays.
+                  </label>
+                </div>
+                </div>
+                </div>
+                </li>
 
-<div class="select">
-<label>Vous voyagez :   </label><select id="freqVoyage" name="freqVoyage" ng-model="freqVoyage"><option value="" >Sélectionnez une valeur</option><option value="0" ng-model="freqVoyage">0</option><option value="1" ng-model="freqVoyage">1</option><option value="2" ng-model="freqVoyage">2</option><option value="3" ng-model="freqVoyage">3</option><option value="4" ng-model="freqVoyage">4 ou plus</option></select></p><p class="hide" data-cref="67" data-ctype="=" data-cvalue="1"><label> par an</label>
-</div>
+                    <li class="list-group-item">
+                <div class="select form-group">
+                <label class="col-sm-3">La durée moyenne du voyage:</label><div class="col-sm-9"> <select id="duree" name="duree" ng-model="duree"><option value="" >Sélectionnez une valeur</option><option value="1" ng-model="duree">moins d'une semaine</option><option value="2" ng-model="job">entre 1 et 2 semaines</option><option value="3" ng-model="duree">plus que deux semaines</option></select></p><p class="hide" data-cref="67" data-ctype="=" data-cvalue="1">
+                </div>
+                </div>
+                </li>
 
-<label>Le type de voyage que vous fréquentez: </label>
-<label ng-repeat="(typeVoyage,enabled) in typeVoyages">
-<div class="check"> 
-    <input type="checkbox" ng-model="typeVoyages[typeVoyage]"> {{typeVoyage}} 
-</div>
-</label>
+                    <li class="list-group-item">
+                        <div class="form-group">
+                <label class="col-sm-3">Le type d'hébergement: </label>
+                            <div class="col-sm-9">
+                <label ng-repeat="(typeHebergement,enabled) in typeHebergements">
+                <div class="checkbox-inline">
+                    <input type="checkbox" ng-model="typeHebergements[typeHebergement]"> {{typeHebergement}}
+                </div>
+                </label></div></div>
+                        </li>
 
-<div class="dire">
-  <label>Votre direction: </label>
-        <div class="radio">
-          <label>
-         <input type="radio" name="optionsRadios" id="pays" ng-name= "direction" value="pays" ng-model="direction" checked>
-    Dans votre pays.
-  </label>
-</div>
-<div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="horsPays" ng-name= "direction" value="horsPays" ng-model="direction">
-    Hors du pays.
-  </label>
-</div>
-</div>
+                    <li class="list-group-item">
+                        <div class="form-group">
+                <label class="col-sm-3">Votre compagnie:</label>
+                            <div class="col-sm-9">
+                <label ng-repeat="(compagnie,enabled) in compagnies">
+                <div class="checkbox-inline">
+                    <input type="checkbox" ng-model="compagnies[compagnie]"> {{compagnie}}
+                </div>
+                </label></div></div>
+                        </li>
 
+                    <li class="list-group-item">
+                <div class="select form-group">
+                <label class="col-sm-3">Type de réservation:</label><div class="col-sm-9"> <select id="typeReservation" name="typeReservation" ng-model="typeReservation"><option value="" >Sélectionnez une valeur</option><option value="internet" ng-model="typeReservation">par internet</option><option value="agence" ng-model="typeReservation">Agences de voyages</option><option value="annonce" ng-model="typeReservation">Annonces publicitaires</option><option value="connaissance" ng-model="typeReservation">Bouche à oreille</option><option value="autres" ng-model="typeReservation">Autres</option></select><p class="hide" data-cref="67" data-ctype="=" data-cvalue="1"></p>
+                </div></div>
+                </li>
 
-<div class="select">
-<label>La durée moyenne du voyage :   </label><select id="duree" name="duree" ng-model="duree"><option value="" >Sélectionnez une valeur</option><option value="1" ng-model="duree">moins d'une semaine</option><option value="2" ng-model="job">entre 1 et 2 semaines</option><option value="3" ng-model="duree">plus que deux semaines</option></select></p><p class="hide" data-cref="67" data-ctype="=" data-cvalue="1">
-</div>
-
-
-<label>Le type d'hébergement: </label>
-<label ng-repeat="(typeHebergement,enabled) in typeHebergements">
-<div class="check"> 
-    <input type="checkbox" ng-model="typeHebergements[typeHebergement]"> {{typeHebergement}} 
-</div>
-</label>
-
-  
-<label>Votre compagnie : </label>
-<label ng-repeat="(compagnie,enabled) in compagnies">
-<div class="check"> 
-    <input type="checkbox" ng-model="compagnies[compagnie]"> {{compagnie}} 
-</div>
-</label>
-
-<div class="select">
-<label>Type de réservation :   </label><select id="typeReservation" name="typeReservation" ng-model="typeReservation"><option value="" >Sélectionnez une valeur</option><option value="internet" ng-model="typeReservation">par internet</option><option value="agence" ng-model="typeReservation">Agences de voyages</option><option value="annonce" ng-model="typeReservation">Annonces publicitaires</option><option value="connaissance" ng-model="typeReservation">Bouche à oreille</option><option value="autres" ng-model="typeReservation">Autres</option></select></p><p class="hide" data-cref="67" data-ctype="=" data-cvalue="1">
-</div>
+                    <li class="list-group-item">
+                <div class="select form-group">
+                <label class="col-sm-3">Budget annuel approximatif:</label><div class="col-sm-9"><select id="budget" name="budget" ng-model="budget"><option value="" >Sélectionnez une valeur</option><option value="1" ng-model="budget">moins 500 €</option><option value="2" ng-model="budget">entre 500€ et 1000€</option><option value="3" ng-model="budget">entre 1000 et 2000 €</option><option value="4" ng-model="budget">plus que 2000€</option><option value="autres" ng-model="typeReservation">Autres</option></select></p><p class="hide" data-cref="67" data-ctype="=" data-cvalue="1">
+                </div></div>
+                </li>
+                    <li class="list-group-item">
+                            <input class="btn btn-lg btn-block btn-primary" type="submit" ng-click="mod()" value="Enregistrer" ng-disabled="modForm.$invalid" schema="UserSchema"/>
+                    </li>
 
 
-<div class="select">
-<label>Budget annuel approximatif :   </label><select id="budget" name="budget" ng-model="budget"><option value="" >Sélectionnez une valeur</option><option value="1" ng-model="budget">moins 500 €</option><option value="2" ng-model="budget">entre 500€ et 1000€</option><option value="3" ng-model="budget">entre 1000 et 2000 €</option><option value="4" ng-model="budget">plus que 2000€</option><option value="autres" ng-model="typeReservation">Autres</option></select></p><p class="hide" data-cref="67" data-ctype="=" data-cvalue="1">
-</div>
-
-            <input class="btn btn-lg btn-block btn-primary" type="submit" ng-click="mod()" value="Enregistrer" ng-disabled="modForm.$invalid" schema="UserSchema"/>
-    
-
-
-           </form>
-          </div>
-   </div>
-    </div>
-   </div>
-</div>
+                           </form>
+                          </div>
+                   </div>
+                    </div>
+                   </div>
+                </div>

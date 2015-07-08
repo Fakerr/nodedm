@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="center-form panel">
+    <div class="center-form panel modified-panel">
       <div class="panel-body">
         <form method="post" ng-submit="signup()" name="signupForm">
           <h2 class="text-center">Inscription</h2>
@@ -25,10 +25,22 @@
 
           <div class="form-group has-feedback" ng-class="{ 'has-error' : signupForm.password.$invalid && signupForm.password.$dirty }">
             <input password-strength class="form-control input-lg" type="password" name="password" ng-model="password" placeholder="Password" required>
-            <span class="ion-key form-control-feedback"></span>
+            <span class="ion-locked form-control-feedback"></span>
             <div class="help-block text-danger" ng-if="signupForm.password.$dirty" ng-messages="signupForm.password.$error">
               <div ng-message="required">Mot de passe est obligatoire.</div>
             </div>
+          </div>
+
+          <div class="form-group">
+              <label class="col-sm-6 " id="modified-label" >Vous êtes:</label>
+              <div class="col-sm-6">
+              <div class="radio">
+                  <input type="radio" value="Annonceur" name="type">Annonceur
+              </div>
+              <div class="radio">
+                  <input type="radio" value="Client" name="type" checked="checked">Client
+              </div>
+              </div>
           </div>
 
           <p class="text-center text-muted"><small>En cliquant sur Inscription, vous acceptez nos  <a href="#">Conditions d'utilisation</a> et indiquez que vous avez lu notre <a href="#">Politique d’utilisation des données</a></small></p>
