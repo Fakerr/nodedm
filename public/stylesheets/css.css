@@ -1,0 +1,19 @@
+.modified-nav{
+    margin-top: -19px !important;
+}
+
+@media (min-width: 768px){
+    .modify {
+        margin: 0 auto !important;
+        display: table !important;
+        table-layout: auto !important;
+        float: none !important;
+        width: 100% !important;
+    }
+    .modify>li {
+        display: table-cell !important;
+        float: none !important;
+        text-align: center !important;
+        font-size: 1.5rem;
+    }
+}
