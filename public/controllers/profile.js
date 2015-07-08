@@ -40,7 +40,8 @@ angular.module('MyApp')
 
 
         $scope.open = function (image) {
-            $scope.pub = image;
+            $scope.pub = image.url;
+            $scope.lien = image.lien;
             $scope.heightDialogImage = 550;
             $scope.widthDialogImage = 800;
             ngDialog.open({

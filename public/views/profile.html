@@ -25,14 +25,14 @@
             <div id="aWrapper">
                 <div class="row">
                     <div class="col-md-4" ng-repeat="annonce in ann track by $index">
-                        <img id="imgA" ng-src="{{annonce}}" width="{{ widthImage }}" height="{{ heightImage }}"
+                        <img id="imgA" ng-src="{{annonce.url}}" width="{{ widthImage }}" height="{{ heightImage }}"
                              ng-click="open(annonce)"/>
                     </div>
                 </div>
             </div>
 
             <script type="text/ng-template" id="firstDialog">
-                <a href="https://www.apple.com/tn/iphone-6/"  target="_blank"  ng-click="donate()">
+                <a href="{{lien}}"  target="_blank"  ng-click="donate()">
                     <img ng-src="{{ pub }}" width="{{ widthDialogImage }}" height="{{ heightDialogImage }}"/>
                 </a>
                 <div class="ngdialog-buttons mt">
