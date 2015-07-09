@@ -25,17 +25,17 @@
     </div>
     <ul class="nav navbar-nav">
         <li data-match-route="/$"><a href="/">Home</a></li>
-        <li data-match-route="/profile"><a href="/profile" ng-if="currentUser.name.localeCompare('admin') != 0 && currentUser">Profile</a></li>
-        <li data-match-route="/form"><a href="/form" ng-if="currentUser.name.localeCompare('admin')!= 0 && currentUser">Formulaires</a></li>
-        <li data-match-route="/search"><a href="/search" ng-if="currentUser.name.localeCompare('admin')== 0 && currentUser">Ajouter</a></li>
+        <li data-match-route="/profile"><a href="/profile" ng-if="currentUser.type.localeCompare('client') == 0 && currentUser">Profile</a></li>
+        <li data-match-route="/form"><a href="/form" ng-if="currentUser.type.localeCompare('client') == 0 && currentUser">Formulaires</a></li>
+        <li data-match-route="/search"><a href="/search" ng-if="currentUser.type.localeCompare('annonceur') == 0 && currentUser">Ajouter</a></li>
     </ul>
-    <ul class="nav navbar-nav pull-right" ng-if="!currentUser">
+    <ul class="nav navbar-nav pull-right" ng-show="!currentUser">
         <li data-match-route="/login"><a href="/login">Connexion</a></li>
         <li class="navbar-text" ng-bind="currentUser.email"></li>
         <li data-match-route="/signup"><a href="/signup">Inscription</a></li>
     </ul>
-    <ul class="nav navbar-nav pull-right" ng-if="currentUser">
-        <li class="navbar-text">{{currentUser.portefeuille + '$'}}</li>
+    <ul class="nav navbar-nav pull-right" ng-show="currentUser">
+        <li class="navbar-text" ng-bind="currentUser.portefeuille + '$'"></li>
         <li class="navbar-text" ng-bind="currentUser.email"></li>
         <li><a href="javascript:void(0)" ng-click="logout()">Déconnexion</a></li>
     </ul>

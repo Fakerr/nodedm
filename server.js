@@ -44,6 +44,24 @@ var imageSchema = new mongoose.Schema({
     url: String
 });
 
+
+var annonceurSchema = new mongoose.Schema({
+    name: {type: String, trim: true, required: true},
+    email: {type: String, unique: true, lowercase: true, trim: true},
+    password: String,
+    type: String,
+    pub: [{
+        type: String,
+        nom_pub: String,
+        categorie: [String],
+        nb_max: Number,
+        montant: Number,
+        url: String,
+        lien: String
+    }]
+});
+
+
 var userSchema = new mongoose.Schema({
     name: {type: String, trim: true, required: true},
     email: {type: String, unique: true, lowercase: true, trim: true},
@@ -98,6 +116,19 @@ userSchema.pre('save', function (next) {
     });
 });
 
+annonceurSchema.pre('save', function (next) {
+    var annonceur = this;
+    if (!annonceur.isModified('password')) return next();
+    bcrypt.genSalt(10, function (err, salt) {
+        if (err) return next(err);
+        bcrypt.hash(annonceur.password, salt, function (err, hash) {
+            if (err) return next(err);
+            annonceur.password = hash;
+            next();
+        });
+    });
+});
+
 imageSchema.pre('save', function (next) {
     var imagePub = this;
     next();
@@ -111,10 +142,19 @@ userSchema.methods.comparePassword = function (candidatePassword, cb) {
     });
 };
 
+annonceurSchema.methods.comparePassword = function (candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    });
+};
+
+
 var User = mongoose.model('User', userSchema);
-//var Show = mongoose.model('Show', showSchema);
+var Annonceur = mongoose.model('Annonceur', annonceurSchema);
 var ImagePub = mongoose.model('ImagePub', imageSchema);
 mongoose.connect('localhost');
+
 var app = express();
 
 
@@ -153,43 +193,66 @@ function createJwtToken(user) {
     return jwt.encode(payload, tokenSecret);
 }
 
+
 app.post('/auth/signup', function (req, res, next) {
-    //if type=client then ....
-    var user = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        type: req.body.type,
-        portefeuille: 0
-    });
-    user.save(function (err) {
-        if (err) return next(err);
-        res.send(200);
+    var type = req.body.type;
+    if (!type.localeCompare("client")) {
+        var user = new User({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password,
+            type: req.body.type,
+            portefeuille: 0
+        });
+        user.save(function (err) {
+            if (err) return next(err);
+            res.sendStatus(200);
+        });
+    } else if (!type.localeCompare("annonceur")) {
+        var ann = new Annonceur({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password,
+            type: req.body.type
+        });
+        ann.save(function (err) {
+            if (err) return next(err);
+            res.sendStatus(200);
+        });
+    }
+});
+
+
+app.post('/auth/login', function (req, res, next) {
+    Annonceur.findOne({email: req.body.email}, function (err, ann) {
+        if (!ann) {
+            User.findOne({email: req.body.email}, function (err, user) {
+                if (!user) return res.send(401, 'Invalid email and/or password');
+                user.comparePassword(req.body.password, function (err, isMatch) {
+                    if (!isMatch) return res.send(401, 'Invalid email and/or password');
+                    var token = createJwtToken(user);
+                    res.send({token: token});
+                });
+            });
+        } else {
+            ann.comparePassword(req.body.password, function (err, isMatch) {
+                if (!isMatch) return res.send(401, 'Invalid email and/or password');
+                var token = createJwtToken(ann);
+                res.send({token: token});
+            });
+        }
     });
 });
 
-app.post('/auth/login', function (req, res, next) {
-    User.findOne({email: req.body.email}, function (err, user) {
-        if (!user) return res.send(401, 'User does not exist');
-        user.comparePassword(req.body.password, function (err, isMatch) {
-            if (!isMatch) return res.send(401, 'Invalid email and/or password');
-            var token = createJwtToken(user);
-            res.send({token: token});
-        });
-    });
-});
 
 app.post('/infor/info', function (req, res, next) {
     console.log('ok');
-    var query = {'email': 'admin@admin'};
+    var query = {'email': req.body.email};
     var age1 = req.body.age;
-    console.log(req.body.sexe);
     var sexe1 = req.body.sexe;
-    console.log(req.body.job);
     var job1 = req.body.job;
     var langage1 = req.body.langues;
 //var dateNaiss1 =req.body.dateNaiss;
-//var portefeuille1 = portefeuille + 5;
     User.findOneAndUpdate(query, {
         "InfoPerso.age": age1,
         "InfoPerso.sexe": sexe1,
@@ -198,8 +261,7 @@ app.post('/infor/info', function (req, res, next) {
         "InfoPerso.statut": req.body.statut,
         "InfoPerso.enfant": req.body.enfant,
         "InfoPerso.nivEtude": req.body.nivEtude,
-        "InfoPerso.salaire": req.body.salaire,
-        portefeuille: 5
+        "InfoPerso.salaire": req.body.salaire
     }, {upsert: true}, function (err, doc) {
         if (err) return res.send(500, {error: err});
         return res.send("succesfully saved");
@@ -208,13 +270,10 @@ app.post('/infor/info', function (req, res, next) {
 
 
 app.post('/mode/mod', function (req, res, next) {
-    console.log('ok');
-    var query = {'email': 'test@69'};
+    var query = {'email': 'yo@yo'};
     var poids = req.body.poids;
-    console.log(req.body.poids);
     var taille1 = req.body.taille;
     var typeVoyages1 = req.body.typeVoyages;
-    console.log = (typeVoyages1);
     User.findOneAndUpdate(query, {
         "ModeVie.poids": req.body.poids,
         "ModeVie.taille": req.body.taille,
@@ -223,10 +282,9 @@ app.post('/mode/mod', function (req, res, next) {
         "ModeVie.direction": req.body.direction,
         "ModeVie.duree": req.body.duree,
         "ModeVie.typeHebergement": req.body.typeHebergements,
-        "ModeVie.compagnie": req.body.compagnie,
+        "ModeVie.compagnie": req.body.Compagnie,
         "ModeVie.typeReservation": req.body.typeReservation,
-        "ModeVie.Budget": req.body.Budget,
-        portefeuille: 10
+        "ModeVie.Budget": req.body.budget
     }, {upsert: true}, function (err, doc) {
         if (err) return res.send(500, {error: err});
         return res.send("succesfully saved");
