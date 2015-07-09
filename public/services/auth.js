@@ -103,7 +103,10 @@ angular.module('MyApp')
                             type: 'material',
                             duration: 3
                         });
-                        $window.location.href = '/profile';
+                        if(!$rootScope.currentUser.type.localeCompare("client"))
+                            $window.location.href = '/profile';
+                        else if(!$rootScope.currentUser.type.localeCompare("annonceur"))
+                            $window.location.href = '/search';
                     })
                     .error(function () {
                         delete $window.localStorage.token;

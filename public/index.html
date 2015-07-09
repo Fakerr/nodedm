@@ -35,7 +35,8 @@
         <li data-match-route="/signup"><a href="/signup">Inscription</a></li>
     </ul>
     <ul class="nav navbar-nav pull-right" ng-show="currentUser">
-        <li class="navbar-text" ng-bind="currentUser.portefeuille + '$'"></li>
+        <li class="navbar-text" ng-if="currentUser.type.localeCompare('client') == 0"
+            ng-bind="currentUser.portefeuille + '$'"></li>
         <li class="navbar-text" ng-bind="currentUser.email"></li>
         <li><a href="javascript:void(0)" ng-click="logout()">Déconnexion</a></li>
     </ul>
