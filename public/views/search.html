@@ -1,58 +1,121 @@
-<div class="panel-body">
-    <div ng-controller="SearchCtrl">
-        <div class="center-form panel">
-            <div class="panel-body">
-                <form method="post" ng-submit="imag()" name="searchForm">
+<div class="container">
+    <div class="panel-body">
+        <div ng-controller="InfoCtrl">
 
-                    <label class="control-label">Titre de l'annonce publicitaire</label>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Ajouter une annonce</h2>
+                </div>
+                <div class="panel-body">
 
-                    <div class="form-group has-feedback">
-                        <input class="form-control input-lg" type="text" name="name" ng-model="name"
-                               placeholder="Saisissez le titre de l'annonce publicitaire" required>
-                    </div>
+                    <form class="form-horizontal" method="post" ng-submit="imag()" name="searchForm">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <label class="col-sm-3">Titre de l'annonce publicitaire</label>
 
-                    <label class="control-label">Prix de l'annonce publicitaire</label>
+                                    <div class=" col-sm-9">
+                                        <input class="form-control" type="text" name="name" ng-model="name"
+                                               placeholder="Saisissez le titre de l'annonce publicitaire" required>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <label class="col-sm-3">Prix de l'annonce publicitaire</label>
 
-                    <div class="form-group has-feedback">
-                        <input class="form-control input-lg" type="text" name="prix" ng-model="prix"
-                               placeholder="Saisissez le prix de l'annonce publicitaire/client" required>
-                    </div>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" name="prix" ng-model="prix"
+                                               placeholder="Saisissez le prix de l'annonce publicitaire/client"
+                                               required>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <label class="col-sm-3">Les cibles de l'annonce</label>
 
+                                    <div class="col-sm-3">
+                                        <select ng-model="temporary.name">
+                                            <option ng-repeat="cibbb in cibleAn" value="{{cibbb.name}}">{{cibbb.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div ng-repeat="cibbb in cibleAn">
+                                        <div ng-show="cibbb.name == temporary.name" class="col-sm-6">
+                                            <div ng-repeat="theoption in cibbb.array">
+                                                <div class="checkbox">
+                                                    <input type="checkbox"> {{theoption}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
 
-                    <label class="control-label">Les cibles de l'annonce</label>
-                    <label ng-repeat="(cible,enabled) in cibles">
-                        <div class="check">
-                            <input type="checkbox" ng-model="cibles[cible]"> {{cible}}
-                        </div>
-                    </label>
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <label class="col-sm-3">Marque du produit de l'annonce publicitaire</label>
 
-                    <label class="control-label">Marque du produit de l'annonce publicitaire</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" name="marque" ng-model="marque"
+                                               placeholder="Saisissez la marque du prduit de l'annonce publicitaire"
+                                               required>
+                                    </div>
+                                </div>
+                            </li>
 
-                    <div class="form-group has-feedback">
-                        <input class="form-control input-lg" type="text" name="marque" ng-model="marque"
-                               placeholder="Saisissez la marque du prduit de l'annonce publicitaire" required>
-                    </div>
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <label class="col-sm-3">choisissez le type de l'annonce</label>
 
+                                    <div class="col-sm-9">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="type" value="image" ng-model="selection"
+                                                       required>
+                                                Image
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="type" value="video" ng-model="selection">
+                                                Video
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-show="selection == 'image'">
+                                    <label class="col-sm-3">Ajouter une image:</label>
 
-                    <div class="col-md-4 col-xs-8">
-                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                            <img class="profile-pic thumbnail" style="width: 200px; height: 150px;"/>
+                                    <div class="col-sm-9">
+                                        <input type="file" name="file" accept="image/*" image="image"
+                                               onchange="angular.element(this).scope().fileNameChanged(this)" required/>
+                                    </div>
+                                </div>
 
-                            <div>
-            <span class="btn btn-default btn-file">
-            <input type="file"  name="file" accept="image/*" image="image"
-                   onchange="angular.element(this).scope().fileNameChanged(this)"/>
-            <img ng-show="img" ng-src="{{img.url}}" type="{{img.file.type}}"/>
-            </span>
-                            </div>
-                            <input class="btn btn-lg btn-block btn-primary" type="submit" ng-click="imag()"
-                                   value="Enregistrer" ng-disabled="searchForm.$invalid" schema="imageSchema"/>
+                                <div class="form-group" ng-show="selection == 'image'">
+                                    <label class="col-sm-3">Ajouter l'URL de l'annonce:</label>
 
-                            </div>
-                        </div>
+                                    <div class="col-sm-9">
+                                        <input type="url" class="form-control" name="url" required>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-show="selection == 'video'">
+                                    <label class="col-sm-3">Ajouter l'URL de la video:</label>
 
-                </form>
-
+                                    <div class="col-sm-9">
+                                        <input type="url" class="form-control" name="urlVideo" required>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <input class="btn btn-lg btn-block btn-primary" type="submit" ng-click="imag()"
+                                       value="Enregistrer" ng-disabled="searchForm.$invalid" schema="imageSchema"/>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
