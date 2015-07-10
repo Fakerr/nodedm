@@ -435,14 +435,38 @@ app.post('/image/imag', function (req, res, next) {
         categorie: req.body.categorie,
         nb_max: req.body.nb_max,
         montant: req.body.montant,
-        url: req.body.url,
-        lien: 'images/' + req.body.lien
+        marque: req.body.marque,
+        lienExterne: req.body.lienExterne,
+        url: 'images/' + req.body.url
     }
     Annonceur.findOneAndUpdate(query, { $push: {'pub': pub1}}, {upsert: true}, function (err, doc) {
         if (err) return res.send(500, {error: err});
-        return res.send("succesfully saved");
+        sendPubForUsers(pub1.categorie,pub1.type,pub1.lienExterne,pub1.url,res);
     });
 });
+
+function sendPubForUsers(categorie,type,lienPub,urlPub,res){
+    if(!type.localeCompare('image')){
+        var image = {
+            url: urlPub,
+            lien: lienPub,
+            check: false
+        }
+        User.findOneAndUpdate({email: "walid@walid"},{ $push: {'annonces': image}}, function(err,doc){
+            if (err) return res.send(500, {error: err});
+            return res.send("successfuly saved");
+        })
+    }else if(!type.localeCompare('video')){
+        var video = {
+            url: lienPub,
+            check: false
+        }
+        User.findOneAndUpdate({email: "walid@walid"},{ $push: {'annoncesVideos': video}}, function(err,doc){
+            if (err) return res.send(500, {error: err});
+            return res.send("successfuly saved");
+        })
+    }
+}
 
 
 app.get('*', function (req, res) {
