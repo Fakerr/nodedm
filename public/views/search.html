@@ -1,13 +1,13 @@
 <div class="container">
     <div class="panel-body">
-        <div>
+        <div ng-controller="SearchCtrl">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="panel-title">Ajouter une annonce</h2>
                 </div>
                 <div class="panel-body">
 
-                    <form class="form-horizontal" name="searchForm">
+                    <form class="form-horizontal" name="searchForm" id="myForm">
                         <ul class="list-group">
                             <li class="list-group-item">
                                 <div class="form-group">
@@ -44,7 +44,9 @@
                                         <div ng-if="cibbb.name == temporary.name" class="col-sm-6">
                                             <div ng-repeat="theoption in cibbb.array">
                                                 <div class="radio">
-                                                    <input type="radio" name="{{cibbb.name}}" value="{{theoption}}" ng-model=""> {{theoption}}
+
+                                                    <input type="radio" name="cat" value="{{theoption}}" ng-model="select.cible"> {{theoption}}
+
                                                 </div>
                                             </div>
                                         </div>
@@ -97,14 +99,14 @@
                                     <label class="col-sm-3">Ajouter l'URL de l'annonce:</label>
 
                                     <div class="col-sm-9">
-                                        <input type="url" class="form-control" name="url" required>
+                                        <input type="url" class="form-control" name="url" ng-model="url" required>
                                     </div>
                                 </div>
                                 <div class="form-group" ng-show="selection == 'video'">
                                     <label class="col-sm-3">Ajouter l'URL de la video:</label>
 
                                     <div class="col-sm-9">
-                                        <input type="url" class="form-control" name="urlVideo" required>
+                                        <input type="url" class="form-control" name="url" ng-model="url" required>
                                     </div>
                                 </div>
                             </li>

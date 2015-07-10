@@ -1,19 +1,14 @@
 angular.module('MyApp')
     .controller('SearchCtrl', ['$scope', 'image','$rootScope', function ($scope, image,$rootScope) {
 
-        $scope.cibles = {
-            Transport: false,
-            Cosmetique: false,
-            Habitation: false,
-            Sports: false,
-            Mode: false,
-            Boisson: false
-        };
+        $scope.img = '';
+        $scope.select = {cible: ''};  /*fix undefined cible problem(coz ngRepeat scope)*/
 
         $scope.lacible = "";
 
         $scope.fileNameChanged = function (element) {
-            $scope.img = element.files[0];
+            $scope.imagePub = element.files[0];
+            $scope.img = $scope.imagePub.name;
         };
 
         $scope.imag = function () {
@@ -21,15 +16,18 @@ angular.module('MyApp')
             console.log("oooooooooooo  "+$scope.name);
             image.imag({
                 email: $rootScope.currentUser.email,
-                type: "video",
+                type: $scope.selection,
                 nom_pub: $scope.name,
-                categorie: "iphone",
+                categorie: $scope.select.cible,
                 nb_max: 15,
                 montant: $scope.prix,
-                url: "https://www.asus.com/fr/",
-                lien: $scope.img.name
+                marque: $scope.marque,
+                lienExterne: $scope.url.replace("?v=","/"),
+                url: $scope.img
             });
+            $scope.img = '';
         };
+
         $scope.pageClass = 'fadeZoom';
         $scope.cibleAn = [
             {"name":"Maison","array":["cuisine","salleDeBain","meuble","accessoire","jardin","produit"]},
