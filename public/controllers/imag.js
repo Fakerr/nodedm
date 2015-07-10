@@ -27,7 +27,6 @@ angular.module('MyApp')
             });
         };
         $scope.pageClass = 'fadeZoom';
-        $scope.cibleAn2 = [];
         $scope.cibleAn = [
             {"name":"Maison","array":["cuisine","salleDeBain","meuble","accessoire","jardin","produit"]},
             {"name":"Cosmetique","array":["produitAllergie","maquillage","antiRide","shampooing","parfun","cremeSoin","centreEsthetique"]},
