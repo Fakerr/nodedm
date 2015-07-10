@@ -10,11 +10,15 @@ angular.module('MyApp')
             Boisson: false
         };
 
+        $scope.lacible = "";
+
         $scope.fileNameChanged = function (element) {
             $scope.img = element.files[0];
         };
 
         $scope.imag = function () {
+            console.log("oooooooooooo  "+$scope.lacible);
+            console.log("oooooooooooo  "+$scope.name);
             image.imag({
                 email: $rootScope.currentUser.email,
                 type: "video",

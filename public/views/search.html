@@ -41,10 +41,10 @@
                                         </select>
                                     </div>
                                     <div ng-repeat="cibbb in cibleAn">
-                                        <div ng-show="cibbb.name == temporary.name" class="col-sm-6">
+                                        <div ng-if="cibbb.name == temporary.name" class="col-sm-6">
                                             <div ng-repeat="theoption in cibbb.array">
-                                                <div class="checkbox">
-                                                    <input type="checkbox"> {{theoption}}
+                                                <div class="radio">
+                                                    <input type="radio" name="{{cibbb.name}}" value="{{theoption}}" ng-model=""> {{theoption}}
                                                 </div>
                                             </div>
                                         </div>
