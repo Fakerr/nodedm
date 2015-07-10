@@ -50,15 +50,7 @@ var annonceurSchema = new mongoose.Schema({
     email: {type: String, unique: true, lowercase: true, trim: true},
     password: String,
     type: String,
-    pub: [{
-        type: String,
-        nom_pub: String,
-        categorie: [String],
-        nb_max: Number,
-        montant: Number,
-        url: String,
-        lien: String
-    }]
+    pub: Object
 });
 
 
@@ -434,61 +426,21 @@ app.post('/api/unsubscribe', ensureAuthenticated, function (req, res, next) {
     });
 });
 
-//var obj =  {'InfoPerso.age' : '23', 'ModeVie.freqVoyage' : '1' };
-/*var oMap = {};
- oMap.map = function () {
- console.log('dfv');
- this.users.forEach(function(users){
- if(User.InfoPerso.age == '23'){
- console.log('model');
- emit( User.email);
- }
- });
- };
- oMap.map();
-
- oMap.reduce = function (k, vals) {
- console.log('ldfn');
-
- var User = [];
- for(var i=0;i<values.length;i++)
- User.push(values[i]);
- return JSON.stringify(User);
- }
-
- oMap.query  = {user:'username'};
- oMap.scope = {person:'user1'};
- User.mapReduce(oMap,function (err, data, stats) {
- console.log('map reduce took %d ms', stats.processtime)
- if(err) callback(err);
- else callback(null,data);
- });
-
- /*User.mapReduce(obj, function (err, model, stats) {
- console.log('map reduce took %d ms', stats.processtime)
- model.find().where('value').gt(10).exec(function (err, docs) {
- console.log(docs);
- });
- });*/
-
 
 app.post('/image/imag', function (req, res, next) {
-    var imagePub = new ImagePub({
-        name: req.body.name,
-        prix: req.body.prix,
-        marque: req.body.marque,
-        cible: req.body.cibles,
-        url: 'images/' + req.body.image
-    });
-
-    console.log('hiii');
-    imagePub.save(function (err) {
-        if (err) return next(err);
-        var query1 = {'name': req.body.name};
-        ImagePub.findOneAndUpdate(query1, {"cible": req.body.cibles}, {upsert: true}, function (err, doc) {
-            if (err) return res.send(500, {error: err});
-            return res.sendStatus(200);
-        });
+    query = {'email': req.body.email};
+    var pub1 = {
+        type: req.body.type,
+        nom_pub: req.body.nom_pub,
+        categorie: req.body.categorie,
+        nb_max: req.body.nb_max,
+        montant: req.body.montant,
+        url: req.body.url,
+        lien: 'images/' + req.body.lien
+    }
+    Annonceur.findOneAndUpdate(query, { $push: {'pub': pub1}}, {upsert: true}, function (err, doc) {
+        if (err) return res.send(500, {error: err});
+        return res.send("succesfully saved");
     });
 });
 
