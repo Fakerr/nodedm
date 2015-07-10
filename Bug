@@ -1,0 +1,15 @@
+
+** bug to be fixed:
+   required on radio input.                                              Fixed
+   redirection when someone try to access page without login.
+   form submit envolve in two post request !!                            Fixed
+   fix authentification system(user/annonceur)                           Fixed
+   upload image base64.
+   reset form.
+   $ display bug.
+   Add decrementation for max consommation for ads.
+   youtube video adding countTime/Vues systemes for watched vids.
+   youtube rating systeme.
+   admin part(manage acount+reporting).
+   transfert bancaire + gift (QR code) + bond d'achat.
+   Users historic.
