@@ -4,13 +4,13 @@ angular.module('MyApp')
     if (token) {
       var payload = JSON.parse($window.atob(token.split('.')[1]));
       //takes a JSON-formatted string and converts it to a JavaScript object
-      //window.atob: encoder 
+      //window.atob: encoder
       $rootScope.currentimagepub = payload.imagePub;
     }
 
       return {
-      imag: function(imagePub) {
-        return $http.post('/image/imag', imagePub)
+      imag: function(annonceur) {
+        return $http.post('/image/imag', annonceur)
           .success(function() {
             $location.path('/search');
             $alert({

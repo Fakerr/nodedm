@@ -1,5 +1,6 @@
 angular.module('MyApp')
-    .controller('SearchCtrl', ['$scope', 'image', function ($scope, image) {
+    .controller('SearchCtrl', ['$scope', 'image','$rootScope', function ($scope, image,$rootScope) {
+
         $scope.cibles = {
             Transport: false,
             Cosmetique: false,
@@ -14,13 +15,15 @@ angular.module('MyApp')
         };
 
         $scope.imag = function () {
-            //console.log('123');
             image.imag({
-                name: $scope.name,
-                prix: $scope.prix,
-                marque: $scope.marque,
-                cibles: $scope.cibles,
-                image: $scope.img.name
+                email: $rootScope.currentUser.email,
+                type: "video",
+                nom_pub: $scope.name,
+                categorie: "iphone",
+                nb_max: 15,
+                montant: $scope.prix,
+                url: "https://www.asus.com/fr/",
+                lien: $scope.img.name
             });
         };
         $scope.pageClass = 'fadeZoom'
