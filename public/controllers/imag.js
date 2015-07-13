@@ -18,6 +18,7 @@ angular.module('MyApp')
                 nb_max: 15,
                 montant: $scope.prix,
                 marque: $scope.marque,
+                budget: $scope.budget,
                 lienExterne: $scope.url.replace("?v=","/"),
                 url: $scope.img
             });
