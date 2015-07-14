@@ -39,7 +39,9 @@
 
             <script type="text/ng-template" id="secondDialog">
                 <img id="imgWS" src="images/bg.png" width="1170" height="550" ng-click="player.playVideo()"/>
-                <div class="timer"><p>Hello</p></div>
+                <div class="timer" ng-if="show">
+                    <timer countdown="duration" max-time-unit="'minute'" interval="1000">{{mminutes}} : {{sseconds}} </timer>
+                </div>
                 <youtube-video video-url="pubVideo" player-width="widthDialogVideo" player-height="heightDialogVideo"
                          player="player" player-vars="playerVars" ng-click="donate()"></youtube-video>
                 <div class="ngdialog-buttons mt">

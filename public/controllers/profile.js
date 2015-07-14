@@ -1,6 +1,5 @@
 /* Discount should be used with configurable  variable */
 
-
 angular.module('MyApp')
     .controller('ProfileCtrl', ['$scope', '$http', '$rootScope','ngDialog','$window', function ($scope, $http, $rootScope,ngDialog,$alert,$window) {
 
@@ -14,7 +13,6 @@ angular.module('MyApp')
             controls: 0
         };
 
-
         $http.get('/api/user', {params: {id: $rootScope.currentUser._id}})
             .success(function (data) {
                 $scope.user = data;
@@ -25,11 +23,10 @@ angular.module('MyApp')
                 console.log(err, 'error user !!');
             });
 
-
-        $scope.$on('youtube.player.ready', function ($event, player) {
+        $scope.$on('youtube.player.playing', function ($event, player) {
             $scope.duration = player.getDuration();
+            $scope.show = true;
         });
-
 
         $scope.$on('youtube.player.ended', function ($event, player) {
             // modif boolean check and update $scope.user
@@ -51,7 +48,6 @@ angular.module('MyApp')
             //player.playVideo();
         });
 
-
         $scope.open = function (image) {
             $scope.pub = image.url;
             $scope.lien = image.lien;
@@ -66,6 +62,8 @@ angular.module('MyApp')
 
         $scope.openVideo = function (video) {
             $scope.pubVideo = video;
+            $scope.show = false;
+           // $scope.duration = 0;
             $scope.heightDialogVideo = 550;
             $scope.widthDialogVideo = 1170;
             ngDialog.open({
@@ -105,7 +103,6 @@ angular.module('MyApp')
             }
         };
 
-        
         function updatePub(idPub){
             $http.get('/api/annonceurs/pub', {params: {id_pub: idPub}}).success(function(ann){
                 var annonceur = ann;
