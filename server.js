@@ -261,9 +261,7 @@ app.post('/infor/info', function (req, res, next) {
 
 
 app.post('/mode/mod', function (req, res, next) {
-    var query = {'email': 'yo@yo'};
-    var poids = req.body.poids;
-    var taille1 = req.body.taille;
+    var query = {'email': req.body.email};
     var typeVoyages1 = req.body.typeVoyages;
     User.findOneAndUpdate(query, {
         "ModeVie.poids": req.body.poids,
@@ -444,7 +442,6 @@ app.post('/image/imag', function (req, res, next) {
         nom_pub: req.body.nom_pub,
         categorie: req.body.categorie,
         nb_max: req.body.nb_max,
-        montant: req.body.montant,
         marque: req.body.marque,
         budget:req.body.budget,
         lienExterne: req.body.lienExterne,
@@ -464,7 +461,7 @@ function sendPubForUsers(id,categorie,type,lienPub,urlPub,res){
             lien: lienPub,
             check: false
         }
-        User.findOneAndUpdate({email: "walid@walid"},{ $push: {'annonces': image}}, function(err,doc){
+        User.findOneAndUpdate({email: "ali@ali"},{ $push: {'annonces': image}}, function(err,doc){
             if (err) return res.send(500, {error: err});
             return res.send("successfuly saved");
         })
@@ -474,7 +471,7 @@ function sendPubForUsers(id,categorie,type,lienPub,urlPub,res){
             url: lienPub,
             check: false
         }
-        User.findOneAndUpdate({email: "walid@walid"},{ $push: {'annoncesVideos': video}}, function(err,doc){
+        User.findOneAndUpdate({email: "ali@ali"},{ $push: {'annoncesVideos': video}}, function(err,doc){
             if (err) return res.send(500, {error: err});
             return res.send("successfuly saved");
         })

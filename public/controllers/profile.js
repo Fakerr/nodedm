@@ -1,3 +1,6 @@
+/* Discount should be used with configurable  variable */
+
+
 angular.module('MyApp')
     .controller('ProfileCtrl', ['$scope', '$http', '$rootScope','ngDialog','$window', function ($scope, $http, $rootScope,ngDialog,$alert,$window) {
 
@@ -21,6 +24,11 @@ angular.module('MyApp')
             }).error(function (err) {
                 console.log(err, 'error user !!');
             });
+
+
+        $scope.$on('youtube.player.ready', function ($event, player) {
+            $scope.duration = player.getDuration();
+        });
 
 
         $scope.$on('youtube.player.ended', function ($event, player) {
