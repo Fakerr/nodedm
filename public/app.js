@@ -1,4 +1,4 @@
-angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mgcrea.ngStrap','ngDialog','youtube-embed'])
+angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mgcrea.ngStrap','ngDialog','timer','youtube-embed'])
     .config(function ($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
 

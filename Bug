@@ -1,0 +1,22 @@
+
+** bug to be fixed:
+
+   walid todo list
+   required on radio input.                                              Fixed
+   form submit envolve in two post request !!                            Fixed
+   fix authentification system(user/annonceur)                           Fixed
+   reset form annonces                                                   Fixed
+   Hide user form already fulfil.(fifo).
+   $ display bug.
+   Add decrementation after consommation of ads.                         En cours (Fixe parametre of discount)
+   youtube video adding countTime/Views systemes for vids.
+   youtube rating systeme.
+   admin part(manage acount+reporting).
+   transfert bancaire + gift (QR code) + bond d'achat.
+   Users historic.
+
+
+   belha todo list:
+   upload image base64.
+   redirection when someone try to access page without login.
+   Page profile sans pub à amélioré.

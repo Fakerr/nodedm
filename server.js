@@ -2,7 +2,6 @@ var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
-
 var crypto = require('crypto');
 var bcrypt = require('bcryptjs');
 var mongoose = require('mongoose');
@@ -25,8 +24,8 @@ var spawn = require('child_process').spawn;
 var _ = require('underscore');
 var util = require('util');
 var fakery = require('mongoose-fakery');
-
 var session = require('express-session');
+var shortid = require('shortid');
 
 
 var videoPub = new mongoose.Schema({
@@ -262,9 +261,7 @@ app.post('/infor/info', function (req, res, next) {
 
 
 app.post('/mode/mod', function (req, res, next) {
-    var query = {'email': 'yo@yo'};
-    var poids = req.body.poids;
-    var taille1 = req.body.taille;
+    var query = {'email': req.body.email};
     var typeVoyages1 = req.body.typeVoyages;
     User.findOneAndUpdate(query, {
         "ModeVie.poids": req.body.poids,
@@ -370,19 +367,29 @@ app.get('/api/users/:id', function (req, res, next) {
 
 
 app.put('/api/users/:id', function (req, res, next) {
-    /*if (req.query.url) {
-     console.log(req.query.url);
-     User.update({_id: req.params.id,'annoncesVideos.url': req.query.url}, {'$set': {
-     'annoncesVideos.$.check': true}},function(err){
-     return next(err);
-     })
-     }else{*/
-    console.log('hello');
     User.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
         if (err) return next(err);
         res.json(post);
     });
-    //}
+});
+
+
+app.get('/api/annonceurs/pub',function(req,res,next) {
+    if (!req.query.id_pub) {
+        return res.send(400, {message: 'Id pub parameter is required.'});
+    }
+    Annonceur.findOne({ pub: { $elemMatch: { id: req.query.id_pub } } }, function (err, annonceur) {
+        if (err) return next(err);
+        res.send(annonceur);
+    });
+});
+
+
+app.put('/api/annonceurs/:id', function (req, res, next) {
+    Annonceur.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
+        if (err) return next(err);
+        res.sendStatus(200);
+    });
 });
 
 
@@ -430,38 +437,41 @@ app.post('/api/unsubscribe', ensureAuthenticated, function (req, res, next) {
 app.post('/image/imag', function (req, res, next) {
     query = {'email': req.body.email};
     var pub1 = {
+        id: shortid.generate(),
         type: req.body.type,
         nom_pub: req.body.nom_pub,
         categorie: req.body.categorie,
         nb_max: req.body.nb_max,
-        montant: req.body.montant,
         marque: req.body.marque,
+        budget:req.body.budget,
         lienExterne: req.body.lienExterne,
         url: 'images/' + req.body.url
     }
     Annonceur.findOneAndUpdate(query, { $push: {'pub': pub1}}, {upsert: true}, function (err, doc) {
         if (err) return res.send(500, {error: err});
-        sendPubForUsers(pub1.categorie,pub1.type,pub1.lienExterne,pub1.url,res);
+        sendPubForUsers(pub1.id,pub1.categorie,pub1.type,pub1.lienExterne,pub1.url,res);
     });
 });
 
-function sendPubForUsers(categorie,type,lienPub,urlPub,res){
+function sendPubForUsers(id,categorie,type,lienPub,urlPub,res){
     if(!type.localeCompare('image')){
         var image = {
+            id: id,
             url: urlPub,
             lien: lienPub,
             check: false
         }
-        User.findOneAndUpdate({email: "walid@walid"},{ $push: {'annonces': image}}, function(err,doc){
+        User.findOneAndUpdate({email: "ali@ali"},{ $push: {'annonces': image}}, function(err,doc){
             if (err) return res.send(500, {error: err});
             return res.send("successfuly saved");
         })
     }else if(!type.localeCompare('video')){
         var video = {
+            id: id,
             url: lienPub,
             check: false
         }
-        User.findOneAndUpdate({email: "walid@walid"},{ $push: {'annoncesVideos': video}}, function(err,doc){
+        User.findOneAndUpdate({email: "ali@ali"},{ $push: {'annoncesVideos': video}}, function(err,doc){
             if (err) return res.send(500, {error: err});
             return res.send("successfuly saved");
         })
