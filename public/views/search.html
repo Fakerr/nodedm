@@ -91,9 +91,11 @@
                                 <div class="form-group" ng-show="selection == 'image'">
                                     <label class="col-sm-3">Ajouter une image:</label>
 
-                                    <div class="col-sm-9">
-                                        <input type="file" name="file" accept="image/*" image="image"
-                                               onchange="angular.element(this).scope().fileNameChanged(this)" required/>
+                                    <div class="col-sm-4">
+                                            <input  class="form-control"  type="file" ngf-select ng-model="files">
+                                    </div>
+                                    <div col-sm-5>
+                                            <img class="img-thumbnail img-resized" ngf-src="files[0]" ngf-default-src="preview.jpg" ngf-accept="'image/*'">
                                     </div>
                                 </div>
 

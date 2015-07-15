@@ -1,5 +1,5 @@
 angular.module('MyApp')
-    .controller('SearchCtrl', ['$scope', 'image', '$rootScope', function ($scope, image, $rootScope) {
+    .controller('SearchCtrl', ['$scope', 'image', '$rootScope','Upload', function ($scope, image, $rootScope, Upload) {
 
         $scope.img = '';
         $scope.select = {cible: ''};
@@ -7,14 +7,28 @@ angular.module('MyApp')
 
         $scope.lacible = "";
 
-        $scope.fileNameChanged = function (element) {
-            $scope.imagePub = element.files[0];
-            $scope.img = $scope.imagePub.name;
+        $scope.upload = function (files) {
+            if (files && files.length) {
+                    var file = files[0];
+                    $scope.img = file.name ;
+                    console.log($scope.img);
+                    Upload.upload({
+                        url: 'upload/picture',
+                        fields: {'name': "aaa.jpg"},
+                        file: file
+                    }).progress(function (evt) {
+                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                        console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                    }).success(function (data, status, headers, config) {
+                        console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                    }).error(function (data, status, headers, config) {
+                        console.log('error status: ' + status);
+                    })
+            }
         };
 
         $scope.imag = function () {
-            console.log("oooooooooooo  "+$scope.lacible);
-            console.log("oooooooooooo  "+$scope.name);
+            $scope.upload($scope.files);
             image.imag({
                 email: $rootScope.currentUser.email,
                 type: $scope.selection,
