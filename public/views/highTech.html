@@ -1,7 +1,11 @@
 <nav class="navbar navbar-inverse modified-nav ">
     <ul class="nav navbar-nav modify">
-        <li data-match-route="/form"><a href="/form">Information personnelles</a></li>
-        <li data-match-route="/Mode-de-vie"><a href="/Mode-de-vie">Mode de vie et santé</a></li>
+        <li data-match-route="/form" ng-if="!infoPerso">
+            <a href="/form">Information personnelles</a>
+        </li>
+        <li data-match-route="/Mode-de-vie" ng-if="!ModeVie">
+            <a href="/Mode-de-vie">Mode de vie et santé</a>
+        </li>
         <li data-match-route="/High-Tech" class="act"><a href="/High-Tech">High Tech</a></li>
         <li data-match-route="/Internet et opérateurs téléphoniques"><a
                 href="/Internet et opérateurs téléphoniques">Internet & opérateurs</a></li>
@@ -11,7 +15,7 @@
         <li data-match-route="/Habitation"><a href="/Habitation">Habitation</a></li>
         <li data-match-route="/Boissons"><a href="/Boissons">Boisson</a></li>
         <li data-match-route="/Transport"><a href="/Transport">Transport</a></li>
-      </ul>
+    </ul>
 </nav>
 <div class="container">
     <div class="panel-body">
@@ -26,13 +30,14 @@
                         <ul class="list-group">
                             <li class="list-group-item">
                                 <div class="form-group">
-                                    <input class="btn btn-lg btn-block btn-primary" type="submit" ng-click="info()" value="Enregistrer" ng-disabled="infoForm.$invalid" schema="UserSchema"/>
+                                    <input class="btn btn-lg btn-block btn-primary" type="submit" ng-click="info()"
+                                           value="Enregistrer" ng-disabled="infoForm.$invalid" schema="UserSchema"/>
                                 </div>
                             </li>
-                    </ul>
-               </form>
-              </div>
+                        </ul>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-   </div>
 </div>

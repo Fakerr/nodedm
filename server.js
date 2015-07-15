@@ -68,6 +68,7 @@ var userSchema = new mongoose.Schema({
     },
     portefeuille: Number,
     InfoPerso: {
+        fulfil : Boolean,
         age: String,
         sexe: String,
         job: String,
@@ -78,6 +79,7 @@ var userSchema = new mongoose.Schema({
         salaire: Number
     },
     ModeVie: {
+        fulfil : Boolean,
         poids: Number,
         taille: Number,
         freqVoyage: Number,
@@ -193,7 +195,9 @@ app.post('/auth/signup', function (req, res, next) {
             email: req.body.email,
             password: req.body.password,
             type: req.body.type,
-            portefeuille: 0
+            portefeuille: 0,
+            "InfoPerso.fulfil": false,
+            "ModeVie.fulfil": false
         });
         user.save(function (err) {
             if (err) return next(err);
@@ -243,8 +247,8 @@ app.post('/infor/info', function (req, res, next) {
     var sexe1 = req.body.sexe;
     var job1 = req.body.job;
     var langage1 = req.body.langues;
-//var dateNaiss1 =req.body.dateNaiss;
     User.findOneAndUpdate(query, {
+        "InfoPerso.fulfil": true,
         "InfoPerso.age": age1,
         "InfoPerso.sexe": sexe1,
         "InfoPerso.job": job1,
@@ -264,6 +268,7 @@ app.post('/mode/mod', function (req, res, next) {
     var query = {'email': req.body.email};
     var typeVoyages1 = req.body.typeVoyages;
     User.findOneAndUpdate(query, {
+        "ModeVie.fulfil": true,
         "ModeVie.poids": req.body.poids,
         "ModeVie.taille": req.body.taille,
         "ModeVie.freqVoyage": req.body.freqVoyage,
@@ -468,7 +473,7 @@ function sendPubForUsers(id,categorie,type,lienPub,urlPub,res){
     }else if(!type.localeCompare('video')){
         var video = {
             id: id,
-            url: lienPub,
+            url: lienPub.replace("?v=", "/"),
             check: false
         }
         User.findOneAndUpdate({email: "ali@ali"},{ $push: {'annoncesVideos': video}}, function(err,doc){

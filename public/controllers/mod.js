@@ -1,5 +1,8 @@
 angular.module('MyApp')
-    .controller('ModeVieCtrl', ['$scope', 'mode','$rootScope', function ($scope, mode,$rootScope) {
+    .controller('ModeVieCtrl', ['$scope', 'mode','$rootScope','$location', function ($scope, mode,$rootScope,$location) {
+
+        if($rootScope.currentUser.ModeVie.fulfil || $rootScope.ModeVie)
+            $location.path('/High-Tech');
 
         $scope.typeVoyages = {Mer: false, Montagne: false, Compagne: true, Culture: false, Aventure: false};
         $scope.typeHebergements = {
@@ -14,6 +17,7 @@ angular.module('MyApp')
         $scope.mod = function () {
             mode.mod({
                 email: $rootScope.currentUser.email,
+                fulfil: true,
                 poids: $scope.poids,
                 taille: $scope.taille,
                 freqVoyage: $scope.freqVoyage,

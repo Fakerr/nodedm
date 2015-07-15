@@ -19,7 +19,7 @@ angular.module('MyApp')
                 nb_max: 15,
                 marque: $scope.marque,
                 budget: $scope.budget,
-                lienExterne: $scope.url.replace("?v=", "/"),
+                lienExterne: $scope.url,
                 url: $scope.img
             });
             $scope.img = '',

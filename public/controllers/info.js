@@ -1,6 +1,8 @@
 angular.module('MyApp')
-    .controller('InfoCtrl', ['$scope', 'infor','$rootScope', function ($scope, infor,$rootScope) {
+    .controller('InfoCtrl', ['$scope', 'infor','$rootScope','$location', function ($scope, infor,$rootScope,$location) {
 
+        if($rootScope.currentUser.InfoPerso.fulfil || $rootScope.infoPerso)
+            $location.path('/Mode-de-vie');
 
         $scope.langues = {
             Arabe: false,
@@ -15,6 +17,7 @@ angular.module('MyApp')
         $scope.info = function () {
             infor.info({
                 email: $rootScope.currentUser.email,
+                fulfil: true,
                 age: $scope.age,
                 sexe: $scope.sexe,
                 job: $scope.job,
