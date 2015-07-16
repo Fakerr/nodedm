@@ -459,7 +459,7 @@ app.post('/image/imag', function (req, res, next) {
         marque: req.body.marque,
         budget:req.body.budget,
         lienExterne: req.body.lienExterne,
-        url: '/public/images/'+ req.body.url
+        url: 'images/'+ req.body.url
     }
     Annonceur.findOneAndUpdate(query, { $push: {'pub': pub1}}, {upsert: true}, function (err, doc) {
         if (err) return res.send(500, {error: err});
