@@ -68,7 +68,7 @@ var userSchema = new mongoose.Schema({
     },
     portefeuille: Number,
     InfoPerso: {
-        fulfil : Boolean,
+        fulfil: Boolean,
         age: String,
         sexe: String,
         job: String,
@@ -79,7 +79,7 @@ var userSchema = new mongoose.Schema({
         salaire: Number
     },
     ModeVie: {
-        fulfil : Boolean,
+        fulfil: Boolean,
         poids: Number,
         taille: Number,
         freqVoyage: Number,
@@ -379,11 +379,11 @@ app.put('/api/users/:id', function (req, res, next) {
 });
 
 
-app.get('/api/annonceurs/pub',function(req,res,next) {
+app.get('/api/annonceurs/pub', function (req, res, next) {
     if (!req.query.id_pub) {
         return res.send(400, {message: 'Id pub parameter is required.'});
     }
-    Annonceur.findOne({ pub: { $elemMatch: { id: req.query.id_pub } } }, function (err, annonceur) {
+    Annonceur.findOne({pub: {$elemMatch: {id: req.query.id_pub}}}, function (err, annonceur) {
         if (err) return next(err);
         res.send(annonceur);
     });
@@ -448,35 +448,35 @@ app.post('/image/imag', function (req, res, next) {
         categorie: req.body.categorie,
         nb_max: req.body.nb_max,
         marque: req.body.marque,
-        budget:req.body.budget,
+        budget: req.body.budget,
         lienExterne: req.body.lienExterne,
-        url: 'images/' + req.body.url
+        url: '/public/images/' + req.body.url
     }
-    Annonceur.findOneAndUpdate(query, { $push: {'pub': pub1}}, {upsert: true}, function (err, doc) {
+    Annonceur.findOneAndUpdate(query, {$push: {'pub': pub1}}, {upsert: true}, function (err, doc) {
         if (err) return res.send(500, {error: err});
-        sendPubForUsers(pub1.id,pub1.categorie,pub1.type,pub1.lienExterne,pub1.url,res);
+        sendPubForUsers(pub1.id, pub1.categorie, pub1.type, pub1.lienExterne, pub1.url, res);
     });
 });
 
-function sendPubForUsers(id,categorie,type,lienPub,urlPub,res){
-    if(!type.localeCompare('image')){
+function sendPubForUsers(id, categorie, type, lienPub, urlPub, res) {
+    if (!type.localeCompare('image')) {
         var image = {
             id: id,
             url: urlPub,
             lien: lienPub,
             check: false
         }
-        User.findOneAndUpdate({email: "ali@ali"},{ $push: {'annonces': image}}, function(err,doc){
+        User.findOneAndUpdate({email: "ali@ali"}, {$push: {'annonces': image}}, function (err, doc) {
             if (err) return res.send(500, {error: err});
             return res.send("successfuly saved");
         })
-    }else if(!type.localeCompare('video')){
+    } else if (!type.localeCompare('video')) {
         var video = {
             id: id,
             url: lienPub.replace("?v=", "/"),
             check: false
         }
-        User.findOneAndUpdate({email: "ali@ali"},{ $push: {'annoncesVideos': video}}, function(err,doc){
+        User.findOneAndUpdate({email: "ali@ali"}, {$push: {'annoncesVideos': video}}, function (err, doc) {
             if (err) return res.send(500, {error: err});
             return res.send("successfuly saved");
         })
