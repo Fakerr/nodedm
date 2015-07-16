@@ -5,11 +5,13 @@
 
             <h3>Videos</h3>
             <br>
+
             <div id="vWrapper">
                 <div class="row">
                     <div class="col-md-4" ng-repeat="video in videos">
                         <img id="imgW" src="images/bg.png" width="380" height="280" ng-click="openVideo(video.url)"/>
-                        <youtube-video video-url="video.url" player-width="widthVideo" player-height="heightVideo" player-vars="playerVars"></youtube-video>
+                        <youtube-video video-url="video.url" player-width="widthVideo" player-height="heightVideo"
+                                       player-vars="playerVars"></youtube-video>
                     </div>
                 </div>
             </div>
@@ -19,6 +21,7 @@
 
             <h3>Images</h3>
             <br>
+
             <div id="aWrapper">
                 <div class="row">
                     <div class="col-md-4" ng-repeat="annonce in ann track by $index">
@@ -29,7 +32,7 @@
             </div>
 
             <script type="text/ng-template" id="firstDialog">
-                <a href="{{lien}}"  target="_blank"  ng-click="donateImage(pub)">
+                <a href="{{lien}}" target="_blank" ng-click="donateImage(pub)">
                     <img ng-src="{{ pub }}" width="{{ widthDialogImage }}" height="{{ heightDialogImage }}"/>
                 </a>
                 <div class="ngdialog-buttons mt">
@@ -40,10 +43,11 @@
             <script type="text/ng-template" id="secondDialog">
                 <img id="imgWS" src="images/bg.png" width="1170" height="550" ng-click="player.playVideo()"/>
                 <div class="timer" ng-if="show">
-                    <timer countdown="duration" max-time-unit="'minute'" interval="1000">{{mminutes}} : {{sseconds}} </timer>
+                    <timer countdown="duration" max-time-unit="'minute'" interval="1000">{{mminutes}} : {{sseconds}}
+                    </timer>
                 </div>
                 <youtube-video video-url="pubVideo" player-width="widthDialogVideo" player-height="heightDialogVideo"
-                         player="player" player-vars="playerVars" ng-click="donate()"></youtube-video>
+                               player="player" player-vars="playerVars" ng-click="donate()"></youtube-video>
                 <div class="ngdialog-buttons mt">
                     <button type="button" class="ngdialog-button ngdialog-button-primary">{{duration}}</button>
                 </div>

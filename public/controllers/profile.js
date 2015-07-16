@@ -28,8 +28,15 @@ angular.module('MyApp')
             $scope.show = true;
         });
 
+        $scope.$on('youtube.player.paused', function ($event, player) {
+            $scope.duration = player.getDuration();
+            $scope.show = false;
+        });
+
         $scope.$on('youtube.player.ended', function ($event, player) {
             // modif boolean check and update $scope.user
+            player.playVideo();
+            player.pauseVideo();
             var vid = $scope.user.annoncesVideos;
             var lien = player.getVideoUrl();
             var res = lien.replace("?v=", "/");
