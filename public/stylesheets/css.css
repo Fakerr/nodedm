@@ -48,6 +48,7 @@
     background-color: #ffffff;
     opacity: 0.9;
     filter: alpha(opacity=90); /* For IE8 and earlier */
+    min-height: 300px;
 }
 
 #modified-label {
@@ -56,4 +57,23 @@
 
 .modified-panel {
     margin-top: 20px;
+}
+
+.socialmedia > a:hover{
+    color: #4C9ED9 !important;
+}
+
+@media (min-width: 768px) {
+    .img-resized{
+        max-height: 140px;
+        max-width: 140px;
+        margin-top: -50px;
+    }
+}
+
+.img-resized {
+    max-height: 140px;
+    max-width: 140px;
+    margin-top: 5px;
+    margin-left: 17px;
 }

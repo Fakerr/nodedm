@@ -1,16 +1,29 @@
 angular.module('MyApp')
-    .controller('SearchCtrl', ['$scope', 'image', '$rootScope', function ($scope, image, $rootScope) {
+    .controller('SearchCtrl', ['$scope', 'image', '$rootScope', 'Upload', function ($scope, image, $rootScope, Upload) {
 
         $scope.img = '';
         $scope.select = {cible: ''};
         /*fix undefined cible problem(coz ngRepeat scope)*/
 
-        $scope.fileNameChanged = function (element) {
-            $scope.imagePub = element.files[0];
-            $scope.img = $scope.imagePub.name;
+        $scope.lacible = "";
+
+        $scope.upload = function (files) {
+            if (files && files.length) {
+                var file = files[0];
+                $scope.img = file.name;
+                Upload.upload({
+                    url: 'upload/picture',
+                    file: file
+                }).progress(function (evt) {
+                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                }).success(function (data, status, headers, config) {
+                }).error(function (data, status, headers, config) {
+                })
+            }
         };
 
         $scope.imag = function () {
+            $scope.upload($scope.files);
             image.imag({
                 email: $rootScope.currentUser.email,
                 type: $scope.selection,

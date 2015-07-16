@@ -25,9 +25,15 @@
     </div>
     <ul class="nav navbar-nav">
         <li data-match-route="/$"><a href="/">Home</a></li>
-        <li data-match-route="/profile"><a href="/profile" ng-if="currentUser.type.localeCompare('client') == 0 && currentUser">Profile</a></li>
-        <li data-match-route="/form"><a href="/form" ng-if="currentUser.type.localeCompare('client') == 0 && currentUser">Formulaires</a></li>
-        <li data-match-route="/search"><a href="/search" ng-if="currentUser.type.localeCompare('annonceur') == 0 && currentUser">Ajouter</a></li>
+        <li data-match-route="/profile"><a href="/profile"
+                                           ng-if="currentUser.type.localeCompare('client') == 0 && currentUser">Profile</a>
+        </li>
+        <li data-match-route="/form"><a href="/form"
+                                        ng-if="currentUser.type.localeCompare('client') == 0 && currentUser">Formulaires</a>
+        </li>
+        <li data-match-route="/search"><a href="/search"
+                                          ng-if="currentUser.type.localeCompare('annonceur') == 0 && currentUser">Ajouter</a>
+        </li>
     </ul>
     <ul class="nav navbar-nav pull-right" ng-if="!currentUser">
         <li data-match-route="/login"><a href="/login">Connexion</a></li>
@@ -79,7 +85,8 @@
 <script src="services/image.js"></script>
 <script src="services/infor.js"></script>
 <script src="https://www.youtube.com/iframe_api"></script>
-
+<script src="vendor/ng-file-upload-shim.min.js"></script>
+<script src="vendor/ng-file-upload.min.js"></script>
 
 
 <!--<script src="app.min.js"></script>-->

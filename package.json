@@ -9,6 +9,8 @@
     "async": "^0.8.0",
     "bcryptjs": "^0.7.12",
     "body-parser": "^1.0.0",
+    "connect-busboy": "0.0.2",
+    "dicer": "^0.2.4",
     "express": "^4.0.0",
     "express-session": "^1.11.3",
     "jwt-simple": "^0.2.0",

@@ -26,7 +26,7 @@ var util = require('util');
 var fakery = require('mongoose-fakery');
 var session = require('express-session');
 var shortid = require('shortid');
-
+var busboy = require('connect-busboy');
 
 var videoPub = new mongoose.Schema({
     id: String,
@@ -146,6 +146,7 @@ annonceurSchema.methods.comparePassword = function (candidatePassword, cb) {
 var User = mongoose.model('User', userSchema);
 var Annonceur = mongoose.model('Annonceur', annonceurSchema);
 var ImagePub = mongoose.model('ImagePub', imageSchema);
+var form = new multiparty.Form();
 mongoose.connect('localhost');
 
 var app = express();
@@ -156,6 +157,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(busboy());
 var data;
 
 function ensureAuthenticated(req, res, next) {
@@ -438,6 +440,17 @@ app.post('/api/unsubscribe', ensureAuthenticated, function (req, res, next) {
     });
 });
 
+app.post('/upload/picture', function (req, res, next) {
+    var fstream;
+    req.pipe(req.busboy);
+    req.busboy.on('file', function (fieldname, file, filename) {
+        fstream = fs.createWriteStream(__dirname + '/public/images/' + filename);
+        file.pipe(fstream);
+        fstream.on('close', function () {
+            res.redirect('back');
+        });
+    });
+});
 
 app.post('/image/imag', function (req, res, next) {
     query = {'email': req.body.email};
@@ -450,7 +463,7 @@ app.post('/image/imag', function (req, res, next) {
         marque: req.body.marque,
         budget: req.body.budget,
         lienExterne: req.body.lienExterne,
-        url: '/public/images/' + req.body.url
+        url: '/images/' + req.body.url
     }
     Annonceur.findOneAndUpdate(query, {$push: {'pub': pub1}}, {upsert: true}, function (err, doc) {
         if (err) return res.send(500, {error: err});
@@ -466,7 +479,7 @@ function sendPubForUsers(id, categorie, type, lienPub, urlPub, res) {
             lien: lienPub,
             check: false
         }
-        User.findOneAndUpdate({email: "ali@ali"}, {$push: {'annonces': image}}, function (err, doc) {
+        User.findOneAndUpdate({email: "aaa@aaa"}, {$push: {'annonces': image}}, function (err, doc) {
             if (err) return res.send(500, {error: err});
             return res.send("successfuly saved");
         })
@@ -476,7 +489,7 @@ function sendPubForUsers(id, categorie, type, lienPub, urlPub, res) {
             url: lienPub.replace("?v=", "/"),
             check: false
         }
-        User.findOneAndUpdate({email: "ali@ali"}, {$push: {'annoncesVideos': video}}, function (err, doc) {
+        User.findOneAndUpdate({email: "aaa@aaa"}, {$push: {'annoncesVideos': video}}, function (err, doc) {
             if (err) return res.send(500, {error: err});
             return res.send("successfuly saved");
         })
