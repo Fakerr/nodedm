@@ -11,7 +11,7 @@ angular.module('MyApp')
         $scope.heightImage = 280;
         $scope.widthImage = 375;
         $scope.playerVars = {
-            controls: 0
+            controls: 1
         };
 
         $http.get('/api/user', {params: {id: $rootScope.currentUser._id}})

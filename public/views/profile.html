@@ -44,7 +44,6 @@
             </script>
 
             <script type="text/ng-template" id="secondDialog">
-                <div id="clock-timer">
                     <img id="imgWS" src="images/bg.png" width="1170" height="550" ng-click="player.playVideo()"
                          ng-blur="console.log('BLUR')"/>
 
@@ -56,10 +55,8 @@
                                    player-height="heightDialogVideo"
                                    player="player" player-vars="playerVars" ng-click="donate()"></youtube-video>
                     <div class="ngdialog-buttons mt">
-                        <button class="btn" onclick="stopResumeTimer('clock-timer', this)" type="button">Stop</button>
                         <button type="button" class="ngdialog-button ngdialog-button-primary">{{duration}}</button>
                     </div>
-                </div>
             </script>
         </div>
     </div>
