@@ -65,15 +65,29 @@
 
 @media (min-width: 768px) {
     .img-resized{
-        max-height: 140px;
-        max-width: 140px;
-        margin-top: -50px;
+        max-height: 260px;
+        max-width: 260px;
+        margin-top: -50px ;
     }
 }
 
-.img-resized {
-    max-height: 140px;
-    max-width: 140px;
-    margin-top: 5px;
-    margin-left: 17px;
+@media (max-width: 768px) {
+    .img-resized {
+        max-height: 140px;
+        max-width: 140px;
+        margin-top: 5px;
+        margin-left: 17px;
+    }
+}
+
+.navbarImage {
+    width: 48px;
+    height: 46px;
+    margin-top: -13px;
+}
+
+.navbarImage:hover {
+    width: 48px;
+    height: 46px;
+    margin-top: -13px;
 }

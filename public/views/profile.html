@@ -9,8 +9,10 @@
             <div id="vWrapper">
                 <div class="row">
                     <div class="col-md-4" ng-repeat="video in videos">
+
                         <img id="imgW" src="images/bg.png" width="380" height="280" ng-click="openVideo(video.url)"
                              ng-class="{'consomme': video.check == true}"/>
+
                         <youtube-video video-url="video.url" player-width="widthVideo" player-height="heightVideo"
                                        player-vars="playerVars"></youtube-video>
                     </div>
@@ -42,15 +44,21 @@
             </script>
 
             <script type="text/ng-template" id="secondDialog">
-                <img id="imgWS" src="images/bg.png" width="1170" height="550" ng-click="player.playVideo()"/>
-                <div class="timer" ng-if="show">
-                    <timer countdown="duration" max-time-unit="'minute'" interval="1000">{{mminutes}} : {{sseconds}}
-                    </timer>
-                </div>
-                <youtube-video video-url="pubVideo" player-width="widthDialogVideo" player-height="heightDialogVideo"
-                               player="player" player-vars="playerVars" ng-click="donate()"></youtube-video>
-                <div class="ngdialog-buttons mt">
-                    <button type="button" class="ngdialog-button ngdialog-button-primary">{{duration}}</button>
+                <div id="clock-timer">
+                    <img id="imgWS" src="images/bg.png" width="1170" height="550" ng-click="player.playVideo()"
+                         ng-blur="console.log('BLUR')"/>
+
+                    <div class="timer" ng-if="show">
+                        <timer countdown="duration" max-time-unit="'minute'" interval="1000">{{mminutes}} : {{sseconds}}
+                        </timer>
+                    </div>
+                    <youtube-video video-url="pubVideo" player-width="widthDialogVideo"
+                                   player-height="heightDialogVideo"
+                                   player="player" player-vars="playerVars" ng-click="donate()"></youtube-video>
+                    <div class="ngdialog-buttons mt">
+                        <button class="btn" onclick="stopResumeTimer('clock-timer', this)" type="button">Stop</button>
+                        <button type="button" class="ngdialog-button ngdialog-button-primary">{{duration}}</button>
+                    </div>
                 </div>
             </script>
         </div>
