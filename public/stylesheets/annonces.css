@@ -78,3 +78,7 @@ img.displayed:hover {
     list-style-type: none;
 }
 
+.consomme{
+    opacity: 0.5 !important;
+}
+

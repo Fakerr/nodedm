@@ -3,6 +3,7 @@
 angular.module('MyApp')
     .controller('ProfileCtrl', ['$scope', '$http', '$rootScope', 'ngDialog', '$window', function ($scope, $http, $rootScope, ngDialog, $alert, $window) {
 
+        var time;
         //Dimension video dans la page profile.
         $scope.heightVideo = 280;
         $scope.widthVideo = 375;
@@ -25,11 +26,13 @@ angular.module('MyApp')
 
         $scope.$on('youtube.player.playing', function ($event, player) {
             $scope.duration = player.getDuration();
+            if (time < $scope.duration)
+                $scope.duration = time;
             $scope.show = true;
         });
 
         $scope.$on('youtube.player.paused', function ($event, player) {
-            $scope.duration = player.getDuration();
+            time = $scope.duration;
             $scope.show = false;
         });
 
@@ -125,4 +128,5 @@ angular.module('MyApp')
         }
 
         $scope.pageClass = 'fadeZoom';
+
     }]);
