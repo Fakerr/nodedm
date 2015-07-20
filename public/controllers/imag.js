@@ -1,5 +1,5 @@
 angular.module('MyApp')
-    .controller('SearchCtrl', ['$scope', 'image', '$rootScope','Upload', function ($scope, image, $rootScope, Upload) {
+    .controller('SearchCtrl', ['$scope', 'image', '$rootScope', 'Upload', function ($scope, image, $rootScope, Upload) {
 
         $scope.img = '';
         $scope.select = {cible: ''};
@@ -9,21 +9,16 @@ angular.module('MyApp')
 
         $scope.upload = function (files) {
             if (files && files.length) {
-                    var file = files[0];
-                    $scope.img = file.name ;
-                    console.log($scope.img);
-                    Upload.upload({
-                        url: 'upload/picture',
-                        fields: {'name': "aaa.jpg"},
-                        file: file
-                    }).progress(function (evt) {
-                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                        console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
-                    }).success(function (data, status, headers, config) {
-                        console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
-                    }).error(function (data, status, headers, config) {
-                        console.log('error status: ' + status);
-                    })
+                var file = files[0];
+                $scope.img = file.name;
+                Upload.upload({
+                    url: 'upload/picture',
+                    file: file
+                }).progress(function (evt) {
+                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                }).success(function (data, status, headers, config) {
+                }).error(function (data, status, headers, config) {
+                })
             }
         };
 
@@ -37,7 +32,7 @@ angular.module('MyApp')
                 nb_max: 15,
                 marque: $scope.marque,
                 budget: $scope.budget,
-                lienExterne: $scope.url.replace("?v=", "/"),
+                lienExterne: $scope.url,
                 url: $scope.img
             });
             $scope.img = '',

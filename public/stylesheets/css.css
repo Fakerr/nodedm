@@ -79,3 +79,15 @@
         margin-left: 17px;
     }
 }
+
+.navbarImage {
+    width: 48px;
+    height: 46px;
+    margin-top: -13px;
+}
+
+.navbarImage:hover {
+    width: 48px;
+    height: 46px;
+    margin-top: -13px;
+}

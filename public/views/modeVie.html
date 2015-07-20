@@ -1,7 +1,10 @@
 <nav class="navbar navbar-inverse modified-nav ">
     <ul class="nav navbar-nav modify">
-        <li data-match-route="/form"><a href="/form">Information personnelles</a></li>
-        <li data-match-route="/Mode-de-vie"><a href="/Mode-de-vie" class="act">Mode de vie et santé</a></li>
+        <li data-match-route="/form" ng-if="!infoPerso">
+            <a href="/form">Information personnelles</a>
+        </li>
+        <li data-match-route="/Mode-de-vie"><a href="/Mode-de-vie" class="act">Mode de vie et santé</a>
+        </li>
         <li data-match-route="/High-Tech"><a href="/High-Tech">High Tech</a></li>
         <li data-match-route="/Internet et opérateurs téléphoniques"><a
                 href="/Internet et opérateurs téléphoniques">Internet & opérateurs</a></li>

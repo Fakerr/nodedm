@@ -68,6 +68,7 @@ var userSchema = new mongoose.Schema({
     },
     portefeuille: Number,
     InfoPerso: {
+        fulfil: Boolean,
         age: String,
         sexe: String,
         job: String,
@@ -78,6 +79,7 @@ var userSchema = new mongoose.Schema({
         salaire: Number
     },
     ModeVie: {
+        fulfil: Boolean,
         poids: Number,
         taille: Number,
         freqVoyage: Number,
@@ -144,6 +146,7 @@ annonceurSchema.methods.comparePassword = function (candidatePassword, cb) {
 var User = mongoose.model('User', userSchema);
 var Annonceur = mongoose.model('Annonceur', annonceurSchema);
 var ImagePub = mongoose.model('ImagePub', imageSchema);
+var form = new multiparty.Form();
 mongoose.connect('localhost');
 
 var app = express();
@@ -194,7 +197,9 @@ app.post('/auth/signup', function (req, res, next) {
             email: req.body.email,
             password: req.body.password,
             type: req.body.type,
-            portefeuille: 0
+            portefeuille: 0,
+            "InfoPerso.fulfil": false,
+            "ModeVie.fulfil": false
         });
         user.save(function (err) {
             if (err) return next(err);
@@ -244,8 +249,8 @@ app.post('/infor/info', function (req, res, next) {
     var sexe1 = req.body.sexe;
     var job1 = req.body.job;
     var langage1 = req.body.langues;
-//var dateNaiss1 =req.body.dateNaiss;
     User.findOneAndUpdate(query, {
+        "InfoPerso.fulfil": true,
         "InfoPerso.age": age1,
         "InfoPerso.sexe": sexe1,
         "InfoPerso.job": job1,
@@ -265,6 +270,7 @@ app.post('/mode/mod', function (req, res, next) {
     var query = {'email': req.body.email};
     var typeVoyages1 = req.body.typeVoyages;
     User.findOneAndUpdate(query, {
+        "ModeVie.fulfil": true,
         "ModeVie.poids": req.body.poids,
         "ModeVie.taille": req.body.taille,
         "ModeVie.freqVoyage": req.body.freqVoyage,
@@ -375,11 +381,11 @@ app.put('/api/users/:id', function (req, res, next) {
 });
 
 
-app.get('/api/annonceurs/pub',function(req,res,next) {
+app.get('/api/annonceurs/pub', function (req, res, next) {
     if (!req.query.id_pub) {
         return res.send(400, {message: 'Id pub parameter is required.'});
     }
-    Annonceur.findOne({ pub: { $elemMatch: { id: req.query.id_pub } } }, function (err, annonceur) {
+    Annonceur.findOne({pub: {$elemMatch: {id: req.query.id_pub}}}, function (err, annonceur) {
         if (err) return next(err);
         res.send(annonceur);
     });
@@ -433,23 +439,21 @@ app.post('/api/unsubscribe', ensureAuthenticated, function (req, res, next) {
         });
     });
 });
-var form = new multiparty.Form();
-app.post('/upload/picture', function(req,res,next){
-        var fstream;
-        req.pipe(req.busboy);
-        console.log(req.busboy);
-        req.busboy.on('file', function (fieldname, file, filename) {
-            console.log("Uploading: " + filename);
-            fstream = fs.createWriteStream(__dirname + '/public/images/' + filename);
-            file.pipe(fstream);
-            fstream.on('close', function () {
-                res.redirect('back');
-            });
+
+app.post('/upload/picture', function (req, res, next) {
+    var fstream;
+    req.pipe(req.busboy);
+    req.busboy.on('file', function (fieldname, file, filename) {
+        fstream = fs.createWriteStream(__dirname + '/public/images/' + filename);
+        file.pipe(fstream);
+        fstream.on('close', function () {
+            res.redirect('back');
         });
     });
+});
+
 app.post('/image/imag', function (req, res, next) {
     query = {'email': req.body.email};
-
     var pub1 = {
         id: shortid.generate(),
         type: req.body.type,
@@ -457,35 +461,35 @@ app.post('/image/imag', function (req, res, next) {
         categorie: req.body.categorie,
         nb_max: req.body.nb_max,
         marque: req.body.marque,
-        budget:req.body.budget,
+        budget: req.body.budget,
         lienExterne: req.body.lienExterne,
-        url: 'images/'+ req.body.url
+        url: '/images/' + req.body.url
     }
-    Annonceur.findOneAndUpdate(query, { $push: {'pub': pub1}}, {upsert: true}, function (err, doc) {
+    Annonceur.findOneAndUpdate(query, {$push: {'pub': pub1}}, {upsert: true}, function (err, doc) {
         if (err) return res.send(500, {error: err});
-        sendPubForUsers(pub1.id,pub1.categorie,pub1.type,pub1.lienExterne,pub1.url,res);
+        sendPubForUsers(pub1.id, pub1.categorie, pub1.type, pub1.lienExterne, pub1.url, res);
     });
 });
 
-function sendPubForUsers(id,categorie,type,lienPub,urlPub,res){
-    if(!type.localeCompare('image')){
+function sendPubForUsers(id, categorie, type, lienPub, urlPub, res) {
+    if (!type.localeCompare('image')) {
         var image = {
             id: id,
             url: urlPub,
             lien: lienPub,
             check: false
         }
-        User.findOneAndUpdate({email: "ali@ali"},{ $push: {'annonces': image}}, function(err,doc){
+        User.findOneAndUpdate({email: "aaa@aaa"}, {$push: {'annonces': image}}, function (err, doc) {
             if (err) return res.send(500, {error: err});
             return res.send("successfuly saved");
         })
-    }else if(!type.localeCompare('video')){
+    } else if (!type.localeCompare('video')) {
         var video = {
             id: id,
             url: lienPub.replace("?v=", "/"),
             check: false
         }
-        User.findOneAndUpdate({email: "ali@ali"},{ $push: {'annoncesVideos': video}}, function(err,doc){
+        User.findOneAndUpdate({email: "aaa@aaa"}, {$push: {'annoncesVideos': video}}, function (err, doc) {
             if (err) return res.send(500, {error: err});
             return res.send("successfuly saved");
         })

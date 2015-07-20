@@ -1,13 +1,13 @@
 /* Discount should be used with configurable  variable */
 
 angular.module('MyApp')
-    .controller('ProfileCtrl', ['$scope', '$http', '$rootScope','ngDialog','$window', function ($scope, $http, $rootScope,ngDialog,$alert,$window) {
+    .controller('ProfileCtrl', ['$scope', '$http', '$rootScope', 'ngDialog', '$window', function ($scope, $http, $rootScope, ngDialog, $alert, $window) {
 
         //Dimension video dans la page profile.
         $scope.heightVideo = 280;
         $scope.widthVideo = 375;
         //Dimension image dans profile.
-        $scope.heightImage= 280;
+        $scope.heightImage = 280;
         $scope.widthImage = 375;
         $scope.playerVars = {
             controls: 0
@@ -32,7 +32,7 @@ angular.module('MyApp')
             // modif boolean check and update $scope.user
             var vid = $scope.user.annoncesVideos;
             var lien = player.getVideoUrl();
-            var res =  lien.replace("?v=","/");
+            var res = lien.replace("?v=", "/");
             for (var i = 0; i < vid.length; i++) {
                 if (!vid[i].url.localeCompare(res)) {
                     var videoCheck = $scope.user.annoncesVideos[i].check;
@@ -41,7 +41,7 @@ angular.module('MyApp')
                     break;
                 }
             }
-            if(!videoCheck){
+            if (!videoCheck) {
                 $scope.user.annoncesVideos[c].check = true;
                 $scope.donate(id);
             }
@@ -63,7 +63,7 @@ angular.module('MyApp')
         $scope.openVideo = function (video) {
             $scope.pubVideo = video;
             $scope.show = false;
-           // $scope.duration = 0;
+            // $scope.duration = 0;
             $scope.heightDialogVideo = 550;
             $scope.widthDialogVideo = 1170;
             ngDialog.open({
@@ -73,17 +73,17 @@ angular.module('MyApp')
             });
         };
 
-        $scope.donate = function(idPub){
+        $scope.donate = function (idPub) {
             $scope.user.portefeuille += 1;
-            $http.put('/api/users/' + $scope.user._id, $scope.user).success(function(data){
+            $http.put('/api/users/' + $scope.user._id, $scope.user).success(function (data) {
                 $scope.user = data;
                 $rootScope.currentUser = data;
                 updatePub(idPub);
             });
         };
 
-        $scope.donateImage = function(url){
-            var images =  $scope.user.annonces;
+        $scope.donateImage = function (url) {
+            var images = $scope.user.annonces;
             for (var i = 0; i < images.length; i++) {
                 if (!images[i].url.localeCompare(url)) {
                     var check = $scope.user.annonces[i].check;
@@ -92,10 +92,10 @@ angular.module('MyApp')
                     break;
                 }
             }
-            if(!check){
+            if (!check) {
                 $scope.user.annonces[index].check = true;
                 $scope.user.portefeuille += 1;
-                $http.put('/api/users/' + $scope.user._id, $scope.user).success(function(data){
+                $http.put('/api/users/' + $scope.user._id, $scope.user).success(function (data) {
                     $scope.user = data;
                     $rootScope.currentUser = data;
                     updatePub(id);
@@ -103,8 +103,8 @@ angular.module('MyApp')
             }
         };
 
-        function updatePub(idPub){
-            $http.get('/api/annonceurs/pub', {params: {id_pub: idPub}}).success(function(ann){
+        function updatePub(idPub) {
+            $http.get('/api/annonceurs/pub', {params: {id_pub: idPub}}).success(function (ann) {
                 var annonceur = ann;
                 var pubs = ann.pub;
                 for (var i = 0; i < pubs.length; i++) {
