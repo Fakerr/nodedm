@@ -3,6 +3,7 @@
 angular.module('MyApp')
     .controller('ProfileCtrl', ['$scope', '$http', '$rootScope', 'ngDialog', '$window', function ($scope, $http, $rootScope, ngDialog, $alert, $window) {
 
+        var player1 ;
         //Dimension video dans la page profile.
         $scope.heightVideo = 280;
         $scope.widthVideo = 375;
@@ -23,13 +24,19 @@ angular.module('MyApp')
                 console.log(err, 'error user !!');
             });
 
-        $scope.$on('youtube.player.playing', function ($event, player) {
+        $scope.$on('youtube.player.ready', function ($event, player) {
+            player1 = player;
             $scope.duration = player.getDuration();
+            stopTimer('timer');
+            $scope.show = true;
+        });
+
+        $scope.$on('youtube.player.playing', function ($event, player) {
+            player1 = player;
             $scope.show = true;
         });
 
         $scope.$on('youtube.player.paused', function ($event, player) {
-            $scope.duration = player.getDuration();
             $scope.show = false;
         });
 
@@ -125,4 +132,29 @@ angular.module('MyApp')
         }
 
         $scope.pageClass = 'fadeZoom';
+
+        var hidden, visibilityChange;
+        if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
+            hidden = "hidden";
+            visibilityChange = "visibilitychange";
+        } else if (typeof document.mozHidden !== "undefined") {
+            hidden = "mozHidden";
+            visibilityChange = "mozvisibilitychange";
+        } else if (typeof document.msHidden !== "undefined") {
+            hidden = "msHidden";
+            visibilityChange = "msvisibilitychange";
+        } else if (typeof document.webkitHidden !== "undefined") {
+            hidden = "webkitHidden";
+            visibilityChange = "webkitvisibilitychange";
+        }
+
+        function handleVisibilityChange() {
+            if (document[hidden]) {
+                player1.pauseVideo();
+            } else {
+                player1.playVideo();
+            }
+        }
+
+        document.addEventListener(visibilityChange, handleVisibilityChange, false);
     }]);
