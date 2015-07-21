@@ -29,7 +29,6 @@ angular.module('MyApp')
 
         $scope.$on('youtube.player.ready', function ($event, player) {
             player1 = player;
-            //$scope.duration = player.getDuration();
             videoLong = player.getDuration();
             timeAct = 0;
         });
