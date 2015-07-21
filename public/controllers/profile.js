@@ -16,6 +16,7 @@ angular.module('MyApp')
             controls: 0
         };
 
+
         $http.get('/api/user', {params: {id: $rootScope.currentUser._id}})
             .success(function (data) {
                 $scope.user = data;
@@ -25,7 +26,6 @@ angular.module('MyApp')
             }).error(function (err) {
                 console.log(err, 'error user !!');
             });
-
 
         $scope.$on('youtube.player.ready', function ($event, player) {
             player1 = player;
@@ -43,6 +43,7 @@ angular.module('MyApp')
             $scope.show = false;
             timeAct = player.getCurrentTime();
         });
+
 
         $scope.$on('youtube.player.ended', function ($event, player) {
             // modif boolean check and update $scope.user
@@ -154,14 +155,15 @@ angular.module('MyApp')
         }
 
         function handleVisibilityChange() {
-            if (document[hidden]) {
-                player1.pauseVideo();
-            } else {
+            if (!document[hidden]) {
+                $scope.$broadcast('timer-start');
                 player1.playVideo();
+            } else {
+                $scope.$broadcast('timer-stop');
+                player1.pauseVideo();
             }
         }
         document.addEventListener(visibilityChange, handleVisibilityChange, false);
-
         $scope.pageClass = 'fadeZoom';
 
     }]);

@@ -12,7 +12,7 @@
 
                         <img id="imgW" src="images/bg.png" width="380" height="280" ng-click="openVideo(video.url)"
                              ng-class="{'consomme': video.check == true}"/>
-
+                        <span class="visionne" ng-if="video.check == true">Visionnée</span>
                         <youtube-video video-url="video.url" player-width="widthVideo" player-height="heightVideo"
                                        player-vars="playerVars"></youtube-video>
                     </div>
@@ -46,7 +46,7 @@
             <script type="text/ng-template" id="secondDialog">
                     <img id="imgWS" src="images/bg.png" width="1170" height="550" ng-click="player.playVideo()"/>
 
-                    <div class="timer" ng-if="show">
+                    <div class="timer" ng-if="show">{{operation}}
                         <timer countdown="duration" max-time-unit="'minute'" interval="1000">{{mminutes}} : {{sseconds}}
                         </timer>
                     </div>
