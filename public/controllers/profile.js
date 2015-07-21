@@ -4,6 +4,8 @@ angular.module('MyApp')
     .controller('ProfileCtrl', ['$scope', '$http', '$rootScope', 'ngDialog', '$window', function ($scope, $http, $rootScope, ngDialog, $alert, $window) {
 
         var player1;
+        var timeAct;
+        var videoLong;
         //Dimension video dans la page profile.
         $scope.heightVideo = 280;
         $scope.widthVideo = 375;
@@ -11,7 +13,7 @@ angular.module('MyApp')
         $scope.heightImage = 280;
         $scope.widthImage = 375;
         $scope.playerVars = {
-            controls: 1
+            controls: 0
         };
 
         $http.get('/api/user', {params: {id: $rootScope.currentUser._id}})
@@ -25,18 +27,30 @@ angular.module('MyApp')
             });
 
 
+        $scope.$on('youtube.player.ready', function ($event, player) {
+            player1 = player;
+            //$scope.duration = player.getDuration();
+            videoLong = player.getDuration();
+            timeAct = 0;
+        });
+
         $scope.$on('youtube.player.playing', function ($event, player) {
             player1 = player;
-            $scope.duration = player.getDuration();
+            $scope.duration =  videoLong - timeAct;
             $scope.show = true;
         });
 
         $scope.$on('youtube.player.paused', function ($event, player) {
             $scope.show = false;
+            timeAct = player.getCurrentTime();
         });
 
         $scope.$on('youtube.player.ended', function ($event, player) {
             // modif boolean check and update $scope.user
+            $scope.show = false;
+            videoLong = player.getDuration();
+            timeAct = 0;
+            player.stopVideo();
             player.playVideo();
             player.pauseVideo();
             var vid = $scope.user.annoncesVideos;
@@ -54,7 +68,6 @@ angular.module('MyApp')
                 $scope.user.annoncesVideos[c].check = true;
                 $scope.donate(id);
             }
-            //player.playVideo();
         });
 
         $scope.open = function (image) {
