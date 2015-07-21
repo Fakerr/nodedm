@@ -14,6 +14,7 @@ angular.module('MyApp')
             controls: 1
         };
 
+
         $http.get('/api/user', {params: {id: $rootScope.currentUser._id}})
             .success(function (data) {
                 $scope.user = data;
@@ -24,16 +25,12 @@ angular.module('MyApp')
                 console.log(err, 'error user !!');
             });
 
-
-        $scope.$on('youtube.player.playing', function ($event, player) {
+        $scope.$on('youtube.player.ready', function ($event, player) {
             player1 = player;
             $scope.duration = player.getDuration();
-            $scope.show = true;
-        });
-
-        $scope.$on('youtube.player.paused', function ($event, player) {
             $scope.show = false;
         });
+
 
         $scope.$on('youtube.player.ended', function ($event, player) {
             // modif boolean check and update $scope.user
@@ -142,14 +139,15 @@ angular.module('MyApp')
         }
 
         function handleVisibilityChange() {
-            if (document[hidden]) {
-                player1.pauseVideo();
-            } else {
+            if (!document[hidden]) {
+                $scope.$broadcast('timer-start');
                 player1.playVideo();
+            } else {
+                $scope.$broadcast('timer-stop');
+                player1.pauseVideo();
             }
         }
         document.addEventListener(visibilityChange, handleVisibilityChange, false);
-
         $scope.pageClass = 'fadeZoom';
 
     }]);

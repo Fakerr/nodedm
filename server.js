@@ -479,7 +479,7 @@ function sendPubForUsers(id, categorie, type, lienPub, urlPub, res) {
             lien: lienPub,
             check: false
         }
-        User.findOneAndUpdate({email: "aaa@aaa"}, {$push: {'annonces': image}}, function (err, doc) {
+        User.findOneAndUpdate({email: "walid@walid"}, {$push: {'annonces': image}}, function (err, doc) {
             if (err) return res.send(500, {error: err});
             return res.send("successfuly saved");
         })
@@ -489,7 +489,7 @@ function sendPubForUsers(id, categorie, type, lienPub, urlPub, res) {
             url: lienPub.replace("?v=", "/"),
             check: false
         }
-        User.findOneAndUpdate({email: "aaa@aaa"}, {$push: {'annoncesVideos': video}}, function (err, doc) {
+        User.findOneAndUpdate({email: "walid@walid"}, {$push: {'annoncesVideos': video}}, function (err, doc) {
             if (err) return res.send(500, {error: err});
             return res.send("successfuly saved");
         })

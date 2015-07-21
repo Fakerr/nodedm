@@ -91,3 +91,14 @@
     height: 46px;
     margin-top: -13px;
 }
+
+.visionne {
+    position: absolute;
+    margin-top: 60px;
+    margin-left: 105px;
+    font-family:Calibri;
+    font-weight: bolder;
+    text-align: center !important;
+    font-size: 4rem !important;
+    color: rgba(0, 0, 0, 0.5) !important;
+}
