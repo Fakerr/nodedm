@@ -88,4 +88,27 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mg
                 }
             }
         });
-    });
+    })
+    .run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {
+        $rootScope.$on('$routeChangeStart', function (event) {
+
+            if (Auth.isLoggedIn() == 0) {
+                console.log('not connected');
+                event.preventDefault();
+                console.log(event);
+                if (($location.path() != '/home') && ($location.path() != '/'))
+                    $location.path('/login');
+            }
+            else if (Auth.isLoggedIn() == 1){
+                console.log('annonceur');
+                if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() !='/search'))
+                    $location.path('/home');
+            }
+            else if (Auth.isLoggedIn() == 2){
+                console.log('client');
+                if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() !='/form') && ($location.path() !='/profile'))
+                    $location.path('/home');
+            }
+
+        });
+    }]);

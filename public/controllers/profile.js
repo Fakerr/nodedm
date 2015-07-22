@@ -28,7 +28,6 @@ angular.module('MyApp')
             });
 
         $scope.$on('youtube.player.ready', function ($event, player) {
-            player1 = player;
             videoLong = player.getDuration();
             timeAct = 0;
         });

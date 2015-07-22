@@ -152,6 +152,18 @@ angular.module('MyApp')
                     duration: 3
                 });
                 $window.location.href = '/';
+            },
+            isLoggedIn : function(){
+                var a;
+                if ($rootScope.currentUser == null )
+                    a = 0;
+                else if ($rootScope.currentUser.type == "annonceur")
+                    a = 1;
+                else if ($rootScope.currentUser.type == "client")
+                    a = 2;
+                else if ($rootScope.currentUser.type == "admin")
+                    a = 3;
+                return a ;
             }
         };
     });
