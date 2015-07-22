@@ -1,8 +1,6 @@
 angular.module('MyApp')
     .controller('ModeVieCtrl', ['$scope', 'mode','$rootScope','$location', function ($scope, mode,$rootScope,$location) {
 
-        if($rootScope.currentUser.ModeVie.fulfil || $rootScope.ModeVie)
-            $location.path('/High-Tech');
 
         $scope.typeVoyages = {Mer: false, Montagne: false, Compagne: true, Culture: false, Aventure: false};
         $scope.typeHebergements = {

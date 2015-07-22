@@ -20,8 +20,6 @@ angular.module('MyApp')
                             type: 'material',
                             duration: 3
                         });
-                        $rootScope.ModeVie = true; // form modeVide fulfiled
-                        $location.path('/High-Tech');
                     })
                     .error(function (response) {
                         $alert({

@@ -1,9 +1,6 @@
 angular.module('MyApp')
     .controller('InfoCtrl', ['$scope', 'infor','$rootScope','$location', function ($scope, infor,$rootScope,$location) {
 
-        if($rootScope.currentUser.InfoPerso.fulfil || $rootScope.infoPerso)
-            $location.path('/Mode-de-vie');
-
         $scope.langues = {
             Arabe: false,
             Français: false,

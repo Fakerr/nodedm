@@ -20,8 +20,6 @@ angular.module('MyApp')
                             type: 'material',
                             duration: 3
                         });
-                        $rootScope.infoPerso = true; // From infoPerso fulfiled
-                        $location.path('/Mode-de-vie');
                     })
                     .error(function (response) {
                         $alert({

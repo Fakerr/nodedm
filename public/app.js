@@ -89,8 +89,17 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mg
             }
         });
     })
-    .run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {
+    .run(['$http','$rootScope', '$location', 'Auth', function ($http,$rootScope, $location, Auth) {
         $rootScope.$on('$routeChangeStart', function (event) {
+
+            /*if($location.path() == '/form'){
+                $http.get('/api/user', {params: {id: $rootScope.currentUser._id}})
+                    .success(function (data) {
+                        $rootScope.currentUser = data;
+                    }).error(function (err) {
+                        console.log(err, 'error user !!');
+                    });
+            }*/
 
             if (Auth.isLoggedIn() == 0) {
                 console.log('not connected');
@@ -99,14 +108,15 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mg
                 if (($location.path() != '/home') && ($location.path() != '/'))
                     $location.path('/login');
             }
-            else if (Auth.isLoggedIn() == 1){
+            else if (Auth.isLoggedIn() == 1) {
                 console.log('annonceur');
-                if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() !='/search'))
+                if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() != '/search'))
                     $location.path('/home');
             }
-            else if (Auth.isLoggedIn() == 2){
+            else if (Auth.isLoggedIn() == 2) {
                 console.log('client');
-                if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() !='/form') && ($location.path() !='/profile'))
+                if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() != '/form') && ($location.path() != '/profile')
+                    && ($location.path() != '/Mode-de-vie') && ($location.path() != '/High-Tech'))
                     $location.path('/home');
             }
 

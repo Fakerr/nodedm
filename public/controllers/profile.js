@@ -1,7 +1,7 @@
 /* Discount should be used with configurable  variable */
 
 angular.module('MyApp')
-    .controller('ProfileCtrl', ['$scope', '$http', '$rootScope', 'ngDialog', '$window', function ($scope, $http, $rootScope, ngDialog, $alert, $window) {
+    .controller('ProfileCtrl', ['$scope', '$http', '$rootScope', 'ngDialog', '$window', function ($scope, $http, $rootScope, ngDialog, $window) {
 
         var player1;
         var timeAct;
@@ -99,6 +99,7 @@ angular.module('MyApp')
             $http.put('/api/users/' + $scope.user._id, $scope.user).success(function (data) {
                 $scope.user = data;
                 $rootScope.currentUser = data;
+                $scope.videos = data.annoncesVideos;
                 updatePub(idPub);
             });
         };
@@ -119,6 +120,17 @@ angular.module('MyApp')
                 $http.put('/api/users/' + $scope.user._id, $scope.user).success(function (data) {
                     $scope.user = data;
                     $rootScope.currentUser = data;
+                    $scope.ann = data.annonces;
+
+                   /* $window.localStorage.token = data.token;
+                    var token = data.token;
+                    if (token) {
+                        var payload = JSON.parse($window.atob(token.split('.')[1]));
+                        //takes a JSON-formatted string and converts it to a JavaScript object
+                        //window.atob: encoder
+                        $rootScope.currentUser = payload.user;
+                    }*/
+
                     updatePub(id);
                 });
             }
