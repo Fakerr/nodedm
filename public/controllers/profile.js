@@ -1,7 +1,7 @@
 /* Discount should be used with configurable  variable */
 
 angular.module('MyApp')
-    .controller('ProfileCtrl', ['$scope', '$http', '$rootScope', 'ngDialog', '$window', function ($scope, $http, $rootScope, ngDialog, $alert, $window) {
+    .controller('ProfileCtrl', ['$scope', '$http', '$rootScope', 'ngDialog', function ($scope, $http, $rootScope, ngDialog) {
 
         var player1;
         var timeAct;
