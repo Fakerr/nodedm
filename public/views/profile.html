@@ -3,18 +3,23 @@
     <div class="panel-body">
         <div ng-controller="ProfileCtrl">
 
-            <h3>Videos</h3>
-            <br>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">VIDEOs</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4" ng-repeat="video in videos">
+                            <div class="embed-responsive embed-responsive-16by9 video-wrapper">
 
-            <div id="vWrapper">
-                <div class="row">
-                    <div class="col-md-4" ng-repeat="video in videos">
-
-                        <img id="imgW" src="images/bg.png" width="380" height="280" ng-click="openVideo(video.url)"
-                             ng-class="{'consomme': video.check == true}"/>
-                        <span class="visionne" ng-if="video.check == true">Visionnée</span>
-                        <youtube-video video-url="video.url" player-width="widthVideo" player-height="heightVideo"
-                                       player-vars="playerVars"></youtube-video>
+                                <img id="imgW" src="images/bg.png"
+                                     ng-click="openVideo(video.url)"
+                                     ng-class="{'consomme': video.check == true}"/>
+                                <span class="visionne" ng-if="video.check == true">Visionnée</span>
+                                <youtube-video video-url="video.url" class="embed-responsive-item"
+                                               player-vars="playerVars"></youtube-video>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -22,40 +27,40 @@
             <br>
             <br>
 
-            <h3>Images</h3>
-            <br>
-
-            <div id="aWrapper">
-                <div class="row">
-                    <div class="col-md-4" ng-repeat="annonce in ann track by $index">
-                        <span class="visionne" ng-if="annonce.check == true">Visionnée</span>
-                        <img id="imgA" ng-src="{{annonce.url}}" width="{{ widthImage }}" height="{{ heightImage }}"
-                             ng-click="open(annonce)" ng-class="{'consomme': annonce.check == true}"/>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">IMAGEs</h2>
+                </div>
+                <div class="panel-body">
+                    <div id="aWrapper">
+                        <div class="row">
+                            <div class="col-md-4" ng-repeat="annonce in ann track by $index">
+                                <span class="visionne" ng-if="annonce.check == true">Visionnée</span>
+                                <img id="imgA" ng-src="{{annonce.url}}" class="imagepub1"
+                                     ng-click="open(annonce)"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
 
             <script type="text/ng-template" id="firstDialog">
                 <a href="{{lien}}" target="_blank" ng-click="donateImage(pub)">
-                    <img ng-src="{{ pub }}" width="{{ widthDialogImage }}" height="{{ heightDialogImage }}"/>
+                    <img ng-src="{{ pub }}" class="imagepub"/>
                 </a>
-                <div class="ngdialog-buttons mt">
-                    <button type="button" class="ngdialog-button ngdialog-button-primary">Ok</button>
-                </div>
             </script>
 
-            <script type="text/ng-template" id="secondDialog">
-                <img id="imgWS" src="images/bg.png" width="1170" height="550" ng-click="player.playVideo()"/>
 
+            <script type="text/ng-template" id="secondDialog">
                 <div class="timer" ng-if="show">{{operation}}
                     <timer countdown="duration" max-time-unit="'minute'" interval="1000">{{mminutes}} : {{sseconds}}
                     </timer>
                 </div>
-                <youtube-video video-url="pubVideo" player-width="widthDialogVideo"
-                               player-height="heightDialogVideo"
-                               player="player" player-vars="playerVars" ng-click="donate()"></youtube-video>
-                <div class="ngdialog-buttons mt">
-                    <button type="button" class="ngdialog-button ngdialog-button-primary">{{duration}}</button>
+                <div class="embed-responsive embed-responsive-16by9 video-wrapper">
+                    <youtube-video video-url="pubVideo" class="embed-responsive-item" player="player"
+                                   player-vars="playerVars" ng-click="donate()">
+                    </youtube-video>
                 </div>
             </script>
         </div>

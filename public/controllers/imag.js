@@ -29,7 +29,7 @@ angular.module('MyApp')
                 type: $scope.selection,
                 nom_pub: $scope.name,
                 categorie: $scope.select.cible,
-                nb_max: 15,
+                nb_max: 15, //traitement à faire ...
                 marque: $scope.marque,
                 budget: $scope.budget,
                 lienExterne: $scope.url,

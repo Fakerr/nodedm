@@ -1,7 +1,7 @@
 /* Discount should be used with configurable  variable */
 
 angular.module('MyApp')
-    .controller('ProfileCtrl', ['$scope', '$http', '$rootScope', 'ngDialog', '$window', function ($scope, $http, $rootScope, ngDialog, $window) {
+    .controller('ProfileCtrl', ['$scope', '$http', '$rootScope', 'ngDialog', function ($scope, $http, $rootScope, ngDialog) {
 
         var player1;
         var timeAct;
@@ -34,7 +34,7 @@ angular.module('MyApp')
 
         $scope.$on('youtube.player.playing', function ($event, player) {
             player1 = player;
-            $scope.duration =  videoLong - timeAct;
+            $scope.duration = videoLong - timeAct;
             $scope.show = true;
         });
 
@@ -122,15 +122,14 @@ angular.module('MyApp')
                     $rootScope.currentUser = data;
                     $scope.ann = data.annonces;
 
-                   /* $window.localStorage.token = data.token;
-                    var token = data.token;
-                    if (token) {
-                        var payload = JSON.parse($window.atob(token.split('.')[1]));
-                        //takes a JSON-formatted string and converts it to a JavaScript object
-                        //window.atob: encoder
-                        $rootScope.currentUser = payload.user;
-                    }*/
-
+                    /* $window.localStorage.token = data.token;
+                     var token = data.token;
+                     if (token) {
+                     var payload = JSON.parse($window.atob(token.split('.')[1]));
+                     //takes a JSON-formatted string and converts it to a JavaScript object
+                     //window.atob: encoder
+                     $rootScope.currentUser = payload.user;
+                     }*/
                     updatePub(id);
                 });
             }
@@ -174,6 +173,7 @@ angular.module('MyApp')
                 player1.pauseVideo();
             }
         }
+
         document.addEventListener(visibilityChange, handleVisibilityChange, false);
         $scope.pageClass = 'fadeZoom';
 

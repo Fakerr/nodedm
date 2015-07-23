@@ -89,23 +89,23 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mg
             }
         });
     })
-    .run(['$http','$rootScope', '$location', 'Auth', function ($http,$rootScope, $location, Auth) {
+    .run(['$http', '$rootScope', '$location', 'Auth', function ($http, $rootScope, $location, Auth) {
         $rootScope.$on('$routeChangeStart', function (event) {
 
             /*if($location.path() == '/form'){
-                $http.get('/api/user', {params: {id: $rootScope.currentUser._id}})
-                    .success(function (data) {
-                        $rootScope.currentUser = data;
-                    }).error(function (err) {
-                        console.log(err, 'error user !!');
-                    });
-            }*/
+             $http.get('/api/user', {params: {id: $rootScope.currentUser._id}})
+             .success(function (data) {
+             $rootScope.currentUser = data;
+             }).error(function (err) {
+             console.log(err, 'error user !!');
+             });
+             }*/
 
             if (Auth.isLoggedIn() == 0) {
                 console.log('not connected');
                 event.preventDefault();
                 console.log(event);
-                if (($location.path() != '/home') && ($location.path() != '/'))
+                if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() != '/signup'))
                     $location.path('/login');
             }
             else if (Auth.isLoggedIn() == 1) {
