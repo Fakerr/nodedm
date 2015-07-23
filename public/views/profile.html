@@ -36,6 +36,10 @@
                     <div id="aWrapper">
                         <div class="row">
                             <div class="col-md-4" ng-repeat="annonce in ann track by $index">
+                                <img id="imgW1" src="images/bg.png"
+                                     ng-click="open(annonce)"
+                                     ng-class="{'consomme': annonce.check == true}"/>
+                                <span class="visionne" ng-if="annonce.check == true">Visionnée</span>
                                 <img id="imgA" ng-src="{{annonce.url}}" class="imagepub1"
                                      ng-click="open(annonce)"/>
                             </div>
