@@ -11,11 +11,10 @@
                     <div class="row">
                         <div class="col-md-4" ng-repeat="video in videos">
                             <div class="embed-responsive embed-responsive-16by9 video-wrapper">
-
                                 <img id="imgW" src="images/bg.png"
                                      ng-click="openVideo(video.lienExterne)"
-                                     ng-class="{'consomme': video.check == true}"/>
-                                <span class="visionne" ng-if="video.check == true">Visionnée</span>
+                                     ng-class="{'consomme': check(video) == true}"/>
+                                <span class="visionne" ng-if="check(video) == true">Visionnée</span>
                                 <youtube-video video-url="video.lienExterne" class="embed-responsive-item"
                                                player-vars="playerVars"></youtube-video>
                             </div>
@@ -35,8 +34,9 @@
                     <div id="aWrapper">
                         <div class="row">
                             <div class="col-md-4" ng-repeat="annonce in ann track by $index">
-                                <span class="visionne" ng-if="annonce.check == true">Visionnée</span>
-                                <img id="imgA" ng-src="{{annonce.url}}" class="imagepub1"
+                                <span class="visionne" ng-if="checked(annonce) == true">Visionnée</span>
+                                <img ng-class="{'consomme': checked(annonce) == true}" id="imgA"
+                                     ng-src="{{annonce.url}}" class="imagepub1"
                                      ng-click="open(annonce)"/>
                             </div>
                         </div>

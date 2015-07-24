@@ -70,7 +70,8 @@
                                         <div ng-if="cibbb.name == temporary.name" class="col-sm-6">
                                             <div ng-repeat="theoption in cibbb.array">
                                                 <div class="radio">
-                                                    <input type="radio" name="cat" value="{{theoption}}" ng-model="select.cible"> {{theoption}}
+                                                    <input type="radio" name="cat" value="{{theoption}}"
+                                                           ng-model="select.cible"> {{theoption}}
                                                 </div>
                                             </div>
                                         </div>
@@ -97,13 +98,15 @@
                                     <div class="col-sm-9">
                                         <div class="radio">
                                             <label>
-                                                <input type="radio" name="type" value="image" ng-model="selection"  required>
+                                                <input type="radio" name="type" value="image" ng-model="selection"
+                                                       required>
                                                 Image
                                             </label>
                                         </div>
                                         <div class="radio">
                                             <label>
-                                                <input type="radio" name="type" value="video" ng-model="selection" required>
+                                                <input type="radio" name="type" value="video" ng-model="selection"
+                                                       required>
                                                 Video
                                             </label>
                                         </div>
@@ -112,9 +115,12 @@
                                 <div class="form-group" ng-show="selection == 'image'">
                                     <label class="col-sm-3">Ajouter une image:</label>
 
-                                    <div class="col-sm-9">
-                                        <input type="file" name="file" accept="image/*" image="image"
-                                               onchange="angular.element(this).scope().fileNameChanged(this)" required/>
+                                    <div class="col-sm-5">
+                                        <input class="form-control" type="file" ngf-select ng-model="files">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <img class="img-thumbnail img-resized" ngf-src="files[0]"
+                                             ngf-default-src="preview.jpg" ngf-accept="'image/*'">
                                     </div>
                                 </div>
 

@@ -29,6 +29,7 @@ var paypal = require('paypal-rest-sdk');
 var Paypal1 = require('paypal-adaptive');
 var session = require('express-session');
 var shortid = require('shortid');
+var busboy = require('connect-busboy');
 
 
 var administrateurSchema = new mongoose.Schema({
@@ -277,6 +278,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(busboy());
 var data;
 
 function ensureAuthenticated(req, res, next) {
@@ -555,9 +557,9 @@ app.post('/auth/google', function (req, res, next) {
     });
 });
 
-app.get('/categories/annonces', function(req, res, next){
-    console.log(req.query.cat );
-    Annonce.find({  categorie: { $in: req.query.cat }}, function (err, cat) {
+app.get('/categories/annonces', function (req, res, next) {
+    console.log(req.query.cat);
+    Annonce.find({categorie: {$in: req.query.cat}}, function (err, cat) {
         if (err) return next(err);
         console.log(cat);
         res.send(cat);
@@ -647,6 +649,18 @@ app.post('/api/unsubscribe', ensureAuthenticated, function (req, res, next) {
     });
 });
 
+app.post('/upload/picture', function (req, res, next) {
+    var fstream;
+    req.pipe(req.busboy);
+    req.busboy.on('file', function (fieldname, file, filename) {
+        fstream = fs.createWriteStream(__dirname + '/public/images/' + filename);
+        file.pipe(fstream);
+        fstream.on('close', function () {
+            res.redirect('back');
+        });
+    });
+});
+
 app.post('/image/imag', function (req, res, next) {
     query = {'email': req.body.email};
     var identifiantPub = shortid.generate();
@@ -655,8 +669,8 @@ app.post('/image/imag', function (req, res, next) {
     var identifiantCat;
     var dateCat;
     var ObjectId = mongoose.Types.ObjectId;
-    var prix1 = req.body.montant*0.4;
-    var prix2 = req.body.montant*0.6;
+    var prix1 = req.body.montant * 0.4;
+    var prix2 = req.body.montant * 0.6;
     var idCompte = req.body.numCompte;
     var psswd = req.body.passwd;
 
@@ -664,24 +678,24 @@ app.post('/image/imag', function (req, res, next) {
     var pay = require('paypal-pay')({
         'userId': idCompte,
         'password': psswd,
-        'signature' : 'AkhzG..PXbThngjvEnnPuE33IuSxAhsaHTJo69SkjF3cuiH-4gvo0qsT',
-        'senderEmail' : 'testcybex-facilitator@hotmail.com',
+        'signature': 'AkhzG..PXbThngjvEnnPuE33IuSxAhsaHTJo69SkjF3cuiH-4gvo0qsT',
+        'senderEmail': 'testcybex-facilitator@hotmail.com',
         'sandbox': true,
         'feesPayer': 'SENDER',
         'currencyCode': 'USD'
     });
-    pay('testcybex-buyer@hotmail.com', prix1, "This is an example memo", function(err, response){
+    pay('testcybex-buyer@hotmail.com', prix1, "This is an example memo", function (err, response) {
         console.log(response);
-        if(err){
-            console.log(err+'ooooooooooooooo');
+        if (err) {
+            console.log(err + 'ooooooooooooooo');
             return;
         }
     });
 //Transfert vers compte 2 qui sera partagé avec les clients:
-    pay('testcybex-buyer@hotmail.com', prix2, "This is an example memo", function(err, response){
+    pay('testcybex-buyer@hotmail.com', prix2, "This is an example memo", function (err, response) {
         console.log(response);
-        if(err){
-            console.log(err+'uuuuuuuuuuuuuuuuuu');
+        if (err) {
+            console.log(err + 'uuuuuuuuuuuuuuuuuu');
             return;
         }
     });
@@ -696,7 +710,7 @@ app.post('/image/imag', function (req, res, next) {
         montant: req.body.montant,
         marque: req.body.marque,
         lienExterne: req.body.lienExterne,
-        url: req.body.url,
+        url: '/images/' + req.body.url,
         type: req.body.type
         // date: dateCat
     }

@@ -20,14 +20,13 @@ angular.module('MyApp')
         $scope.user = $rootScope.currentUser;
 
 
-        /* $http.get('/api/user', {params: {id: $rootScope.currentUser._id}})
-         .success(function (data) {
-         $scope.user = data;
-         $scope.userName = data.name;
-         }).error(function (err) {
-         console.log(err, 'error user !!');
-         });*/
-
+        $http.get('/api/user', {params: {id: $rootScope.currentUser._id}})
+            .success(function (data) {
+                $scope.user = data;
+                $scope.userName = data.name;
+            }).error(function (err) {
+                console.log(err, 'error user !!');
+            });
 
         $http.get('/categories/annonces', {params: {cat: $rootScope.currentUser.Categories}})
             .success(function (data) {
@@ -45,6 +44,16 @@ angular.module('MyApp')
                 console.log(err, 'error get categories !!');
             });
 
+        $scope.check = function (video) {
+            if (video in $scope.user.annoncesVideos)
+                return true;
+            return false;
+        };
+        $scope.checked = function (image) {
+            if (image in $scope.ann)
+                return true;
+            return false;
+        };
 
         $scope.$on('youtube.player.ready', function ($event, player) {
             videoLong = player.getDuration();
@@ -71,26 +80,23 @@ angular.module('MyApp')
             player.stopVideo();
             player.playVideo();
             player.pauseVideo();
-            var vid = $scope.user.annoncesVideos;
+            var vid = $scope.videos;
             var lien = player.getVideoUrl();
             var res = lien.replace("?v=", "/");
             for (var i = 0; i < vid.length; i++) {
-                if (!vid[i].url.localeCompare(res)) {
-                    var videoCheck = $scope.user.annoncesVideos[i].check;
-                    var id = $scope.user.annoncesVideos[i].id;
-                    var c = i;
+                if (!vid[i].lienExterne.localeCompare(res)) {
+                    if (!$scope.check($scope.videos[i])) {
+                        $scope.user.annoncesVideos.push($scope.videos[i]);
+                        $scope.donate($scope.videos[i]);
+                    }
                     break;
                 }
-            }
-            if (!videoCheck) {
-                $scope.user.annoncesVideos[c].check = true;
-                $scope.donate(id);
             }
         });
 
         $scope.open = function (image) {
             $scope.pub = image.url;
-            $scope.lien = image.lien;
+            $scope.lien = image.lienExterne;
             $scope.heightDialogImage = 550;
             $scope.widthDialogImage = 800;
             ngDialog.open({
@@ -113,13 +119,12 @@ angular.module('MyApp')
             });
         };
 
-        $scope.donate = function (idPub) {
+        $scope.donate = function (pub) {
             $scope.user.portefeuille += 1;
             $http.put('/api/users/' + $scope.user._id, $scope.user).success(function (data) {
                 $scope.user = data;
                 $rootScope.currentUser = data;
-                $scope.videos = data.annoncesVideos;
-                updatePub(idPub);
+                //updatePub(idPub);
             });
         };
 

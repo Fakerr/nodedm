@@ -105,6 +105,7 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mg
                 console.log('not connected');
                 event.preventDefault();
                 console.log(event);
+
                 if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() != '/signup'))
                     $location.path('/login');
             }
