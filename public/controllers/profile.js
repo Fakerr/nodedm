@@ -75,6 +75,7 @@ angular.module('MyApp')
         $scope.$on('youtube.player.ended', function ($event, player) {
             // modif boolean check and update $scope.user
             $scope.show = false;
+            console.log("video ended");
             videoLong = player.getDuration();
             timeAct = 0;
             player.stopVideo();
@@ -82,11 +83,11 @@ angular.module('MyApp')
             player.pauseVideo();
             var vid = $scope.videos;
             var lien = player.getVideoUrl();
-            var res = lien.replace("?v=", "/");
             for (var i = 0; i < vid.length; i++) {
                 if (!vid[i].lienExterne.localeCompare(res)) {
                     if (!$scope.check($scope.videos[i])) {
                         $scope.user.annoncesVideos.push($scope.videos[i]);
+                        console.log( $scope.user.annoncesVideos);
                         $scope.donate($scope.videos[i]);
                     }
                     break;
