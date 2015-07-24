@@ -23,10 +23,21 @@ angular.module('MyApp')
                 $scope.userName = data.name;
                 $scope.ann = data.annonces;
                 $scope.videos = data.annoncesVideos;
+
             }).error(function (err) {
                 console.log(err, 'error user !!');
             });
 
+        $scope.check = function(video){
+            if (video in $scope.videos)
+                return true;
+            return false;
+         };
+        $scope.checked = function(image){
+            if (image in $scope.ann)
+                return true;
+            return false;
+        };
         $scope.$on('youtube.player.ready', function ($event, player) {
             videoLong = player.getDuration();
             timeAct = 0;
@@ -52,20 +63,18 @@ angular.module('MyApp')
             player.stopVideo();
             player.playVideo();
             player.pauseVideo();
-            var vid = $scope.user.annoncesVideos;
+            var vid = $scope.videos;
             var lien = player.getVideoUrl();
             var res = lien.replace("?v=", "/");
             for (var i = 0; i < vid.length; i++) {
                 if (!vid[i].url.localeCompare(res)) {
-                    var videoCheck = $scope.user.annoncesVideos[i].check;
-                    var id = $scope.user.annoncesVideos[i].id;
-                    var c = i;
+                    if(!$scope.check($scope.videos[i]))
+                    {
+                        $scope.user.annoncesVideos = $scope.videos[i];
+                        $scope.donate($scope.videos[i].id);
+                    }
                     break;
                 }
-            }
-            if (!videoCheck) {
-                $scope.user.annoncesVideos[c].check = true;
-                $scope.donate(id);
             }
         });
 

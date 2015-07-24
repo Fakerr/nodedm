@@ -14,6 +14,7 @@ var agenda = require('agenda')({db: {address: 'localhost:27017/test'}});
 var sugar = require('sugar');
 var nodemailer = require('nodemailer');
 var _ = require('lodash');
+var autoIncrement = require('mongoose-auto-increment');
 var tokenSecret = 'your unique secret';
 var uuid = require('node-uuid');
 multiparty = require('multiparty');
@@ -24,10 +25,19 @@ var spawn = require('child_process').spawn;
 var _ = require('underscore');
 var util = require('util');
 var fakery = require('mongoose-fakery');
+var paypal = require('paypal-rest-sdk');
+var Paypal1 = require('paypal-adaptive');
 var session = require('express-session');
 var shortid = require('shortid');
-var busboy = require('connect-busboy');
 
+
+var administrateurSchema = new mongoose.Schema({
+    name: String,
+    email: {type: String, unique: true, lowercase: true, trim: true},
+    password: String,
+    type: String
+});
+var connection = mongoose.createConnection("mongodb://localhost");
 var videoPub = new mongoose.Schema({
     id: String,
     url: String,
@@ -43,18 +53,27 @@ var imageSchema = new mongoose.Schema({
     url: String
 });
 
+var image2Schema = new mongoose.Schema({
+    id: Number,
+    question: String,
+    categorie: String
+});
+
+var annoncesSchema = new mongoose.Schema({
+    categorie: String,
+    pubs: []
+});
 
 var annonceurSchema = new mongoose.Schema({
     name: {type: String, trim: true, required: true},
     email: {type: String, unique: true, lowercase: true, trim: true},
     password: String,
     type: String,
-    pub: Object
+    pub: []
 });
 
-
 var userSchema = new mongoose.Schema({
-    name: {type: String, trim: true, required: true},
+    Nom: {type: String, trim: true, required: true},
     email: {type: String, unique: true, lowercase: true, trim: true},
     password: String,
     type: String,
@@ -66,35 +85,105 @@ var userSchema = new mongoose.Schema({
         id: String,
         email: String
     },
-    portefeuille: Number,
-    InfoPerso: {
-        fulfil: Boolean,
-        age: String,
-        sexe: String,
-        job: String,
-        langues: Array,
-        statut: String,
-        enfant: Number,
-        nivEtude: String,
-        salaire: Number
-    },
-    ModeVie: {
-        fulfil: Boolean,
-        poids: Number,
-        taille: Number,
-        freqVoyage: Number,
-        typeVoyages: Array,
-        direction: String,
-        duree: Number,
-        typeHebergement: Array,
-        compagnie: Array,
-        typeReservation: String,
-        Budget: String
-    },
+    fulfil1: Boolean,
+    fulfil2: Boolean,
+    Prenom: String,
+    Sexe: String,
+    Age: Number,
+    type: String,
+    Statut_social: String,
+    Nombre_enfants: Number,
+    Niveau_Etude: String,
+    Profession: String,
+    Salaire: Number,
+    Langues: [{langue: String}],
+    Poids: Number,
+    Taille: Number,
+    IMC: Number,
+    Allergies: [{allergie: String}],
+    Maladies: [{maladie: String}],
+    Frequence_voyages: Number,
+    Types_voyages: String,
+    Budget_voyages: Number,
+    Direction: String,
+    Duree_voyages: Number,
+    Type_hebergement: String,
+    Compagnie: String,
+    Types_reservation: String,
+    Age_ordinateur: Number,
+    Marque_ordinateur: String,
+    Prix_ordinateur: Number,
+    Age_telephone: Number,
+    Marque_tele: String,
+    Prix_tele: Number,
+    Lieu_achat: String,
+    Operateurs_tel: [{op: String}],
+    Choix_operateur: String,
+    Type_offre: String,
+    Type_connexion_internet: String,
+    Fournisseur_internet: String,
+    Sports: [{Sport: String}],
+    Budget_sport: Number,
+    Frequence_sport: Number,
+    Endroit_sport: String,
+    Niveau_Sport: String,
+    Sports_regardes: [{Sport: String}],
+    Comment: String,
+    Type_abonnement: String,
+    Utilisation_produits_cosmétiques: Number,
+    Marques: [{Marque: String}],
+    Frequence_utilisation: Number,
+    Critere_choix: String,
+    Frequence_achat: Number,
+    Lieu_achat_produits_cosmetiques: String,
+    Tester_produit: Number,
+    Salons_esthetiques: Number,
+    Frequence_salon_esthetiques: Number,
+    Styles_vetement: [{Style: String}],
+    Styles_chaussures: [{Style: String}],
+    Budget: Number,
+    Critere_choix_habits: [{Critere: String}],
+    maniere_achat: String,
+    hebergement: String,
+    status: String,
+    Etat_hebergement: String,
+    style_hebergement: String,
+    source_inspiration_hebergement: String,
+    Boissons: [{type: String, marque: String, frequence: String, Budget: Number, lieu: String}],
+    budget_carburants: Number,
+    type_carburant: String,
+    Station_de_services: String,
+    Transport_publique: [{type: String, frequence: Number, dest: String}],
+    Categories: [],
+    Mode_payement: String,
     annonces: [],
     annoncesVideos: []
 });
 
+paypal.configure({
+    'mode': 'sandbox', //sandbox or live
+    'client_id': 'ARXi5KtJpLv0xpGdOM3iZNzoLNFHRG4wSmM7vlOjIirp3zBD--53lDKicwxwr-wwAgqcHDCFD749gF_S',
+    'client_secret': 'EP_uhxXQab5aBvYkEpz2UAYSjP9n3WSaNuM7rU_2TcOzQZxhu2G7E8w8hyKWh98_NuNWv9UpDal95bXI'
+});
+var card_data = {
+    "type": "visa",
+    "number": "4032039278059607",
+    "expire_month": "08",
+    "expire_year": "2020",
+    "cvv2": "123",
+    "first_name": "Joe",
+    "last_name": "Shopper"
+};
+
+paypal.creditCard.create(card_data, function (error, credit_card) {
+    if (error) {
+        console.log(error + 'erreur');
+        // throw error;
+    } else {
+        // console.log("Create Credit-Card Response");
+        // console.log(credit_card);
+    }
+})
 
 userSchema.pre('save', function (next) {
     var user = this;
@@ -122,11 +211,30 @@ annonceurSchema.pre('save', function (next) {
     });
 });
 
+
+annoncesSchema.pre('save', function (next) {
+    var annonce = this;
+    next();
+});
+
+administrateurSchema.pre('save', function (next) {
+    var administrateur1 = this;
+    if (!administrateur1.isModified('password')) return next();
+    bcrypt.genSalt(10, function (err, salt) {
+        if (err) return next(err);
+        bcrypt.hash(administrateur1.password, salt, function (err, hash) {
+            if (err) return next(err);
+            administrateur1.password = hash;
+            next();
+        });
+    });
+});
+
+
 imageSchema.pre('save', function (next) {
     var imagePub = this;
     next();
 });
-
 
 userSchema.methods.comparePassword = function (candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
@@ -142,12 +250,23 @@ annonceurSchema.methods.comparePassword = function (candidatePassword, cb) {
     });
 };
 
+administrateurSchema.methods.comparePassword = function (candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    });
+};
 
 var User = mongoose.model('User', userSchema);
 var Annonceur = mongoose.model('Annonceur', annonceurSchema);
 var ImagePub = mongoose.model('ImagePub', imageSchema);
-var form = new multiparty.Form();
+var ImageAdmin = mongoose.model('ImageAdmin', image2Schema);
+var Annonce = mongoose.model('Annonce', annoncesSchema);
+var Administrateur1 = mongoose.model('Administrateur1', administrateurSchema);
+var connection = mongoose.createConnection("mongodb://localhost");
 mongoose.connect('localhost');
+autoIncrement.initialize(connection);
+image2Schema.plugin(autoIncrement.plugin, 'ImageAdmin');
 
 var app = express();
 
@@ -157,7 +276,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(busboy());
 var data;
 
 function ensureAuthenticated(req, res, next) {
@@ -188,18 +306,17 @@ function createJwtToken(user) {
     return jwt.encode(payload, tokenSecret);
 }
 
-
 app.post('/auth/signup', function (req, res, next) {
     var type = req.body.type;
     if (!type.localeCompare("client")) {
         var user = new User({
-            name: req.body.name,
+            Nom: req.body.name,
             email: req.body.email,
             password: req.body.password,
             type: req.body.type,
             portefeuille: 0,
-            "InfoPerso.fulfil": false,
-            "ModeVie.fulfil": false
+            fulfil1: false,
+            fulfil2: false
         });
         user.save(function (err) {
             if (err) return next(err);
@@ -219,17 +336,31 @@ app.post('/auth/signup', function (req, res, next) {
     }
 });
 
-
 app.post('/auth/login', function (req, res, next) {
     Annonceur.findOne({email: req.body.email}, function (err, ann) {
         if (!ann) {
             User.findOne({email: req.body.email}, function (err, user) {
-                if (!user) return res.send(401, 'Invalid email and/or password');
-                user.comparePassword(req.body.password, function (err, isMatch) {
-                    if (!isMatch) return res.send(401, 'Invalid email and/or password');
-                    var token = createJwtToken(user);
-                    res.send({token: token});
-                });
+                if (!user) {
+                    Administrateur1.findOne({email: req.body.email}, function (err, adminis) {
+                        if (!adminis) res.send(401, 'Invalid email and/or password');
+                        else {
+                            adminis.comparePassword(req.body.password, function (err, isMatch) {
+
+                                if (!isMatch) return res.send(401, 'Invalid email and/or password');
+                                var token = createJwtToken(adminis);
+                                res.send({token: token});
+                            });
+                        }
+                    });
+
+                } else {
+                    user.comparePassword(req.body.password, function (err, isMatch) {
+
+                        if (!isMatch) return res.send(401, 'Invalid email and/or password');
+                        var token = createJwtToken(user);
+                        res.send({token: token});
+                    });
+                }
             });
         } else {
             ann.comparePassword(req.body.password, function (err, isMatch) {
@@ -249,16 +380,17 @@ app.post('/infor/info', function (req, res, next) {
     var sexe1 = req.body.sexe;
     var job1 = req.body.job;
     var langage1 = req.body.langues;
+
     User.findOneAndUpdate(query, {
-        "InfoPerso.fulfil": true,
-        "InfoPerso.age": age1,
-        "InfoPerso.sexe": sexe1,
-        "InfoPerso.job": job1,
-        "InfoPerso.langues": langage1,
-        "InfoPerso.statut": req.body.statut,
-        "InfoPerso.enfant": req.body.enfant,
-        "InfoPerso.nivEtude": req.body.nivEtude,
-        "InfoPerso.salaire": req.body.salaire
+        "Age": age1,
+        "Sexe": sexe1,
+        "Profession": job1,
+        "Langues": langage1,
+        "Statut_social": req.body.statut,
+        "Nombre_enfants": req.body.enfant,
+        "Niveau_Etude": req.body.nivEtude,
+        "Salaire": req.body.salaire,
+        "fulfil1": true
     }, {upsert: true}, function (err, doc) {
         if (err) return res.send(500, {error: err});
         return res.send("succesfully saved");
@@ -267,23 +399,100 @@ app.post('/infor/info', function (req, res, next) {
 
 
 app.post('/mode/mod', function (req, res, next) {
-    var query = {'email': req.body.email};
+    var query = {'email': 'yo@yo'};
+    var poids = req.body.poids;
+    var taille1 = req.body.taille;
     var typeVoyages1 = req.body.typeVoyages;
+    var IMC1 = req.body.poids / (req.body.taille * req.body.taille);
     User.findOneAndUpdate(query, {
-        "ModeVie.fulfil": true,
-        "ModeVie.poids": req.body.poids,
-        "ModeVie.taille": req.body.taille,
-        "ModeVie.freqVoyage": req.body.freqVoyage,
-        "ModeVie.typeVoyages": typeVoyages1,
-        "ModeVie.direction": req.body.direction,
-        "ModeVie.duree": req.body.duree,
-        "ModeVie.typeHebergement": req.body.typeHebergements,
-        "ModeVie.compagnie": req.body.Compagnie,
-        "ModeVie.typeReservation": req.body.typeReservation,
-        "ModeVie.Budget": req.body.budget
+        "Poids": req.body.poids,
+        "Taille": req.body.taille,
+        "IMC": IMC1,
+        "Frequence_voyages": req.body.freqVoyage,
+        "Types_voyages": typeVoyages1,
+        "Direction": req.body.direction,
+        "Duree_voyages": req.body.duree,
+        "Type_hebergement": req.body.typeHebergements,
+        "Compagnie": req.body.Compagnie,
+        "Types_reservation": req.body.typeReservation,
+        "Budget_voyages": req.body.budget,
+        "fulfil2": true
     }, {upsert: true}, function (err, doc) {
         if (err) return res.send(500, {error: err});
         return res.send("succesfully saved");
+    });
+});
+
+app.post('/transfertbanc/trans', function (req, res, next) {
+    var userID1 = 'testcybex-buyer@hotmail.com';
+    var password1;
+    var query = {'email': 'yo@yo'};
+    var numCompte = req.body.numer;
+    var montant = req.body.montant
+    console.log(req.body.method);
+    console.log(numCompte);
+    console.log(montant);
+    console.log(req.body.nomAssociation);
+    console.log(req.body.typeBon);
+
+    if (req.body.method === 'bonAchat') {
+        console.log('Bon dachat');
+    }
+    if (req.body.method === 'association') {
+        if (req.body.nomAssociation == 'croixRouge') {
+            // userID1 prend ID du compte de l'association Croissant rouge
+            console.log('transfert réalisé vers le compte du croissant rouge');
+        }
+        if (req.body.nomAssociation == 'medecinSansFrontiere') {
+            // userID1 prend ID du compte de l'association Croissant rouge
+            console.log('transfert réalisé vers le compte du Medecins sans frontieres');
+        }
+        if (req.body.nomAssociation == 'unicef') {
+            // userID1 prend ID du compte de l'association Croissant rouge
+            console.log('transfert réalisé vers le compte d UNICEF');
+        }
+    }
+    if (req.body.method === 'banktrans') {
+        console.log('Transfert bancaire réalisé');
+        montant = req.body.montant;
+        userID1 = req.body.numer;
+    }
+    var pay = require('paypal-pay')({
+        //required parameters
+        'userId': 'testcybex-facilitator_api1.hotmail.com',
+        'password': 'WQCV82LMEGHAKYPH',
+        'signature': 'AkhzG..PXbThngjvEnnPuE33IuSxAhsaHTJo69SkjF3cuiH-4gvo0qsT',
+
+        //make sure that senderEmail and above credentials are from the same paypal account
+        //otherwise paypal won't compete payment automatically
+        'senderEmail': 'testcybex-facilitator@hotmail.com',
+
+        //optional parameters and their defaults
+        'sandbox': true,
+        'feesPayer': 'SENDER',
+        'currencyCode': 'USD'
+    });
+
+    pay(userID1, 50, "This is an example memo", function (err, response) {
+        console.log(response);
+        if (err) {
+            console.log(err + 'uuuuuuuuuuuuuuuuuu');
+            //response.error -- will contains errors if something went wrong
+            //see response examples below for more details
+
+            return;
+        }
+    });
+});
+
+app.post('/adminis/admin', function (req, res, next) {
+    var imageAdmin = new ImageAdmin({
+        categorie: req.body.categorie,
+        question: req.body.question
+    });
+    imageAdmin.save(function (err) {
+        if (err) return next(err);
+        res.send(200);
     });
 });
 
@@ -374,31 +583,20 @@ app.get('/api/users/:id', function (req, res, next) {
 
 
 app.put('/api/users/:id', function (req, res, next) {
+    /*if (req.query.url) {
+     console.log(req.query.url);
+     User.update({_id: req.params.id,'annoncesVideos.url': req.query.url}, {'$set': {
+     'annoncesVideos.$.check': true}},function(err){
+     return next(err);
+     })
+     }else{*/
+    console.log('hello');
     User.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
         if (err) return next(err);
         res.json(post);
     });
+    //}
 });
-
-
-app.get('/api/annonceurs/pub', function (req, res, next) {
-    if (!req.query.id_pub) {
-        return res.send(400, {message: 'Id pub parameter is required.'});
-    }
-    Annonceur.findOne({pub: {$elemMatch: {id: req.query.id_pub}}}, function (err, annonceur) {
-        if (err) return next(err);
-        res.send(annonceur);
-    });
-});
-
-
-app.put('/api/annonceurs/:id', function (req, res, next) {
-    Annonceur.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
-        if (err) return next(err);
-        res.sendStatus(200);
-    });
-});
-
 
 app.get('/api/imagesPub', function (req, res, next) {
     if (!req.query.name) {
@@ -409,7 +607,6 @@ app.get('/api/imagesPub', function (req, res, next) {
         res.send({available: !imagePub});
     });
 });
-
 
 //upload donnees vers fichier .json
 spawn('mongoexport', ['--db', 'test', '--collection', 'users', '--out', 'chahnouza.json'])
@@ -440,41 +637,76 @@ app.post('/api/unsubscribe', ensureAuthenticated, function (req, res, next) {
     });
 });
 
-app.post('/upload/picture', function (req, res, next) {
-    var fstream;
-    req.pipe(req.busboy);
-    req.busboy.on('file', function (fieldname, file, filename) {
-        fstream = fs.createWriteStream(__dirname + '/public/images/' + filename);
-        file.pipe(fstream);
-        fstream.on('close', function () {
-            res.redirect('back');
+app.post('/image/imag', function (req, res, next) {
+    query = {'email': req.body.email};
+    var identifiantPub = shortid.generate();
+    var ObjectId = mongoose.Types.ObjectId;
+    console.log(req.body.categorie);
+    var identifiantCat;
+    var dateCat;
+    var ObjectId = mongoose.Types.ObjectId;
+    var prix1 = req.body.montant*0.4;
+    var prix2 = req.body.montant*0.6;
+    var idCompte = req.body.numCompte;
+    var psswd = req.body.passwd;
+
+    //transfert bancaire vers le compte administrateur
+    var pay = require('paypal-pay')({
+        'userId': idCompte,
+        'password': psswd,
+        'signature' : 'AkhzG..PXbThngjvEnnPuE33IuSxAhsaHTJo69SkjF3cuiH-4gvo0qsT',
+        'senderEmail' : 'testcybex-facilitator@hotmail.com',
+        'sandbox': true,
+        'feesPayer': 'SENDER',
+        'currencyCode': 'USD',
+    });
+    pay('testcybex-buyer@hotmail.com', prix1, "This is an example memo", function(err, response){
+        console.log(response);
+        if(err){
+            console.log(err+'ooooooooooooooo');
+            return;
+        }
+    });
+//Transfert vers compte 2 qui sera partagé avec les clients:
+    pay('testcybex-buyer@hotmail.com', prix2, "This is an example memo", function(err, response){
+        console.log(response);
+        if(err){
+            console.log(err+'uuuuuuuuuuuuuuuuuu');
+            return;
+        }
+    });
+    //chaque video vaut 1
+    var num_max = Math.floor(prix2);
+    var annonce = {
+        id: identifiantPub,
+        name: req.body.nom_pub,
+        annonceur: req.body.email,
+        nb_max: num_max,
+        nb_utilisation: 0,
+        montant: req.body.montant,
+        marque: req.body.marque,
+        lienExterne: req.body.lienExterne,
+        url: req.body.url,
+        type: req.body.type
+        // date: dateCat
+    }
+    var pub = {
+        id_pub: identifiantPub,
+        categorie: req.body.categorie,
+        date_pub: ''
+    }
+    Annonceur.findOneAndUpdate(query, {$push: {'pub': pub}}, {upsert: true}, function (err, doc) {
+        if (err) return res.send(500, {error: err});
+        Annonce.findOneAndUpdate({'categorie': req.body.categorie}, {$push: {'pubs': annonce}}, {upsert: true}, function (err, doc) {
+            if (err) return res.send(500, {error: err});
+            res.send(200);
         });
     });
 });
 
-app.post('/image/imag', function (req, res, next) {
-    query = {'email': req.body.email};
-    var pub1 = {
-        id: shortid.generate(),
-        type: req.body.type,
-        nom_pub: req.body.nom_pub,
-        categorie: req.body.categorie,
-        nb_max: req.body.nb_max,
-        marque: req.body.marque,
-        budget: req.body.budget,
-        lienExterne: req.body.lienExterne,
-        url: '/images/' + req.body.url
-    }
-    Annonceur.findOneAndUpdate(query, {$push: {'pub': pub1}}, {upsert: true}, function (err, doc) {
-        if (err) return res.send(500, {error: err});
-        sendPubForUsers(pub1.id, pub1.categorie, pub1.type, pub1.lienExterne, pub1.url, res);
-    });
-});
-
-function sendPubForUsers(id, categorie, type, lienPub, urlPub, res) {
+function sendPubForUsers(categorie, type, lienPub, urlPub, res) {
     if (!type.localeCompare('image')) {
         var image = {
-            id: id,
             url: urlPub,
             lien: lienPub,
             check: false
@@ -485,7 +717,6 @@ function sendPubForUsers(id, categorie, type, lienPub, urlPub, res) {
         })
     } else if (!type.localeCompare('video')) {
         var video = {
-            id: id,
             url: lienPub.replace("?v=", "/"),
             check: false
         }
