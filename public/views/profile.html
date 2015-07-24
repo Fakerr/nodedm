@@ -13,10 +13,10 @@
                             <div class="embed-responsive embed-responsive-16by9 video-wrapper">
 
                                 <img id="imgW" src="images/bg.png"
-                                     ng-click="openVideo(video.url)"
+                                     ng-click="openVideo(video.lienExterne)"
                                      ng-class="{'consomme': video.check == true}"/>
                                 <span class="visionne" ng-if="video.check == true">Visionnée</span>
-                                <youtube-video video-url="video.url" class="embed-responsive-item"
+                                <youtube-video video-url="video.lienExterne" class="embed-responsive-item"
                                                player-vars="playerVars"></youtube-video>
                             </div>
                         </div>

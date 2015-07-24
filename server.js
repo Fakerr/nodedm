@@ -90,6 +90,7 @@ var userSchema = new mongoose.Schema({
     Prenom: String,
     Sexe: String,
     Age: Number,
+    portefeuille: Number,
     type: String,
     Statut_social: String,
     Nombre_enfants: Number,
@@ -399,7 +400,7 @@ app.post('/infor/info', function (req, res, next) {
 
 
 app.post('/mode/mod', function (req, res, next) {
-    var query = {'email': 'yo@yo'};
+    var query = {'email': req.body.email};
     var poids = req.body.poids;
     var taille1 = req.body.taille;
     var typeVoyages1 = req.body.typeVoyages;
@@ -554,6 +555,15 @@ app.post('/auth/google', function (req, res, next) {
     });
 });
 
+app.get('/categories/annonces', function(req, res, next){
+    console.log(req.query.cat );
+    Annonce.find({  categorie: { $in: req.query.cat }}, function (err, cat) {
+        if (err) return next(err);
+        console.log(cat);
+        res.send(cat);
+    });
+});
+
 
 app.get('/api/users', function (req, res, next) {
     if (!req.query.email) {
@@ -641,13 +651,47 @@ app.post('/image/imag', function (req, res, next) {
     query = {'email': req.body.email};
     var identifiantPub = shortid.generate();
     var ObjectId = mongoose.Types.ObjectId;
-    // var dateCat = ObjectId(identifiantPub).getTimestamp();
     console.log(req.body.categorie);
+    var identifiantCat;
+    var dateCat;
+    var ObjectId = mongoose.Types.ObjectId;
+    var prix1 = req.body.montant*0.4;
+    var prix2 = req.body.montant*0.6;
+    var idCompte = req.body.numCompte;
+    var psswd = req.body.passwd;
+
+    //transfert bancaire vers le compte administrateur
+    var pay = require('paypal-pay')({
+        'userId': idCompte,
+        'password': psswd,
+        'signature' : 'AkhzG..PXbThngjvEnnPuE33IuSxAhsaHTJo69SkjF3cuiH-4gvo0qsT',
+        'senderEmail' : 'testcybex-facilitator@hotmail.com',
+        'sandbox': true,
+        'feesPayer': 'SENDER',
+        'currencyCode': 'USD'
+    });
+    pay('testcybex-buyer@hotmail.com', prix1, "This is an example memo", function(err, response){
+        console.log(response);
+        if(err){
+            console.log(err+'ooooooooooooooo');
+            return;
+        }
+    });
+//Transfert vers compte 2 qui sera partagé avec les clients:
+    pay('testcybex-buyer@hotmail.com', prix2, "This is an example memo", function(err, response){
+        console.log(response);
+        if(err){
+            console.log(err+'uuuuuuuuuuuuuuuuuu');
+            return;
+        }
+    });
+    //chaque video vaut 1
+    var num_max = Math.floor(prix2);
     var annonce = {
         id: identifiantPub,
         name: req.body.nom_pub,
         annonceur: req.body.email,
-        nb_max: 15,
+        nb_max: num_max,
         nb_utilisation: 0,
         montant: req.body.montant,
         marque: req.body.marque,

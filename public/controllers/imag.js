@@ -1,49 +1,31 @@
 angular.module('MyApp')
-    .controller('SearchCtrl', ['$scope', 'image', '$rootScope', 'Upload', function ($scope, image, $rootScope, Upload) {
+    .controller('SearchCtrl', ['$scope', 'image', '$rootScope', function ($scope, image, $rootScope) {
 
         $scope.img = '';
         $scope.select = {cible: ''};
         /*fix undefined cible problem(coz ngRepeat scope)*/
 
-        $scope.lacible = "";
-
-        $scope.upload = function (files) {
-            if (files && files.length) {
-                var file = files[0];
-                $scope.img = file.name;
-                Upload.upload({
-                    url: 'upload/picture',
-                    file: file
-                }).progress(function (evt) {
-                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                }).success(function (data, status, headers, config) {
-                }).error(function (data, status, headers, config) {
-                })
-            }
+        $scope.fileNameChanged = function (element) {
+            $scope.imagePub = element.files[0];
+            $scope.img = $scope.imagePub.name;
         };
 
         $scope.imag = function () {
-            $scope.upload($scope.files);
             image.imag({
                 email: $rootScope.currentUser.email,
                 type: $scope.selection,
                 nom_pub: $scope.name,
                 categorie: $scope.select.cible,
-                nb_max: 15, //traitement à faire ...
+                nb_max: 15,
+                montant: $scope.prix,
                 marque: $scope.marque,
-                budget: $scope.budget,
                 lienExterne: $scope.url,
-                url: $scope.img
+                url: $scope.img,
+                numCompte: $scope.NumCompte,
+                passwd: $scope.passwd
             });
-            $scope.img = '',
-                $scope.selection = '',
-                $scope.name = '',
-                $scope.select = {cible: ''},
-                $scope.marque = '',
-                $scope.budget = '',
-                $scope.url = ''
+            $scope.img = '';
         };
-
         $scope.pageClass = 'fadeZoom';
         $scope.cibleAn = [
             {"name": "Maison", "array": ["cuisine", "salleDeBain", "meuble", "accessoire", "jardin", "produit"]},
@@ -82,5 +64,3 @@ angular.module('MyApp')
             {"name": "Construction", "array": ["construction"]},
             {"name": "Loisir", "array": ["intrumentMusique", "musique", "cinema", "livre", "theatre", "concert"]}];
     }]);
-
-

@@ -15,17 +15,36 @@ angular.module('MyApp')
         $scope.playerVars = {
             controls: 0
         };
+        $scope.ann = [];
+        $scope.videos = [];
+        $scope.user = $rootScope.currentUser;
 
 
-        $http.get('/api/user', {params: {id: $rootScope.currentUser._id}})
+        /* $http.get('/api/user', {params: {id: $rootScope.currentUser._id}})
+         .success(function (data) {
+         $scope.user = data;
+         $scope.userName = data.name;
+         }).error(function (err) {
+         console.log(err, 'error user !!');
+         });*/
+
+
+        $http.get('/categories/annonces', {params: {cat: $rootScope.currentUser.Categories}})
             .success(function (data) {
-                $scope.user = data;
-                $scope.userName = data.name;
-                $scope.ann = data.annonces;
-                $scope.videos = data.annoncesVideos;
+                data.forEach(function (categorie) {
+                    categorie.pubs.forEach(function (pub, index) {
+                        if (pub.type == "video") {
+                            $scope.videos.push(categorie.pubs[index]);
+                            console.log($scope.videos);
+                        } else {
+                            $scope.ann.push(categorie.pubs[index]);
+                        }
+                    });
+                });
             }).error(function (err) {
-                console.log(err, 'error user !!');
+                console.log(err, 'error get categories !!');
             });
+
 
         $scope.$on('youtube.player.ready', function ($event, player) {
             videoLong = player.getDuration();
@@ -121,15 +140,6 @@ angular.module('MyApp')
                     $scope.user = data;
                     $rootScope.currentUser = data;
                     $scope.ann = data.annonces;
-
-                    /* $window.localStorage.token = data.token;
-                     var token = data.token;
-                     if (token) {
-                     var payload = JSON.parse($window.atob(token.split('.')[1]));
-                     //takes a JSON-formatted string and converts it to a JavaScript object
-                     //window.atob: encoder
-                     $rootScope.currentUser = payload.user;
-                     }*/
                     updatePub(id);
                 });
             }
