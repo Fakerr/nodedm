@@ -1,13 +1,13 @@
-<div class="container">
+<div class="container container-modified">
 
     <div class="panel-body">
         <div ng-controller="ProfileCtrl">
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">VIDEOs</h2>
+            <div class="panel panel-default panel-modified">
+                <div class="panel-heading ">
+                    <h2 class="panel-title ">VIDEOs</h2>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body panel-modified">
                     <div class="row">
                         <div class="col-md-4" ng-repeat="video in videos">
                             <div class="embed-responsive embed-responsive-16by9 video-wrapper">
@@ -15,7 +15,7 @@
                                      ng-click="openVideo(video.lienExterne)"
                                      ng-class="{'consomme': check(video) == true}"/>
                                 <span class="visionne" ng-if="check(video) == true">Visionnée</span>
-                                <youtube-video video-url="video.lienExterne" class="embed-responsive-item"
+                                <youtube-video video-url="video.lienExterne" class="embed-responsive-item-preview"
                                                player-vars="playerVars"></youtube-video>
                             </div>
                         </div>

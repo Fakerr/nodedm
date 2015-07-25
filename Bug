@@ -14,7 +14,7 @@
    transfert bancaire + gift (QR code) + bond d'achat.(ch)
    Users historic + archivage des annonces (trace).
    Pause video when users try to change page.                            Fixed
-   Gerer tout les formulaires(redirection).
+   Gerer tout les formulaires(redirection).                              Anort
    Qr code implementation.
    limit number of visualization for one user (exple 5 max) per day.
    Problem when it is one catgeories for the user.
@@ -24,5 +24,5 @@
    belha todo list:
    upload image base64.                                                  Fixed
    redirection when someone try to access page without login.            Fixed
-   Page profile sans pub à amélioré.
+   Page profile sans pub à amélioré.                                     Fixed
    youtube rating systeme.

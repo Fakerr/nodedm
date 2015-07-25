@@ -17,7 +17,6 @@ angular.module('MyApp')
         };
         $scope.ann = [];
         $scope.videos = [];
-        $scope.user = $rootScope.currentUser;
 
 
         $http.get('/api/user', {params: {id: $rootScope.currentUser._id}})
@@ -45,13 +44,22 @@ angular.module('MyApp')
             });
 
         $scope.check = function (video) {
-            if (video in $scope.user.annoncesVideos)
-                return true;
+            for (var i = 0; i < $scope.user.annoncesVideos.length; i++) {
+                if (!$scope.user.annoncesVideos[i].lienExterne.localeCompare(video.lienExterne)) {
+                    return true;
+                    break;
+                }
+            }
             return false;
         };
+
         $scope.checked = function (image) {
-            if (image in $scope.ann)
-                return true;
+            for (var i = 0; i < $scope.user.annonces.length; i++) {
+                if (!$scope.user.annonces[i].lienExterne.localeCompare(image.lienExterne)) {
+                    return true;
+                    break;
+                }
+            }
             return false;
         };
 
@@ -83,8 +91,9 @@ angular.module('MyApp')
             player.pauseVideo();
             var vid = $scope.videos;
             var lien = player.getVideoUrl();
+           //var res = lien.replace("?v=", "/");
             for (var i = 0; i < vid.length; i++) {
-                if (!vid[i].lienExterne.localeCompare(res)) {
+                if (!vid[i].lienExterne.localeCompare(lien)) {
                     if (!$scope.check($scope.videos[i])) {
                         $scope.user.annoncesVideos.push($scope.videos[i]);
                         console.log( $scope.user.annoncesVideos);
@@ -94,7 +103,6 @@ angular.module('MyApp')
                 }
             }
         });
-
         $scope.open = function (image) {
             $scope.pub = image.url;
             $scope.lien = image.lienExterne;
@@ -125,7 +133,6 @@ angular.module('MyApp')
             $http.put('/api/users/' + $scope.user._id, $scope.user).success(function (data) {
                 $scope.user = data;
                 $rootScope.currentUser = data;
-                //updatePub(idPub);
             });
         };
 
