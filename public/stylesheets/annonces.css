@@ -52,10 +52,6 @@ img.displayed:hover {
     cursor: pointer;
 }
 
-#imgA:hover{
-    opacity: 0.9;
-}
-
 .aList{
     white-space: nowrap;
     margin: 0px;
@@ -98,6 +94,18 @@ img.displayed:hover {
     text-shadow: 0px 1px rgba(255, 255, 255, 0.7) ;
     color: rgba(0, 0, 0, 0.7) !important;
     z-index: 4 !important;
+}
+.visionneImage {
+    position: absolute;
+    top : 30%;
+    left: 30%;
+    font-family:Calibri;
+    font-weight: bolder;
+    text-align: center !important;
+    font-size: 4rem !important;
+    text-shadow: 0px 1px rgba(255, 255, 255, 0.7) ;
+    color: rgba(0, 0, 0, 0.7) !important;
+    z-index: -1 !important;
 }
 
 .embed-responsive {
@@ -172,4 +180,12 @@ img.displayed:hover {
         padding: 0px !important;
     }
 
+}
+.no-padding-bottom{
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+.no-padding-top{
+    padding-top: -15px;
+    margin-top: -15px;
 }

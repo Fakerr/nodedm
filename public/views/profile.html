@@ -2,8 +2,7 @@
 
     <div class="panel-body">
         <div ng-controller="ProfileCtrl">
-
-            <div class="panel panel-default panel-modified">
+            <div class="panel panel-default no-padding-bottom no-padding-top">
                 <div class="panel-heading ">
                     <h2 class="panel-title ">VIDEOs</h2>
                 </div>
@@ -26,15 +25,15 @@
             <br>
             <br>
 
-            <div class="panel panel-default">
+            <div class="panel panel-default no-padding-top">
                 <div class="panel-heading">
                     <h2 class="panel-title">IMAGEs</h2>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body panel-modified">
                     <div id="aWrapper">
                         <div class="row">
                             <div class="col-md-4" ng-repeat="annonce in ann track by $index">
-                                <span class="visionne" ng-if="checked(annonce) == true">Visionnée</span>
+                                <span class="visionneImage" ng-if="checked(annonce) == true">Visionnée</span>
                                 <img ng-class="{'consomme': checked(annonce) == true}" id="imgA"
                                      ng-src="{{annonce.url}}" class="imagepub1"
                                      ng-click="open(annonce)"/>

@@ -577,14 +577,14 @@ app.get('/api/users', function (req, res, next) {
     });
 });
 
-
+/*
 app.get('/api/user', function (req, res, next) {
     User.findOne({_id: req.query.id}, function (err, post) {
         if (err) return next(err);
         res.send(post);
     });
 });
-
+*/
 
 app.get('/api/users/:id', function (req, res, next) {
     User.findById(req.params.id, function (err, todo) {
@@ -595,17 +595,13 @@ app.get('/api/users/:id', function (req, res, next) {
 
 
 app.put('/api/users/:id', function (req, res, next) {
-    /*if (req.query.url) {
-     console.log(req.query.url);
-     User.update({_id: req.params.id,'annoncesVideos.url': req.query.url}, {'$set': {
-     'annoncesVideos.$.check': true}},function(err){
-     return next(err);
-     })
-     }else{*/
+
     console.log('hello');
-    User.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
+    User.findByIdAndUpdate(req.params.id, req.body, function (err, user) {
+        console.log(req.body);
         if (err) return next(err);
-        res.json(post);
+        var token = createJwtToken(req.body);
+        res.send({token: token});
     });
     //}
 });
