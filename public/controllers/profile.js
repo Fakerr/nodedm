@@ -79,14 +79,19 @@ angular.module('MyApp')
                 if (!vid[i].lienExterne.localeCompare(lien)) {
                     if (!$scope.check($scope.videos[i])) {
                         $rootScope.currentUser.annoncesVideos.push($scope.videos[i]);
-                        console.log("HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
-                        console.log($rootScope.currentUser.annoncesVideos);
                         $scope.donate($scope.videos[i]);
+                        ngDialog.open({
+                            template: 'thirdDialog',
+                            className: 'ngdialog-theme-default ngdialog-theme-custom',
+                            scope: $scope
+                        });
                     }
                     break;
                 }
             }
         });
+
+
         $scope.open = function (image) {
             $scope.pub = image.url;
             $scope.lien = image.lienExterne;

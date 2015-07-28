@@ -189,3 +189,18 @@ img.displayed:hover {
     padding-top: -15px;
     margin-top: -15px;
 }
+
+.panel-rating {
+    border-radius: 5px;
+    background-color: white;
+    font-family: 'Helvetica',sans-serif;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    margin: 0 auto;
+    max-width: 100%;
+    position: relative;
+    top:50px;
+    right:25px;
+    width: 600px;
+    height: 500px;
+}
