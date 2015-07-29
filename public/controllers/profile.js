@@ -17,7 +17,9 @@ angular.module('MyApp')
                 data.forEach(function (categorie) {
                     categorie.pubs.forEach(function (pub, index) {
                         if (pub.type == "video") {
-                            $scope.videos.push(categorie.pubs[index]);
+                            var a = categorie.pubs[index];
+                            a.categorie = categorie.categorie;
+                            $scope.videos.push(a);
                         } else {
                             $scope.ann.push(categorie.pubs[index]);
                         }
@@ -111,12 +113,13 @@ angular.module('MyApp')
         };
 
         $scope.donate = function (pub) {
+            console.log("--------------***********************---------");
+            console.log(pub);
             $rootScope.currentUser.portefeuille += 1;
+            $http.get('/api/annonces/pub', {params: {id_pub: pub.id, categorie:pub.categorie}}).success(function (ann) {
+            });
             $http.put('/api/users/' + $rootScope.currentUser._id, $rootScope.currentUser).success(function (data) {
-                $window.localStorage.token = data.token;
-                var payload = JSON.parse($window.atob(data.token.split('.')[1]));
-                console.log(payload.user);
-                $rootScope.currentUser = payload.user;
+                $window.localStorage.token = $window.localStorage.token = btoa(JSON.stringify($rootScope.currentUser));
             });
         };
 
@@ -133,17 +136,8 @@ angular.module('MyApp')
             }
         };
 
-        function updatePub(idPub) {
-            $http.get('/api/annonceurs/pub', {params: {id_pub: idPub}}).success(function (ann) {
-                var annonceur = ann;
-                var pubs = ann.pub;
-                for (var i = 0; i < pubs.length; i++) {
-                    if (!pubs[i].id.localeCompare(idPub)) {
-                        annonceur.pub[i].budget -= 1;
-                        break;
-                    }
-                }
-                $http.put('/api/annonceurs/' + annonceur._id, annonceur);
+        function updatePub(idPub,categ) {
+            $http.get('/api/annonces/pub', {params: {categorie:categ,id_pub: idPub}}).success(function (ann) {
             });
         }
 

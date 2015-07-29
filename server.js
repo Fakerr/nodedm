@@ -358,10 +358,9 @@ app.post('/auth/login', function (req, res, next) {
 
                 } else {
                     user.comparePassword(req.body.password, function (err, isMatch) {
-
                         if (!isMatch) return res.send(401, 'Invalid email and/or password');
-                        var token = createJwtToken(user);
-                        res.send({token: token});
+
+                        res.json(user);
                     });
                 }
             });
@@ -558,11 +557,11 @@ app.post('/auth/google', function (req, res, next) {
 });
 
 app.get('/categories/annonces', function (req, res, next) {
-    console.log(req.query.cat);
     Annonce.find({categorie: {$in: req.query.cat}}, function (err, cat) {
         if (err) return next(err);
-        console.log(cat);
         res.send(cat);
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+        console.log(cat);
     });
 });
 
@@ -600,10 +599,27 @@ app.put('/api/users/:id', function (req, res, next) {
     User.findByIdAndUpdate(req.params.id, req.body, function (err, user) {
         console.log(req.body);
         if (err) return next(err);
-        var token = createJwtToken(req.body);
-        res.send({token: token});
+       /* var token = createJwtToken(req.body);
+        res.send({token: token});*/
     });
-    //}
+});
+
+//ajouter 1 au nombre d'utilisation d'une publicité visionné
+app.get('/api/annonces/pub', function(req, res, next){
+    Annonce.findOne({categorie: req.query.categorie},function(err,obj) {
+        for(i=0; i< obj.pubs.length; i++){
+
+            if (obj.pubs[i].id === req.query.id_pub){
+                obj.pubs[i].nb_utilisation += 1;
+                Annonce.findOneAndUpdate({'pubs.id': req.query.id_pub},{pubs:obj.pubs},function(err, obj){
+
+                });
+                break;
+            }
+        }
+    });
+    //Annonce.findOneAndUpdate({id : req.query.id_pub},{nb_max : })
+
 });
 
 app.get('/api/imagesPub', function (req, res, next) {
@@ -661,7 +677,6 @@ app.post('/image/imag', function (req, res, next) {
     query = {'email': req.body.email};
     var identifiantPub = shortid.generate();
     var ObjectId = mongoose.Types.ObjectId;
-    console.log(req.body.categorie);
     var identifiantCat;
     var dateCat;
     var ObjectId = mongoose.Types.ObjectId;
@@ -724,7 +739,7 @@ app.post('/image/imag', function (req, res, next) {
     });
 });
 
-function sendPubForUsers(categorie, type, lienPub, urlPub, res) {
+/*function sendPubForUsers(categorie, type, lienPub, urlPub, res) {
     if (!type.localeCompare('image')) {
         var image = {
             url: urlPub,
@@ -745,7 +760,7 @@ function sendPubForUsers(categorie, type, lienPub, urlPub, res) {
             return res.send("successfuly saved");
         })
     }
-}
+}*/
 
 
 app.get('*', function (req, res) {
