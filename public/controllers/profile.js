@@ -6,12 +6,13 @@ angular.module('MyApp')
         var player1;
         var timeAct;
         var videoLong;
+//Supprimer la barre de youtube
         $scope.playerVars = {
             controls: 0
         };
         $scope.ann = [];
         $scope.videos = [];
-
+//get pubs selon categories de user in the collection categorie
         $http.get('/categories/annonces', {params: {cat: $rootScope.currentUser.Categories}})
             .success(function (data) {
                 data.forEach(function (categorie) {
@@ -28,7 +29,7 @@ angular.module('MyApp')
             }).error(function (err) {
                 console.log(err, 'error get categories !!');
             });
-
+//verifier si la video a ete visionne avant
         $scope.check = function (video) {
             for (var i = 0; i < $rootScope.currentUser.annoncesVideos.length; i++) {
                 if (!$rootScope.currentUser.annoncesVideos[i].lienExterne.localeCompare(video.lienExterne)) {
@@ -39,6 +40,7 @@ angular.module('MyApp')
             return false;
         };
 
+//verifier si l'image a ete visionne avant
         $scope.checked = function (image) {
             for (var i = 0; i < $rootScope.currentUser.annonces.length; i++) {
                 if (!$rootScope.currentUser.annonces[i].lienExterne.localeCompare(image.lienExterne)) {
@@ -76,19 +78,17 @@ angular.module('MyApp')
             player.pauseVideo();
             var vid = $scope.videos;
             var lien = player.getVideoUrl();
-           //var res = lien.replace("?v=", "/");
             for (var i = 0; i < vid.length; i++) {
                 if (!vid[i].lienExterne.localeCompare(lien)) {
                     if (!$scope.check($scope.videos[i])) {
                         $rootScope.currentUser.annoncesVideos.push($scope.videos[i]);
-                        console.log("HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
-                        console.log($rootScope.currentUser.annoncesVideos);
                         $scope.donate($scope.videos[i]);
                     }
                     break;
                 }
             }
         });
+        //ouvrir une image ds ng-dialog
         $scope.open = function (image) {
             $scope.pub = image.url;
             $scope.lien = image.lienExterne;
@@ -98,11 +98,11 @@ angular.module('MyApp')
                 scope: $scope
             });
         };
+        //ouvrir une video ds ng-dialog
 
         $scope.openVideo = function (video) {
             $scope.pubVideo = video;
             $scope.show = false;
-            // $scope.duration = 0;
             $scope.heightDialogVideo = 550;
             $scope.widthDialogVideo = 1170;
             ngDialog.open({
@@ -113,13 +113,14 @@ angular.module('MyApp')
         };
 
         $scope.donate = function (pub) {
-            console.log("--------------***********************---------");
-            console.log(pub);
-            $rootScope.currentUser.portefeuille += 1;
+            $rootScope.currentUser.portefeuille += 1;//payer l'utilisateur selon le tarif de la publicite
+
             $http.get('/api/annonces/pub', {params: {id_pub: pub.id, categorie:pub.categorie}}).success(function (ann) {
-            });
+            }); //augmenter le nombre d'utilisation de la video +1
+           //ajout de l'annonce dans la collection de l'utilisateur ainsi que son portefeuille
             $http.put('/api/users/' + $rootScope.currentUser._id, $rootScope.currentUser).success(function (data) {
-                $window.localStorage.token = $window.localStorage.token = btoa(JSON.stringify($rootScope.currentUser));
+                $window.localStorage.token = btoa(JSON.stringify($rootScope.currentUser));
+                //persister localement la rootscope apres le changement
             });
         };
 
@@ -136,11 +137,8 @@ angular.module('MyApp')
             }
         };
 
-        function updatePub(idPub,categ) {
-            $http.get('/api/annonces/pub', {params: {categorie:categ,id_pub: idPub}}).success(function (ann) {
-            });
-        }
 
+// pour verifier si l'onglet courant est actif ou pas
         var hidden, visibilityChange;
         if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
             hidden = "hidden";

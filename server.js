@@ -86,8 +86,6 @@ var userSchema = new mongoose.Schema({
         id: String,
         email: String
     },
-    fulfil1: Boolean,
-    fulfil2: Boolean,
     Prenom: String,
     Sexe: String,
     Age: Number,
@@ -157,7 +155,7 @@ var userSchema = new mongoose.Schema({
     Station_de_services: String,
     Transport_publique: [{type: String, frequence: Number, dest: String}],
     Categories: [],
-    Mode_payement: String,
+    Mode_payement: [],
     annonces: [],
     annoncesVideos: []
 });
@@ -599,18 +597,20 @@ app.put('/api/users/:id', function (req, res, next) {
     User.findByIdAndUpdate(req.params.id, req.body, function (err, user) {
         console.log(req.body);
         if (err) return next(err);
-       /* var token = createJwtToken(req.body);
-        res.send({token: token});*/
+        var token = createJwtToken(req.body);
+        res.send({token: token});
     });
 });
 
 //ajouter 1 au nombre d'utilisation d'une publicité visionné
 app.get('/api/annonces/pub', function(req, res, next){
+    //Chercher la case de l'annonce dans la base
     Annonce.findOne({categorie: req.query.categorie},function(err,obj) {
         for(i=0; i< obj.pubs.length; i++){
 
             if (obj.pubs[i].id === req.query.id_pub){
                 obj.pubs[i].nb_utilisation += 1;
+                //Changement
                 Annonce.findOneAndUpdate({'pubs.id': req.query.id_pub},{pubs:obj.pubs},function(err, obj){
 
                 });

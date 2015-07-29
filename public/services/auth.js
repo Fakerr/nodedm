@@ -96,9 +96,6 @@ angular.module('MyApp')
                 return $http.post('/auth/login', user)
                     .success(function (data) {
                         $window.localStorage.token = btoa(JSON.stringify(data));
-                        console.log($window.localStorage.token);
-                        console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-                        console.log(data);
                         $rootScope.currentUser = data;
                         $location.path('/');
                         $alert({
