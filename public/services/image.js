@@ -1,13 +1,6 @@
 angular.module('MyApp')
   .factory('image', function($http, $location, $rootScope, $alert, $window) {
-    var token = $window.localStorage.token;
-    if (token) {
-      var payload = JSON.parse($window.atob(token.split('.')[1]));
-      //takes a JSON-formatted string and converts it to a JavaScript object
-      //window.atob: encoder
-      $rootScope.currentimagepub = payload.imagePub;
-    }
-
+      
       return {
       imag: function(annonceur) {
         return $http.post('/image/imag', annonceur)

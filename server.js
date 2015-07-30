@@ -348,8 +348,7 @@ app.post('/auth/login', function (req, res, next) {
                             adminis.comparePassword(req.body.password, function (err, isMatch) {
 
                                 if (!isMatch) return res.send(401, 'Invalid email and/or password');
-                                var token = createJwtToken(adminis);
-                                res.send({token: token});
+                                res.send(adminis);
                             });
                         }
                     });
@@ -365,8 +364,7 @@ app.post('/auth/login', function (req, res, next) {
         } else {
             ann.comparePassword(req.body.password, function (err, isMatch) {
                 if (!isMatch) return res.send(401, 'Invalid email and/or password');
-                var token = createJwtToken(ann);
-                res.send({token: token});
+                res.json(ann);
             });
         }
     });
