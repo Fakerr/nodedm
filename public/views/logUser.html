@@ -1,0 +1,64 @@
+<div class="container container-modified">
+    <div class="panel-body">
+        <div class="panel panel-default no-padding-top">
+            <table class="table table-striped">
+                <tr>
+                    <th>Nom de l'annonce</th>
+                    <th>Marque</th>
+                    <th>Annonceur</th>
+                    <th>Date</th>
+                    <th>Preview</th>
+                </tr>
+                <tr ng-repeat="ann in currentUser.annonces">
+                    <td>{{ann.name}}</td>
+                    <td>{{ann.marque}}</td>
+                    <td>{{ann.annonceur}}</td>
+                    <td>En cours...</td>
+                    <td><img ng-src="{{ann.url}}" height="100px" width="150px" ng-click="open(ann)"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="panel panel-default no-padding-top">
+            <table class="table table-striped">
+                <tr>
+                    <th>Nom de l'annonce</th>
+                    <th>Marque</th>
+                    <th>Annonceur</th>
+                    <th>Date</th>
+                    <th>Preview</th>
+                </tr>
+
+                <tr ng-repeat="ann in currentUser.annoncesVideos">
+                    <td>{{ann.name}}</td>
+                    <td>{{ann.marque}}</td>
+                    <td>{{ann.annonceur}}</td>
+                    <td>En cours...</td>
+                    <td>
+                        <img class="videoPreview"
+                             ng-src="http://img.youtube.com/vi/{{ann.lienExterne.replace('https://www.youtube.com/watch?v=','')}}/0.jpg"
+                             ng-click="openVideo(ann.lienExterne)">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="firstDialog">
+    <a href="{{lien}}" target="_blank">
+        <img ng-src="{{ pub }}" class="imagepub"/>
+    </a>
+</script>
+<script type="text/ng-template" id="secondDialog">
+    <div class="timer" ng-if="show">
+        <timer countdown="duration" max-time-unit="'minute'" interval="1000">{{mminutes}} : {{sseconds}}
+        </timer>
+    </div>
+    <div class="embed-responsive embed-responsive-16by9 video-wrapper">
+        <youtube-video video-url="pubVideo" class="embed-responsive-item" player="player"
+                       player-vars="playerVars">
+        </youtube-video>
+    </div>
+</script>

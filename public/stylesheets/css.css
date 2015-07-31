@@ -91,3 +91,8 @@
     height: 46px;
     margin-top: -13px;
 }
+
+.videoPreview {
+    height: 120px;
+    width: 180px;
+}

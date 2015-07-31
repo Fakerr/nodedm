@@ -22,7 +22,9 @@ angular.module('MyApp')
                             a.categorie = categorie.categorie;
                             $scope.videos.push(a);
                         } else {
-                            $scope.ann.push(categorie.pubs[index]);
+                            var a = categorie.pubs[index];
+                            a.categorie = categorie.categorie;
+                            $scope.ann.push(a);
                         }
                     });
                 });
@@ -32,7 +34,7 @@ angular.module('MyApp')
 //verifier si la video a ete visionne avant
         $scope.check = function (video) {
             for (var i = 0; i < $rootScope.currentUser.annoncesVideos.length; i++) {
-                if (!$rootScope.currentUser.annoncesVideos[i].lienExterne.localeCompare(video.lienExterne)) {
+                if (!$rootScope.currentUser.annoncesVideos[i].id.localeCompare(video.id)) {
                     return true;
                     break;
                 }
@@ -43,7 +45,7 @@ angular.module('MyApp')
 //verifier si l'image a ete visionne avant
         $scope.checked = function (image) {
             for (var i = 0; i < $rootScope.currentUser.annonces.length; i++) {
-                if (!$rootScope.currentUser.annonces[i].lienExterne.localeCompare(image.lienExterne)) {
+                if (!$rootScope.currentUser.annonces[i].id.localeCompare(image.id)) {
                     return true;
                     break;
                 }

@@ -603,14 +603,16 @@ app.put('/api/users/:id', function (req, res, next) {
 //ajouter 1 au nombre d'utilisation d'une publicité visionné
 app.get('/api/annonces/pub', function(req, res, next){
     //Chercher la case de l'annonce dans la base
+    console.log(req.query.categorie);
+    console.log("********************");
     Annonce.findOne({categorie: req.query.categorie},function(err,obj) {
+        console.log(obj);
         for(i=0; i< obj.pubs.length; i++){
 
             if (obj.pubs[i].id === req.query.id_pub){
                 obj.pubs[i].nb_utilisation += 1;
                 //Changement
                 Annonce.findOneAndUpdate({'pubs.id': req.query.id_pub},{pubs:obj.pubs},function(err, obj){
-
                 });
                 break;
             }

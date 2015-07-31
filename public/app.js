@@ -67,6 +67,10 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mg
                 templateUrl: 'views/Transport.html',
                 controller: 'TransportCtrl'
             })
+            .when('/logUser', {
+                templateUrl: 'views/logUser.html',
+                controller: 'logUserCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -93,21 +97,24 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mg
         $rootScope.$on('$routeChangeStart', function (event) {
 
             if (Auth.isLoggedIn() == 0) {
-                console.log('not connected');
                 event.preventDefault();
-                console.log(event);
 
+                // redirection to if not connected
                 if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() != '/signup'))
                     $location.path('/login');
             }
+
             else if (Auth.isLoggedIn() == 1) {
-                console.log('annonceur');
+
+                // redirection to if annoncer
                 if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() != '/search'))
                     $location.path('/home');
             }
             else if (Auth.isLoggedIn() == 2) {
+
+                // redirection to if User
                 if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() != '/form') && ($location.path() != '/profile')
-                    && ($location.path() != '/Mode-de-vie') && ($location.path() != '/High-Tech'))
+                    && ($location.path() != '/Mode-de-vie') && ($location.path() != '/High-Tech') && ($location.path() != '/logUser'))
                     $location.path('/home');
             }
 
