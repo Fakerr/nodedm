@@ -71,6 +71,14 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mg
                 templateUrl: 'views/logUser.html',
                 controller: 'logUserCtrl'
             })
+            .when('/adminUser', {
+                templateUrl: 'views/utilisateur_admin.html',
+                controller: 'UserAdminCtrl'
+            })
+            .when('/adminAnnoncer', {
+                templateUrl: 'views/annonceur_admin.html',
+                controller: 'AnnoncerAdminCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -107,7 +115,7 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mg
             else if (Auth.isLoggedIn() == 1) {
 
                 // redirection to if annoncer
-                if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() != '/search'))
+                if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() != '/search')&& ($location.path() != '/adminAnnoncer') && ($location.path() != '/adminUser'))
                     $location.path('/home');
             }
             else if (Auth.isLoggedIn() == 2) {
@@ -115,6 +123,10 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mg
                 // redirection to if User
                 if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() != '/form') && ($location.path() != '/profile')
                     && ($location.path() != '/Mode-de-vie') && ($location.path() != '/High-Tech') && ($location.path() != '/logUser'))
+                    $location.path('/home');
+            }
+            else if (Auth.isLoggedIn() == 3) {
+                if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() != '/adminAnnoncer') && ($location.path() != '/adminUser'))
                     $location.path('/home');
             }
 

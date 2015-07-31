@@ -1,0 +1,51 @@
+<div class="container container-modified">
+    <div class="panel-body">
+        <div class="panel panel-default no-padding-bottom no-padding-top">
+            <div class="panel-heading ">
+                <h2 class="panel-title ">Liste des annonceurs</h2>
+            </div>
+            <div class="panel-body panel-modified no-padding-bottom">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Nombre</th>
+                        <th>Action</th><th></th><th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-show="showForm">
+                        <td><input class="form-control" ng-model="annonceur.name"></td>
+                        <td><input class="form-control" ng-model="annonceur.email"></td>
+                        <td><input class="form-control" ng-model="annonceur.nombre"></td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="update()">Actualiser</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="clear()">Vider</button>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="annonceur in list_annonceur">
+                        <td>{{annonceur.name}}</td>
+                        <td>{{annonceur.email}}</td>
+                        <td>{{annonceur.nombre}}</td>
+                        <td>
+                            <button class="btn btn-danger" ng-click="remove(annonceur._id)">Supprimer</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="aff(annonceur.pu)">Publicités</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning" ng-click="edit(annonceur._id)">Modifier</button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+

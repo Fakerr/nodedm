@@ -18,6 +18,7 @@
     "lodash": "^2.4.1",
     "method-override": "^1.0.0",
     "moment": "^2.7.0",
+    "mongojs": "^1.2.1",
     "mongoose": "^4.0.8",
     "mongoose-auto-increment": "^4.0.0",
     "morgan": "^1.0.0",

@@ -30,6 +30,10 @@ var Paypal1 = require('paypal-adaptive');
 var session = require('express-session');
 var shortid = require('shortid');
 var busboy = require('connect-busboy');
+var mongojs = require('mongojs');
+var db = mongojs('test', ['annonceurs']);
+var dbc = mongojs('test', ['annonces']);
+var dbu = mongojs('test', ['users']);
 
 
 var administrateurSchema = new mongoose.Schema({
@@ -307,6 +311,175 @@ function createJwtToken(user) {
     return jwt.encode(payload, tokenSecret);
 }
 
+//pour avoir la liste des utilisateurs
+app.get('/userlist', function (req, res) {
+    console.log("I received a user-get request")
+    dbu.users.find(function (err, docs) {
+        console.log(docs);
+        res.json(docs);
+
+    });
+});
+
+//pour avoir la liste des publicité pour chaque annonceur
+app.put("/publist/", function (req, res) {
+    console.log("I'm here *****");
+    var pub = req.body;
+    console.log(pub);
+    var i = 0;
+    var t = [];
+    var id;
+    for (i = 0; i < pub.length; i++) {
+        t[i] = pub[i].categorie;
+    }
+    dbc.annonces.find({categorie: {$in: t}}, function (err, doc) {
+        console.log(doc);
+        res.json(doc);
+    });
+});
+
+
+//pour supprimer un annonceur
+app.delete("/contactlist/:id", function (req, res) {
+    var id = req.params.id;
+
+    db.annonceurs.remove({_id: mongojs.ObjectId(id)}, function (err, doc) {
+
+        res.json(doc);
+
+    })
+});
+
+
+//pour supprimer un utilisateur
+app.delete("/userlist/:id", function (req, res) {
+    var id = req.params.id;
+
+    dbu.users.remove({_id: mongojs.ObjectId(id)}, function (err, doc) {
+
+        res.json(doc);
+
+    })
+});
+
+//pour supprimer une annonce au niveau annonceur
+app.delete("/ann/:id", function (req, res) {
+
+    var id = req.params.id;
+    console.log("delete from ann");
+    db.annonceurs.update({}, {$pull: {"pub": {id_pub: id}}}, {multi: true}, function (err, doc) {
+        res.json(doc);
+    })
+
+});
+
+//pour supprimer une annonce au niveau categorie( n'est pas utilisé )
+app.delete("/plist/:id", function (req, res) {
+    var id = req.params.id;
+    console.log("au niveau cat");
+    dbc.annonces.update({}, {$pull: {"pub": {id: id}}}, false, true, function (err, doc) {
+
+        res.json(doc);
+
+    })
+});
+
+//pour recuperer un annonceur selon son id
+app.get("/contactlist/:id", function (req, res) {
+    var id = req.params.id;
+
+    db.annonceurs.findOne({_id: mongojs.ObjectId(id)}, function (err, doc) {
+        res.json(doc);
+    });
+});
+
+//pour recuperer une utiilsateur par son id
+app.get("/userlist/:id", function (req, res) {
+    var id = req.params.id;
+    dbu.users.findOne({_id: mongojs.ObjectId(id)}, function (err, doc) {
+        res.json(doc);
+    });
+});
+
+//pour recuperer une annonce par son id
+app.get("/plist/:id", function (req, res) {
+    var id = req.params.id;
+    dbc.annonces.findOne({"pubs.id": id}, function (err, doc) {
+        res.json(doc);
+    });
+});
+
+//pour avoir la liste des annonceurs (contactlist ce signifie rien )
+app.get("/contactlist", function (req, res) {
+    console.log("I received a get request")
+    db.annonceurs.find(function (err, docs) {
+//console.log(docs);
+        res.json(docs);
+
+    });
+});
+
+//pour modifier l'annonce
+app.put("/plist/:id", function (req, res) {
+    var id = req.params.id;
+    dbc.annonces.findAndModify({
+        query: {"pub.id": id},
+        update: {
+            $set: {
+                "pub.$.name": req.body.name,
+                "pub.$.marque": req.body.marque,
+                "pub.$.montant": req.body.montant,
+                "pub.$.nb_utilisation": req.body.nb_utilisation,
+                "pub.$.nb_max": req.body.nb_max,
+                "pub.$.type": req.body.type,
+                "pub.$.lienExterne": req.body.lien,
+                "pub.$.url": req.body.url
+            }
+        },
+        new: true
+    }, function (err, doc) {
+        res.json(doc);
+
+    });
+});
+
+
+//pour modifier l'annonceur
+app.put("/contactlist/:id", function (req, res) {
+    var id = req.params.id;
+    db.annonceurs.findAndModify({
+        query: {_id: mongojs.ObjectId(id)},
+        update: {$set: {name: req.body.name, email: req.body.email, password: req.body.password}},
+        new: true
+    }, function (err, doc) {
+        res.json(doc);
+
+    });
+});
+
+//pour modifier l'utilisateur
+app.put("/userlist/:id", function (req, res) {
+    var id = req.params.id;
+    console.log(id);
+    dbu.users.findAndModify({
+        query: {_id: mongojs.ObjectId(id)},
+        update: {
+            $set: {
+                Nom: req.body.name,
+                email: req.body.email,
+                password: req.body.password,
+                Sexe: req.body.sexe,
+                Age: req.body.age,
+                portefeuille: req.body.portefeuille
+            }
+        },
+        new: true
+    }, function (err, doc) {
+        res.json(doc);
+
+    });
+});
+
 app.post('/auth/signup', function (req, res, next) {
     var type = req.body.type;
     if (!type.localeCompare("client")) {
@@ -556,8 +729,6 @@ app.get('/categories/annonces', function (req, res, next) {
     Annonce.find({categorie: {$in: req.query.cat}}, function (err, cat) {
         if (err) return next(err);
         res.send(cat);
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-        console.log(cat);
     });
 });
 
@@ -573,13 +744,13 @@ app.get('/api/users', function (req, res, next) {
 });
 
 /*
-app.get('/api/user', function (req, res, next) {
-    User.findOne({_id: req.query.id}, function (err, post) {
-        if (err) return next(err);
-        res.send(post);
-    });
-});
-*/
+ app.get('/api/user', function (req, res, next) {
+ User.findOne({_id: req.query.id}, function (err, post) {
+ if (err) return next(err);
+ res.send(post);
+ });
+ });
+ */
 
 app.get('/api/users/:id', function (req, res, next) {
     User.findById(req.params.id, function (err, todo) {
@@ -601,18 +772,18 @@ app.put('/api/users/:id', function (req, res, next) {
 });
 
 //ajouter 1 au nombre d'utilisation d'une publicité visionné
-app.get('/api/annonces/pub', function(req, res, next){
+app.get('/api/annonces/pub', function (req, res, next) {
     //Chercher la case de l'annonce dans la base
     console.log(req.query.categorie);
     console.log("********************");
-    Annonce.findOne({categorie: req.query.categorie},function(err,obj) {
+    Annonce.findOne({categorie: req.query.categorie}, function (err, obj) {
         console.log(obj);
-        for(i=0; i< obj.pubs.length; i++){
+        for (i = 0; i < obj.pubs.length; i++) {
 
-            if (obj.pubs[i].id === req.query.id_pub){
+            if (obj.pubs[i].id === req.query.id_pub) {
                 obj.pubs[i].nb_utilisation += 1;
                 //Changement
-                Annonce.findOneAndUpdate({'pubs.id': req.query.id_pub},{pubs:obj.pubs},function(err, obj){
+                Annonce.findOneAndUpdate({'pubs.id': req.query.id_pub}, {pubs: obj.pubs}, function (err, obj) {
                 });
                 break;
             }
@@ -740,27 +911,27 @@ app.post('/image/imag', function (req, res, next) {
 });
 
 /*function sendPubForUsers(categorie, type, lienPub, urlPub, res) {
-    if (!type.localeCompare('image')) {
-        var image = {
-            url: urlPub,
-            lien: lienPub,
-            check: false
-        }
-        User.findOneAndUpdate({email: "walid@walid"}, {$push: {'annonces': image}}, function (err, doc) {
-            if (err) return res.send(500, {error: err});
-            return res.send("successfuly saved");
-        })
-    } else if (!type.localeCompare('video')) {
-        var video = {
-            url: lienPub.replace("?v=", "/"),
-            check: false
-        }
-        User.findOneAndUpdate({email: "walid@walid"}, {$push: {'annoncesVideos': video}}, function (err, doc) {
-            if (err) return res.send(500, {error: err});
-            return res.send("successfuly saved");
-        })
-    }
-}*/
+ if (!type.localeCompare('image')) {
+ var image = {
+ url: urlPub,
+ lien: lienPub,
+ check: false
+ }
+ User.findOneAndUpdate({email: "walid@walid"}, {$push: {'annonces': image}}, function (err, doc) {
+ if (err) return res.send(500, {error: err});
+ return res.send("successfuly saved");
+ })
+ } else if (!type.localeCompare('video')) {
+ var video = {
+ url: lienPub.replace("?v=", "/"),
+ check: false
+ }
+ User.findOneAndUpdate({email: "walid@walid"}, {$push: {'annoncesVideos': video}}, function (err, doc) {
+ if (err) return res.send(500, {error: err});
+ return res.send("successfuly saved");
+ })
+ }
+ }*/
 
 
 app.get('*', function (req, res) {
@@ -822,3 +993,4 @@ agenda.on('start', function (job) {
 agenda.on('complete', function (job) {
     console.log("Job %s finished", job.attrs.name);
 });
+
