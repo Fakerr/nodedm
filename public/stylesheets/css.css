@@ -42,6 +42,8 @@
 
 .jumbotron-modified {
     background: url("../images/cash.gif");
+    padding-top: 70px;
+    padding-bottom: 70px;
 }
 
 .box{
@@ -60,7 +62,11 @@
 }
 
 .socialmedia > a:hover{
-    color: #4C9ED9 !important;
+    color: #0B6ADD !important;
+}
+.socialmedia{
+    padding-top: 0px !important;
+    margin-top: 0px!important;
 }
 
 @media (min-width: 768px) {
@@ -95,4 +101,12 @@
 .videoPreview {
     height: 120px;
     width: 180px;
+}
+
+.thetable {
+    table-layout: fixed !important;
+    word-wrap: break-word !important;
+}
+.privacy{
+    margin-top: 17px!important;
 }

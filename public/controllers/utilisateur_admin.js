@@ -56,6 +56,7 @@ angular.module('MyApp')
             ;
             var html = '<div class="container">' +
                 '<h1>Liste des annonces consultées</h1>' +
+                '<h3><input type="text" class="form-control" ng-model="query"></h3>'+
                 '<table class="table">' +
                 '<thead>' +
                 '<tr>' +
@@ -71,7 +72,7 @@ angular.module('MyApp')
 
             $scope.publ = pub;
             html +=
-                '<tr ng-repeat="p in publ track by $index" >' +
+                '<tr ng-repeat="p in publ|filter: query track by $index" >' +
                 '<td>{{p.name}}</td>' +
                 '<td>{{p.marque}}</td>' +
                 '<td>{{p.annonceur}}</td>' +
@@ -93,7 +94,7 @@ angular.module('MyApp')
                 plain: 'true',
                 overlay: false,
                 scope: $scope,
-                className:'ngdialog-theme-plain'
+                className: 'ngdialog-theme-plain'
             });
 
 

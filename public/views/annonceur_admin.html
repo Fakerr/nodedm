@@ -2,8 +2,10 @@
     <div class="panel-body">
         <div class="panel panel-default no-padding-bottom no-padding-top">
             <div class="panel-heading ">
-                <h2 class="panel-title ">Liste des annonceurs</h2>
+                <div class="panel-title h2">Liste des utilisateurs <span class="pull-right"> <input
+                        style="margin-top: -8px" class="form-control" type="text" ng-model="search"></span><span class="pull-right" style="margin-right: 5px">Search: </span></div>
             </div>
+
             <div class="panel-body panel-modified no-padding-bottom">
                 <table class="table">
                     <thead>
@@ -11,7 +13,9 @@
                         <th>Nom</th>
                         <th>Email</th>
                         <th>Nombre</th>
-                        <th>Action</th><th></th><th></th>
+                        <th>Action</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -26,7 +30,7 @@
                             <button class="btn btn-primary" ng-click="clear()">Vider</button>
                         </td>
                     </tr>
-                    <tr ng-repeat="annonceur in list_annonceur">
+                    <tr ng-repeat="annonceur in list_annonceur|filter: search">
                         <td>{{annonceur.name}}</td>
                         <td>{{annonceur.email}}</td>
                         <td>{{annonceur.nombre}}</td>

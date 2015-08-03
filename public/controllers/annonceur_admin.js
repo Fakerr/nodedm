@@ -3,11 +3,10 @@
 angular.module('MyApp')
     .controller("AnnoncerAdminCtrl", ['$scope', '$http', 'ngDialog', '$window', function ($scope, $http, ngDialog, $window) {
         $scope.showForm = false;
+        $scope.showFormDialog = false;
 
         //la requete pour la recupération de la liste des annonceurs dés le départ
         $http.get("/contactlist").success(function (response) {
-            console.log("I got the data I requested");
-            console.log(response);
             var tab = [];
             var i = 0;
             for (i = 0; i < response.length; i++) {
@@ -26,7 +25,6 @@ angular.module('MyApp')
             }
 
             $scope.list_annonceur = tab;
-            console.log(tab);
 
         });
 
@@ -34,8 +32,6 @@ angular.module('MyApp')
 // la fonction pour afficher la liste des annonces pour un annonceur particulier
         $scope.aff = function (pu) {
             $http.put("/publist/", pu).success(function (response) {
-                console.log("**************");
-                console.log(response);
 
                 var i, j, c;
                 var k = -1;
@@ -52,19 +48,18 @@ angular.module('MyApp')
                         }
                     }
                 }
-                console.log("**")
-                console.log(r);
                 $scope.publ = r;
                 var html = '<div class="container">' +
                     '<h1>Liste des Pubs de ' + $scope.publ[0].annonceur + '</h1>' +
-                    '<table class="table">' +
+                        '<h3><input type="text" class="form-control" ng-model="query2"></h3>'+
+                    '<table class="table thetable">' +
                     '<thead>' +
                     '<tr>' +
                     '<th>id</th>' +
                     '<th>nom</th>' +
                     '<th>marque</th>' +
                     '<th>montant</th>' +
-                    '<th>nb_utilisation</th>' +
+                    '<th>nb_vues</th>' +
                     '<th>nb_max </th>' +
                     '<th>type</th>' +
                     '<th>Lien</th>' +
@@ -73,7 +68,7 @@ angular.module('MyApp')
                     '</tr>' +
                     '</thead>' +
                     '<tbody>' +
-                    '<tr>' +
+                    '<tr ng-show="showFormDialog">' +
                     '<td><input class="form-control" ng-model="pub.id"></td>' +
                     '<td><input class="form-control" ng-model="pub.name"></td>' +
                     '<td><input class="form-control" ng-model="pub.marque"></td>' +
@@ -88,7 +83,7 @@ angular.module('MyApp')
 
 
                 html +=
-                    '<tr ng-repeat="p in publ" >' +
+                    '<tr ng-repeat="p in publ |filter: query2" >' +
                     '<td>{{p.id}}</td>' +
                     '<td>{{p.name}}</td>' +
                     '<td>{{p.marque}}</td>' +
@@ -106,7 +101,6 @@ angular.module('MyApp')
                 html += '</tbody>' +
                     '</table>' +
                     '</div>';
-                console.log(html);
                 ngDialog.open({
                     template: '<center >' +
                     html +
@@ -126,7 +120,6 @@ angular.module('MyApp')
 
 //la fonction qui supprime un annonceur
         $scope.remove = function (id) {
-            console.log(id);
             $http.delete("/contactlist/" + id).success(function (response) {
                 $window.location.reload();
             });
@@ -135,7 +128,6 @@ angular.module('MyApp')
 
 //la fonction qui supprime une annonce
         $scope.remove_pub = function (id) {
-            console.log(id);
 
             $http.delete("/ann/" + id).success(function (response) {
 
@@ -171,7 +163,6 @@ angular.module('MyApp')
 
 //la fonction qui met à jour la base aprés avoir modifier les données d'un annonceur
         $scope.update = function () {
-            console.log($scope.annonceur._id);
             $http.put("/contactlist/" + $scope.annonceur._id, $scope.annonceur).success(function (response) {
                 $window.location.reload();
                 $scope.showForm = false;
@@ -186,6 +177,7 @@ angular.module('MyApp')
         $scope.update_pub = function () {
             $http.put("/plist/" + $scope.pub.id, $scope.pub).success(function (response) {
                 $window.location.reload();
+                $scope.showFormDialog = false;
             })
         };
 
@@ -193,10 +185,8 @@ angular.module('MyApp')
 //la fonction qui modifie les parametres d'une annonce
         $scope.edit_pub = function (id) {
 
-
+            $scope.showFormDialog = true ;
             $http.get("/plist/" + id).success(function (response) {
-                console.log("--------------------------");
-                console.log(response);
                 var t = [];
                 var i;
                 for (i = 0; i < response.pubs.length; i++) {
