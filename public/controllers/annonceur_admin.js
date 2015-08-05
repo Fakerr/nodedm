@@ -64,7 +64,7 @@ angular.module('MyApp')
                     '<th>type</th>' +
                     '<th>Lien</th>' +
                     '<th>URL</th>' +
-                    '<th>Actions</th>' +
+                    '<th>Actions</th><th></th>' +
                     '</tr>' +
                     '</thead>' +
                     '<tbody>' +

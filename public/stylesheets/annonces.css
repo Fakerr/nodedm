@@ -23,6 +23,7 @@ img.displayed:hover {
     font-size: 2.5rem;
     color : white;
     z-index: 1;
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.7);
 }
 
 #aWrapper {

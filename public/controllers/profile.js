@@ -75,7 +75,6 @@ angular.module('MyApp')
             $scope.show = false;
             videoLong = player.getDuration();
             timeAct = 0;
-            player.stopVideo();
             player.playVideo();
             player.pauseVideo();
             var vid = $scope.videos;

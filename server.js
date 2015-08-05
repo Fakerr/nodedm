@@ -771,11 +771,31 @@ app.put('/api/users/:id', function (req, res, next) {
     });
 });
 
+//get all annonces (pour la page des statistiques)
+app.get('/api/annonces/all', function (req, res, next) {
+    Annonce.find({}, function (err, listeOfAnnonce) {
+            if (err) console.log(err);
+            console.log(listeOfAnnonce[0].pubs.length);
+            res.json(listeOfAnnonce);
+        });
+});
+
+//retourner les annonces grouper par date(year-month), don't work yet !
+app.get('/api/annonces/AnnByDate', function (req, res, next) {
+    console.log("///////////////////////////////////////////////////");
+    Annonce.aggregate([
+        {$group: {_id : { year: { $year : "pubs.$.date" }, month: { $month : "pubs.$.date" }},
+            annoncesByDate: {$push: '$pubs.$.name'}}},
+        {$project: {date: '$_id', patients: 1, _id: 0}}
+    ], function (err, listeOfAnnonce) {
+        if (err) console.log(err);
+        res.json(listeOfAnnonce);
+    });
+});
+
 //ajouter 1 au nombre d'utilisation d'une publicité visionné
 app.get('/api/annonces/pub', function (req, res, next) {
     //Chercher la case de l'annonce dans la base
-    console.log(req.query.categorie);
-    console.log("********************");
     Annonce.findOne({categorie: req.query.categorie}, function (err, obj) {
         console.log(obj);
         for (i = 0; i < obj.pubs.length; i++) {
@@ -849,7 +869,7 @@ app.post('/image/imag', function (req, res, next) {
     var identifiantPub = shortid.generate();
     var ObjectId = mongoose.Types.ObjectId;
     var identifiantCat;
-    var dateCat;
+    var dateCat = new Date();
     var ObjectId = mongoose.Types.ObjectId;
     var prix1 = req.body.montant * 0.4;
     var prix2 = req.body.montant * 0.6;
@@ -893,13 +913,13 @@ app.post('/image/imag', function (req, res, next) {
         marque: req.body.marque,
         lienExterne: req.body.lienExterne,
         url: '/images/' + req.body.url,
-        type: req.body.type
-        // date: dateCat
+        type: req.body.type,
+        date: dateCat.toJSON()
     }
     var pub = {
         id_pub: identifiantPub,
         categorie: req.body.categorie,
-        date_pub: ''
+        date_pub: dateCat.toJSON()
     }
     Annonceur.findOneAndUpdate(query, {$push: {'pub': pub}}, {upsert: true}, function (err, doc) {
         if (err) return res.send(500, {error: err});
@@ -909,30 +929,6 @@ app.post('/image/imag', function (req, res, next) {
         });
     });
 });
-
-/*function sendPubForUsers(categorie, type, lienPub, urlPub, res) {
- if (!type.localeCompare('image')) {
- var image = {
- url: urlPub,
- lien: lienPub,
- check: false
- }
- User.findOneAndUpdate({email: "walid@walid"}, {$push: {'annonces': image}}, function (err, doc) {
- if (err) return res.send(500, {error: err});
- return res.send("successfuly saved");
- })
- } else if (!type.localeCompare('video')) {
- var video = {
- url: lienPub.replace("?v=", "/"),
- check: false
- }
- User.findOneAndUpdate({email: "walid@walid"}, {$push: {'annoncesVideos': video}}, function (err, doc) {
- if (err) return res.send(500, {error: err});
- return res.send("successfuly saved");
- })
- }
- }*/
-
 
 app.get('*', function (req, res) {
     res.redirect('/#' + req.originalUrl);

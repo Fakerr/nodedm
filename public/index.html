@@ -13,6 +13,7 @@
     <link href="stylesheets/css.css" rel="stylesheet">
     <link href="stylesheets/annonces.css" rel="stylesheet">
     <link href="stylesheets/ngDialog.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/angular-chart.js/dist/angular-chart.css">
     <link href="stylesheets/ngDialog-theme-default.css" rel="stylesheet">
 </head>
 <body>
@@ -41,6 +42,8 @@
         </li>
         <li data-match-route="/adminUser"><a href="/adminUser"
                                           ng-if="currentUser.type.localeCompare('admin') == 0 && currentUser">Gérer les utilisateurs</a>
+        </li><li data-match-route="/statistics"><a href="/statistics"
+                                          ng-if="currentUser.type.localeCompare('admin') == 0 && currentUser">Statistiques</a>
         </li>
     </ul>
     <ul class="nav navbar-nav pull-right" ng-if="!currentUser">
@@ -91,11 +94,14 @@
 <script src="controllers/logUser.js"></script>
 <script src="controllers/utilisateur_admin.js"></script>
 <script src="controllers/annonceur_admin.js"></script>
+<script src="controllers/statistics.js"></script>
 <script src="services/auth.js"></script>
 <script src="services/mode.js"></script>
 <script src="services/image.js"></script>
 <script src="services/infor.js"></script>
 <script src="https://www.youtube.com/iframe_api"></script>
+<script src="vendor/Chart.js/Chart.js"></script>
+<script src="vendor/angular-chart.js/dist/angular-chart.js"></script>
 <script src="vendor/ng-file-upload-shim.min.js"></script>
 <script src="vendor/ng-file-upload.min.js"></script>
 

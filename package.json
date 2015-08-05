@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "agenda": "^0.6.10",
+    "angular-chart.js": "^0.7.2",
     "async": "^0.8.0",
     "bcryptjs": "^0.7.12",
     "body-parser": "^1.0.0",

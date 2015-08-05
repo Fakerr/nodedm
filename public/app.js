@@ -1,4 +1,4 @@
-angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mgcrea.ngStrap', 'ngDialog', 'timer', 'youtube-embed', 'ngFileUpload'])
+angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mgcrea.ngStrap', 'ngDialog', 'timer', 'youtube-embed', 'ngFileUpload', 'chart.js'])
     .config(function ($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
 
@@ -78,6 +78,9 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mg
             .when('/adminAnnoncer', {
                 templateUrl: 'views/annonceur_admin.html',
                 controller: 'AnnoncerAdminCtrl'
+            }).when('/statistics', {
+                templateUrl: 'views/statistics.html',
+                controller: 'statCtrl'
             })
             .when('/privacy', {
                 templateUrl: 'views/Privacy.html',
@@ -131,7 +134,7 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mg
             else if (Auth.isLoggedIn() == 3) {
 
                 //redirection to if Administrator
-                if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() != '/adminAnnoncer') && ($location.path() != '/adminUser')&& ($location.path() != '/privacy'))
+                if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() != '/adminAnnoncer') && ($location.path() != '/adminUser')&& ($location.path() != '/privacy')&& ($location.path() != '/statistics'))
                     $location.path('/home');
             }
 

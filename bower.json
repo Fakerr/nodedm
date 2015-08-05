@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "homepage": "https://github.com/Fakerr/nodedm",
   "authors": [
-    "walid <berrahal.walid07@gmail.com>"
+    "walid <berrahal.walid07@gmail.com>",
+    "Belhassen Jribi"
   ],
   "license": "MIT",
   "ignore": [
@@ -16,7 +17,8 @@
   "dependencies": {
     "angular-youtube-mb": "~1.0.2",
     "humanize-duration": "~3.1.0",
-    "momentjs": "~2.10.3"
+    "momentjs": "~2.10.3",
+    "angular-chart.js": "~0.7.2"
   },
   "resolutions": {
     "humanize-duration": "~2.8.0",
