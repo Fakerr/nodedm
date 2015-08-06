@@ -37,6 +37,9 @@
         <li data-match-route="/search"><a href="/search"
                                           ng-if="currentUser.type.localeCompare('annonceur') == 0 && currentUser">Ajouter</a>
         </li>
+        <li data-match-route="/logAnnoncer"><a href="/logAnnoncer"
+                                          ng-if="currentUser.type.localeCompare('annonceur') == 0 && currentUser">Mes annonces</a>
+        </li>
         <li data-match-route="/adminAnnoncer"><a href="/adminAnnoncer"
                                           ng-if="currentUser.type.localeCompare('admin') == 0 && currentUser">Gérer les Annonceurs</a>
         </li>
@@ -92,6 +95,7 @@
 <script src="controllers/mod.js"></script>
 <script src="controllers/imag.js"></script>
 <script src="controllers/logUser.js"></script>
+<script src="controllers/logAnnoncer.js"></script>
 <script src="controllers/utilisateur_admin.js"></script>
 <script src="controllers/annonceur_admin.js"></script>
 <script src="controllers/statistics.js"></script>

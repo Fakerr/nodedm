@@ -5,7 +5,6 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mg
         $routeProvider
             .when('/', {
                 templateUrl: 'views/home.html',
-                controller: 'MainCtrl'
             })
 
             .when('/login', {
@@ -70,6 +69,9 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mg
             .when('/logUser', {
                 templateUrl: 'views/logUser.html',
                 controller: 'logUserCtrl'
+            }).when('/logAnnoncer', {
+                templateUrl: 'views/logAnnoncer.html',
+                controller: 'logAnnoncerCtrl'
             })
             .when('/adminUser', {
                 templateUrl: 'views/utilisateur_admin.html',
@@ -121,7 +123,7 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mg
             else if (Auth.isLoggedIn() == 1) {
 
                 // redirection to if annoncer
-                if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() != '/search')&& ($location.path() != '/privacy'))
+                if (($location.path() != '/home') && ($location.path() != '/') && ($location.path() != '/search')&& ($location.path() != '/privacy')&& ($location.path() != '/logAnnoncer'))
                     $location.path('/home');
             }
             else if (Auth.isLoggedIn() == 2) {

@@ -323,9 +323,7 @@ app.get('/userlist', function (req, res) {
 
 //pour avoir la liste des publicité pour chaque annonceur
 app.put("/publist/", function (req, res) {
-    console.log("I'm here *****");
     var pub = req.body;
-    console.log(pub);
     var i = 0;
     var t = [];
     var id;
@@ -743,14 +741,20 @@ app.get('/api/users', function (req, res, next) {
     });
 });
 
-/*
- app.get('/api/user', function (req, res, next) {
- User.findOne({_id: req.query.id}, function (err, post) {
- if (err) return next(err);
- res.send(post);
- });
- });
- */
+
+app.get('/api/viewedAds/userList', function (req, res, next) {
+    console.log("/////////////////////////////////////////////");
+    console.log(req.query.id);
+    User.find({$or: [{"annoncesVideos.id": req.query.id},{"annonces.id": req.query.id}]}, function (err, post) {
+        if (err) {
+            console.log(err);
+            return next(err);
+        }
+        console.log(post);
+        res.send(post);
+    });
+});
+
 
 app.get('/api/users/:id', function (req, res, next) {
     User.findById(req.params.id, function (err, todo) {
@@ -774,21 +778,8 @@ app.put('/api/users/:id', function (req, res, next) {
 //get all annonces (pour la page des statistiques)
 app.get('/api/annonces/all', function (req, res, next) {
     Annonce.find({}, function (err, listeOfAnnonce) {
-            if (err) console.log(err);
-            console.log(listeOfAnnonce[0].pubs.length);
-            res.json(listeOfAnnonce);
-        });
-});
-
-//retourner les annonces grouper par date(year-month), don't work yet !
-app.get('/api/annonces/AnnByDate', function (req, res, next) {
-    console.log("///////////////////////////////////////////////////");
-    Annonce.aggregate([
-        {$group: {_id : { year: { $year : "pubs.$.date" }, month: { $month : "pubs.$.date" }},
-            annoncesByDate: {$push: '$pubs.$.name'}}},
-        {$project: {date: '$_id', patients: 1, _id: 0}}
-    ], function (err, listeOfAnnonce) {
         if (err) console.log(err);
+        console.log(listeOfAnnonce[0].pubs.length);
         res.json(listeOfAnnonce);
     });
 });

@@ -114,3 +114,8 @@
 .padding-bottom {
     padding-bottom: 15px;
 }
+
+.AnnonceLogAnnoncer>td{
+    cursor: hand !important;
+    cursor: pointer !important;
+}
