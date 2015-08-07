@@ -488,7 +488,8 @@ app.post('/auth/signup', function (req, res, next) {
             type: req.body.type,
             portefeuille: 0,
             fulfil1: false,
-            fulfil2: false
+            fulfil2: false,
+            Categories : ["smartphone","cuisine"]
         });
         user.save(function (err) {
             if (err) return next(err);
