@@ -1,9 +1,11 @@
 angular.module('MyApp')
     .factory('Auth', function ($http, $location, $rootScope, $alert, $window) {
         var token = $window.localStorage.token;
+        console.log("aaaaaaaaaaaaaaaaaa");
         if (token) {
-            var payload = JSON.parse($window.atob(token.split('.')[1]));
-            $rootScope.currentUser = payload.user;
+            var payload = JSON.parse($window.atob(token));
+            $rootScope.currentUser = payload;
+            console.log(payload);
         }
 
         // Asynchronously initialize Facebook SDK
@@ -92,9 +94,8 @@ angular.module('MyApp')
             login: function (user) {
                 return $http.post('/auth/login', user)
                     .success(function (data) {
-                        $window.localStorage.token = data.token;
-                        var payload = JSON.parse($window.atob(data.token.split('.')[1]));
-                        $rootScope.currentUser = payload.user;
+                        $window.localStorage.token = btoa(JSON.stringify(data));
+                        $rootScope.currentUser = data;
                         $location.path('/');
                         $alert({
                             title: 'Félicitations!',

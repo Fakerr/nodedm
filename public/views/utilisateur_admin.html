@@ -1,0 +1,56 @@
+<div class="container container-modified">
+    <div class="panel-body">
+        <div class="panel panel-default no-padding-bottom no-padding-top">
+            <div class="panel-heading ">
+                <div class="panel-title h2">Liste des utilisateurs <span class="pull-right"> <input
+                        style="margin-top: -8px" class="form-control" type="text" ng-model="search"></span><span class="pull-right" style="margin-right: 5px">Search: </span></div>
+            </div>
+            <div class="panel-body panel-modified no-padding-bottom">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Sexe</th>
+                        <th>Age</th>
+                        <th>Portefeuille</th>
+                        <th>Action</th><th></th><th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-show="showForm">
+                        <td><input class="form-control" ng-model="utilisateur.name"></td>
+                        <td><input class="form-control" ng-model="utilisateur.email"></td>
+                        <td><input class="form-control" ng-model="utilisateur.sexe"></td>
+                        <td><input class="form-control" ng-model="utilisateur.age"></td>
+                        <td><input class="form-control" ng-model="utilisateur.portefeuille"></td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="update()">Actualiser</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="clear()">Vider</button>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="utilisateur in list_utilisateur|filter: search">
+                        <td>{{utilisateur.name}}</td>
+                        <td>{{utilisateur.email}}</td>
+                        <td>{{utilisateur.sexe}}</td>
+                        <td>{{utilisateur.age}}</td>
+                        <td>{{utilisateur.portefeuille}}</td>
+                        <td>
+                            <button class="btn btn-danger" ng-click="remove(utilisateur._id)">Supprimer</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="clickToOpen(utilisateur)">Historique</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning" ng-click="edit(utilisateur._id)">Modifier</button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

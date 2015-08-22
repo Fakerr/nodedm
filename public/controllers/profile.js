@@ -1,35 +1,40 @@
 /* Discount should be used with configurable  variable */
 
 angular.module('MyApp')
-    .controller('ProfileCtrl', ['$scope', '$http', '$rootScope', 'ngDialog','$window', function ($scope, $http, $rootScope, ngDialog, $window) {
+    .controller('ProfileCtrl', ['$scope', '$http', '$rootScope', 'ngDialog', '$window', function ($scope, $http, $rootScope, ngDialog, $window) {
 
         var player1;
         var timeAct;
         var videoLong;
+//Supprimer la barre de youtube
         $scope.playerVars = {
             controls: 0
         };
         $scope.ann = [];
         $scope.videos = [];
-
+//get pubs selon categories de user in the collection categorie
         $http.get('/categories/annonces', {params: {cat: $rootScope.currentUser.Categories}})
             .success(function (data) {
                 data.forEach(function (categorie) {
                     categorie.pubs.forEach(function (pub, index) {
                         if (pub.type == "video") {
-                            $scope.videos.push(categorie.pubs[index]);
+                            var a = categorie.pubs[index];
+                            a.categorie = categorie.categorie;
+                            $scope.videos.push(a);
                         } else {
-                            $scope.ann.push(categorie.pubs[index]);
+                            var a = categorie.pubs[index];
+                            a.categorie = categorie.categorie;
+                            $scope.ann.push(a);
                         }
                     });
                 });
             }).error(function (err) {
                 console.log(err, 'error get categories !!');
             });
-
+//verifier si la video a ete visionne avant
         $scope.check = function (video) {
             for (var i = 0; i < $rootScope.currentUser.annoncesVideos.length; i++) {
-                if (!$rootScope.currentUser.annoncesVideos[i].lienExterne.localeCompare(video.lienExterne)) {
+                if (!$rootScope.currentUser.annoncesVideos[i].id.localeCompare(video.id)) {
                     return true;
                     break;
                 }
@@ -37,9 +42,10 @@ angular.module('MyApp')
             return false;
         };
 
+//verifier si l'image a ete visionne avant
         $scope.checked = function (image) {
             for (var i = 0; i < $rootScope.currentUser.annonces.length; i++) {
-                if (!$rootScope.currentUser.annonces[i].lienExterne.localeCompare(image.lienExterne)) {
+                if (!$rootScope.currentUser.annonces[i].id.localeCompare(image.id)) {
                     return true;
                     break;
                 }
@@ -69,12 +75,10 @@ angular.module('MyApp')
             $scope.show = false;
             videoLong = player.getDuration();
             timeAct = 0;
-            player.stopVideo();
             player.playVideo();
             player.pauseVideo();
             var vid = $scope.videos;
             var lien = player.getVideoUrl();
-           //var res = lien.replace("?v=", "/");
             for (var i = 0; i < vid.length; i++) {
                 if (!vid[i].lienExterne.localeCompare(lien)) {
                     if (!$scope.check($scope.videos[i])) {
@@ -91,7 +95,6 @@ angular.module('MyApp')
             }
         });
 
-
         $scope.open = function (image) {
             $scope.pub = image.url;
             $scope.lien = image.lienExterne;
@@ -101,11 +104,11 @@ angular.module('MyApp')
                 scope: $scope
             });
         };
+        //ouvrir une video ds ng-dialog
 
         $scope.openVideo = function (video) {
             $scope.pubVideo = video;
             $scope.show = false;
-            // $scope.duration = 0;
             $scope.heightDialogVideo = 550;
             $scope.widthDialogVideo = 1170;
             ngDialog.open({
@@ -116,12 +119,19 @@ angular.module('MyApp')
         };
 
         $scope.donate = function (pub) {
-            $rootScope.currentUser.portefeuille += 1;
+            $rootScope.currentUser.portefeuille += 1;//payer l'utilisateur selon le tarif de la publicite
+
+            $http.get('/api/annonces/pub', {
+                params: {
+                    id_pub: pub.id,
+                    categorie: pub.categorie
+                }
+            }).success(function (ann) {
+            }); //augmenter le nombre d'utilisation de la video +1
+            //ajout de l'annonce dans la collection de l'utilisateur ainsi que son portefeuille
             $http.put('/api/users/' + $rootScope.currentUser._id, $rootScope.currentUser).success(function (data) {
-                $window.localStorage.token = data.token;
-                var payload = JSON.parse($window.atob(data.token.split('.')[1]));
-                console.log(payload.user);
-                $rootScope.currentUser = payload.user;
+                $window.localStorage.token = btoa(JSON.stringify($rootScope.currentUser));
+                //persister localement la rootscope apres le changement
             });
         };
 
@@ -138,20 +148,8 @@ angular.module('MyApp')
             }
         };
 
-        function updatePub(idPub) {
-            $http.get('/api/annonceurs/pub', {params: {id_pub: idPub}}).success(function (ann) {
-                var annonceur = ann;
-                var pubs = ann.pub;
-                for (var i = 0; i < pubs.length; i++) {
-                    if (!pubs[i].id.localeCompare(idPub)) {
-                        annonceur.pub[i].budget -= 1;
-                        break;
-                    }
-                }
-                $http.put('/api/annonceurs/' + annonceur._id, annonceur);
-            });
-        }
 
+// pour verifier si l'onglet courant est actif ou pas
         var hidden, visibilityChange;
         if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
             hidden = "hidden";
